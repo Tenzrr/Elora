@@ -1,0 +1,18 @@
+{
+  "contract_version": "1.0",
+  "request": {
+    "image_uri": "string",
+    "crop_slug": "tomato|chilli|citrus|banana|roses|chrysanthemum",
+    "model_task": "disease|quality",
+    "model_version": "string"
+  },
+  "response": {
+    "crop_slug": "string",
+    "task": "disease|quality",
+    "label": "string",
+    "confidence": "number 0..1",
+    "top_predictions": [{"label": "string", "confidence": "number 0..1"}],
+    "model_version": "string",
+    "created_at": "ISO-8601 timestamp"
+  }
+}
