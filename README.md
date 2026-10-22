@@ -1,6 +1,6 @@
 # Garden
 
-Garden is a Flutter + FastAPI crop intelligence platform. This repository is organised so each developer can own a complete vertical slice: mobile UI, API/database work, and AI/model integration.
+Garden is a Flutter mobile app with a FastAPI backend for crop intelligence. This repository is organised so each developer can own a complete vertical slice: mobile UI, API/database work, and AI/model integration. Read `WORK_DISTRIBUTION.md` before starting work and `AGENTS.md` when using an AI coding agent.
 
 ## Stack
 
