@@ -1,3 +1,11 @@
+import sys
+from pathlib import Path
+
+# Ensure repository root is on sys.path so 'ai', 'shared', etc. are accessible
+REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
 from fastapi import FastAPI
 from app.modules.crop_health.router import router as crop_health_router
 
