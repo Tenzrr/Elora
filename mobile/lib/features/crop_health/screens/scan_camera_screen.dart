@@ -18,7 +18,7 @@ class _ScanCameraScreenState extends ConsumerState<ScanCameraScreen> {
   final ImagePicker _picker = ImagePicker();
   bool _isFlashOn = false;
   String _zoomLevel = '1x';
-  String _selectedCrop = 'tomato';
+  final String _selectedCrop = 'tomato';
 
   Future<void> _pickImage(ImageSource source) async {
     try {
