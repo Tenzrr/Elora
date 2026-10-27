@@ -1,7 +1,15 @@
-# Figma foundation
+# Garden Figma Foundation
 
-The shared UI foundation is based on the My Garden Figma file supplied by the project owner:
+> **Notice: Specification Migrated**  
+> This specification has been migrated to the authoritative design document:  
+> 👉 [Garden UI/UX Design Specification (Garden_UI_UX_Design_Specification.md)](specifications/Garden_UI_UX_Design_Specification.md)
 
-- https://www.figma.com/design/i3Jq3mO3o724r7J8JjkKLv/My-Garden
+---
 
-The Flutter implementation starts from the shared theme in `mobile/lib/core/theme/app_theme.dart`. All feature screens should reuse the theme, Material 3 components, shared spacing, and the cream/green visual language instead of introducing module-specific colors. When exact Figma exports are available, update this file and the theme tokens together so design decisions remain discoverable in the repository.
+## Summary
+
+The shared UI foundation is based on the **My Garden** Figma design system:
+- **Figma Design Link**: [My Garden Figma (Dev Mode)](https://www.figma.com/design/i3Jq3mO3o724r7J8JjkKLv/My-Garden?m=dev)
+- **Local Screen Exports**: Located in [`docs/screens/`](screens/)
+
+All mobile features must strictly adhere to the Material 3 design foundation, token definitions (`GardenColors.cream`, `GardenColors.leafGreen`, `GardenColors.deepGreen`), screen PNG compositions, and component guidelines defined in `mobile/lib/core/theme/app_theme.dart` and [specifications/Garden_UI_UX_Design_Specification.md](specifications/Garden_UI_UX_Design_Specification.md).

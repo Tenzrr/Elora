@@ -23,6 +23,22 @@ Garden is a Flutter mobile app backed by a FastAPI service. Do not create a web 
 - Use the shared API/model contracts. Do not invent feature-specific versions of them.
 - LangChain provides tools and retrieval, LangGraph manages agent state and transitions, and LangSmith provides tracing/evaluation. Keep agent tools typed and routed through backend services.
 
+## UI/UX design fidelity and screen authorities
+
+All UI implementations, Flutter screens, widgets, color palettes, and interaction patterns must strictly conform to the authoritative design screens in `docs/screens/` and the official Figma project:
+- **Figma Reference**: [My Garden Figma (Dev Mode)](https://www.figma.com/design/i3Jq3mO3o724r7J8JjkKLv/My-Garden?m=dev)
+- **Authoritative Screen Inventory**:
+  1. `docs/screens/Mobile app.png` — Home screen with user header, Level/XP progress pill (`650 / 1000 XP • Level 2`), 5 isometric garden crop blocks, and deep-green bottom navigation with raised center Scan button.
+  2. `docs/screens/Block selected.png` — Selected garden block with highlighted glow and slide-up bottom sheet of plant checkup cards with condition status.
+  3. `docs/screens/Plant 1 details.png` — Plant profile hero view, condition summary, and "A little care, next" horizontal care cards (Next watering, Next fertilizer).
+  4. `docs/screens/Scan camera.png` — Camera viewfinder with alignment reticle, 1x zoom indicator, flash toggle, gallery upload, and camera flip.
+  5. `docs/screens/Crop diagnosis results.png` — Scan diagnosis result view with sample photo, diagnosis card, symptom chips, 3-step recovery action list, and "Scan again" / "Save result" buttons.
+  6. `docs/screens/Garden AI chat.png` — AI assistant conversational interface with message bubbles (cream for assistant, leaf green for user), pill input bar with camera upload, and send action.
+  7. `docs/screens/Community.png` — Social community feed with "For You / Following" segmented pill tabs, "+" create post button, author cards with "+ Follow", crop tags, and engagement bar.
+
+**Mandatory Pre-Implementation Rule for Agents**:
+Before creating or editing any mobile screen or UI widget, coding agents **must inspect the matching PNG in `docs/screens/`**. Do not invent arbitrary layout, button arrangements, navigation icons, or color tokens that contradict these reference screens. When the Figma board or PNGs specify visual behavior, follow them strictly.
+
 ## Ownership and conflict prevention
 
 - Change only the assigned module unless the task explicitly requires a shared change.
