@@ -1,10 +1,8 @@
 # Garden Figma Foundation
 
-> **Notice: Specification Migrated**  
-> This specification has been migrated to the authoritative design document:  
-> 👉 [Garden UI/UX Design Specification (Garden_UI_UX_Design_Specification.md)](specifications/Garden_UI_UX_Design_Specification.md)
+The shared UI foundation is based on the My Elora Figma file supplied by the project owner:
 
----
+- https://www.figma.com/design/i3Jq3mO3o724r7J8JjkKLv/My-Elora
 
 ## Summary
 

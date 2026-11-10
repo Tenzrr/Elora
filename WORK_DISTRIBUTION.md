@@ -1,6 +1,6 @@
-# Garden work distribution
+# Elora work distribution
 
-Garden is a mobile-first application. The client is built with Flutter/Dart in `mobile/`; the service layer is built with FastAPI/Python in `backend/`. Every developer owns a complete vertical slice: Flutter screens, FastAPI routes, database queries, and AI/model integration.
+Elora is a mobile-first application. The client is built with Flutter/Dart in `mobile/`; the service layer is built with FastAPI/Python in `backend/`. Every developer owns a complete vertical slice: Flutter screens, FastAPI routes, database queries, and AI/model integration.
 
 ## Ownership
 
