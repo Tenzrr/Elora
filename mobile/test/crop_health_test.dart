@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:garden_mobile/features/crop_health/models/crop_health_models.dart';
-import 'package:garden_mobile/features/crop_health/widgets/recovery_action_list.dart';
-import 'package:garden_mobile/features/crop_health/widgets/viewfinder_reticle.dart';
+import 'package:elora_mobile/features/crop_health/models/crop_health_models.dart';
+import 'package:elora_mobile/features/crop_health/widgets/recovery_action_list.dart';
+import 'package:elora_mobile/features/crop_health/widgets/viewfinder_reticle.dart';
 
 void main() {
   group('Crop Health Model Tests', () {

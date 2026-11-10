@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
-import 'package:garden_mobile/features/crop_health/models/crop_health_models.dart';
+import 'package:elora_mobile/features/crop_health/models/crop_health_models.dart';
 
 class CropHealthState {
   const CropHealthState({

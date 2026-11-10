@@ -1,39 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:garden_mobile/core/theme/app_theme.dart';
-import 'package:garden_mobile/features/crop_health/screens/scan_camera_screen.dart';
+import 'package:elora_mobile/core/theme/app_theme.dart';
+import 'package:elora_mobile/features/crop_health/screens/scan_camera_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
     const ProviderScope(
-      child: GardenApp(),
+      child: EloraApp(),
     ),
   );
 }
 
-class GardenApp extends StatelessWidget {
-  const GardenApp({super.key});
+class EloraApp extends StatelessWidget {
+  const EloraApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Garden',
+      title: 'Elora',
       debugShowCheckedModeBanner: false,
-      theme: GardenTheme.light(),
-      home: const GardenShellScreen(),
+      theme: EloraTheme.light(),
+      home: const EloraShellScreen(),
     );
   }
 }
 
-class GardenShellScreen extends StatefulWidget {
-  const GardenShellScreen({super.key});
+class EloraShellScreen extends StatefulWidget {
+  const EloraShellScreen({super.key});
 
   @override
-  State<GardenShellScreen> createState() => _GardenShellScreenState();
+  State<EloraShellScreen> createState() => _EloraShellScreenState();
 }
 
-class _GardenShellScreenState extends State<GardenShellScreen> {
+class _EloraShellScreenState extends State<EloraShellScreen> {
   int _currentIndex = 0;
 
   void _openCameraScanner() {
@@ -47,7 +47,7 @@ class _GardenShellScreenState extends State<GardenShellScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: GardenColors.cream,
+      backgroundColor: EloraColors.cream,
       body: SafeArea(
         top: false,
         child: Column(
@@ -60,10 +60,10 @@ class _GardenShellScreenState extends State<GardenShellScreen> {
               child: IndexedStack(
                 index: _currentIndex,
                 children: [
-                  _buildHomeGardenView(context),
+                  _buildHomeEloraView(context),
                   _buildPlaceholderTab('Community', Icons.people_outline),
                   const SizedBox.shrink(), // Placeholder for center FAB
-                  _buildPlaceholderTab('Garden AI Assistant', Icons.chat_bubble_outline),
+                  _buildPlaceholderTab('Elora AI Assistant', Icons.chat_bubble_outline),
                   _buildPlaceholderTab('More & Settings', Icons.more_horiz),
                 ],
               ),
@@ -103,7 +103,7 @@ class _GardenShellScreenState extends State<GardenShellScreen> {
             ),
             child: const Icon(
               Icons.person,
-              color: GardenColors.deepGreen,
+              color: EloraColors.deepGreen,
               size: 22,
             ),
           ),
@@ -113,11 +113,11 @@ class _GardenShellScreenState extends State<GardenShellScreen> {
             child: Row(
               children: [
                 const Text(
-                  'My Garden',
+                  'My Elora',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
-                    color: GardenColors.deepGreen,
+                    color: EloraColors.deepGreen,
                     fontFamily: 'Inter',
                   ),
                 ),
@@ -133,7 +133,7 @@ class _GardenShellScreenState extends State<GardenShellScreen> {
                     style: TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.w600,
-                      color: GardenColors.deepGreen,
+                      color: EloraColors.deepGreen,
                       fontFamily: 'Inter',
                     ),
                   ),
@@ -152,7 +152,7 @@ class _GardenShellScreenState extends State<GardenShellScreen> {
             child: IconButton(
               icon: const Icon(
                 Icons.notifications_none,
-                color: GardenColors.deepGreen,
+                color: EloraColors.deepGreen,
                 size: 20,
               ),
               onPressed: () {},
@@ -163,7 +163,7 @@ class _GardenShellScreenState extends State<GardenShellScreen> {
     );
   }
 
-  Widget _buildHomeGardenView(BuildContext context) {
+  Widget _buildHomeEloraView(BuildContext context) {
     return Container(
       width: double.infinity,
       color: const Color(0xFF52B788), // Field Green background from docs/screens/Mobile app.png
@@ -180,14 +180,14 @@ class _GardenShellScreenState extends State<GardenShellScreen> {
               ),
               child: Row(
                 children: [
-                  const Icon(Icons.touch_app_outlined, color: GardenColors.deepGreen, size: 22),
+                  const Icon(Icons.touch_app_outlined, color: EloraColors.deepGreen, size: 22),
                   const SizedBox(width: 10),
                   const Expanded(
                     child: Text(
                       'Tap any crop block or tap Scan below to diagnose leaf diseases.',
                       style: TextStyle(
                         fontSize: 13,
-                        color: GardenColors.ink,
+                        color: EloraColors.ink,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -198,7 +198,7 @@ class _GardenShellScreenState extends State<GardenShellScreen> {
           ),
           const SizedBox(height: 14),
 
-          // Isometric Garden Plots Preview
+          // Isometric Elora Plots Preview
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -255,7 +255,7 @@ class _GardenShellScreenState extends State<GardenShellScreen> {
           color: isFeatured ? const Color(0xFFE8F5E9) : Colors.white,
           borderRadius: BorderRadius.circular(20),
           border: isFeatured
-              ? Border.all(color: GardenColors.leafGreen, width: 2)
+              ? Border.all(color: EloraColors.leafGreen, width: 2)
               : null,
           boxShadow: [
             BoxShadow(
@@ -270,7 +270,7 @@ class _GardenShellScreenState extends State<GardenShellScreen> {
           children: [
             Icon(
               icon,
-              color: isFeatured ? GardenColors.leafGreen : GardenColors.deepGreen,
+              color: isFeatured ? EloraColors.leafGreen : EloraColors.deepGreen,
               size: 32,
             ),
             const SizedBox(height: 8),
@@ -280,7 +280,7 @@ class _GardenShellScreenState extends State<GardenShellScreen> {
               style: const TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.w600,
-                color: GardenColors.ink,
+                color: EloraColors.ink,
               ),
             ),
             const SizedBox(height: 2),
@@ -289,7 +289,7 @@ class _GardenShellScreenState extends State<GardenShellScreen> {
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 11,
-                color: GardenColors.muted,
+                color: EloraColors.muted,
               ),
             ),
           ],
@@ -303,20 +303,20 @@ class _GardenShellScreenState extends State<GardenShellScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(icon, size: 64, color: GardenColors.leafGreen),
+          Icon(icon, size: 64, color: EloraColors.leafGreen),
           const SizedBox(height: 16),
           Text(
             title,
             style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: GardenColors.deepGreen,
+              color: EloraColors.deepGreen,
             ),
           ),
           const SizedBox(height: 8),
           const Text(
             'Module ready for integration testing.',
-            style: TextStyle(color: GardenColors.muted, fontSize: 14),
+            style: TextStyle(color: EloraColors.muted, fontSize: 14),
           ),
         ],
       ),
@@ -336,7 +336,7 @@ class _GardenShellScreenState extends State<GardenShellScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _buildNavIcon(0, Icons.yard_outlined, 'Garden'),
+          _buildNavIcon(0, Icons.yard_outlined, 'Elora'),
           _buildNavIcon(1, Icons.people_outline, 'Community'),
           // Elevated Center Scan FAB
           GestureDetector(

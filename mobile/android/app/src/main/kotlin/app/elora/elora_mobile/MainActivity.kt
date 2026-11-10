@@ -1,4 +1,4 @@
-package app.garden.garden_mobile
+package app.elora.elora_mobile
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,4 +1,4 @@
-# garden_mobile
+# elora_mobile
 
 A new Flutter project.
 

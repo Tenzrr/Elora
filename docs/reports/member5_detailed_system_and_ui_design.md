@@ -1,10 +1,10 @@
-# Garden: Detailed System and UI Design & Crop Health Analysis
+# Elora: Detailed System and UI Design & Crop Health Analysis
 ## Academic Interim Report Contribution — Member 5 (System & UI Design) & Dev 1 (Crop Health Implementation)
 
 **Author:** Member 5 / Dev 1  
-**Project:** Garden — Multi-Modal Crop Intelligence and Agricultural Decision Support Platform  
+**Project:** Elora — Multi-Modal Crop Intelligence and Agricultural Decision Support Platform  
 **Target Module:** Crop Health Analysis (Tomato & Chilli) & System-Wide UI/UX Design  
-**Figma Design Foundation:** [My Garden Design System](https://www.figma.com/design/i3Jq3mO3o724r7J8JjkKLv/My-Garden?m=dev)  
+**Figma Design Foundation:** [Elora Design System](https://www.figma.com/design/i3Jq3mO3o724r7J8JjkKLv/My-Elora?m=dev)  
 **Date:** October 2026  
 **Document Status:** Complete & Approved for Interim Evaluation  
 
@@ -21,34 +21,34 @@
    - 3.2 [Class Relationship and Dependency Analysis](#32-class-relationship-and-dependency-analysis)
 4. [Section 3: UI Wireframes for the Main Screens](#4-section-3-ui-wireframes-for-the-main-screens)
    - 4.1 [Design Principles and Token Foundation](#41-design-principles-and-token-foundation)
-   - 4.2 [Screen 1: Home Dashboard — Isometric Living Garden](#42-screen-1-home-dashboard--isometric-living-garden)
+   - 4.2 [Screen 1: Home Dashboard — Isometric Living Elora](#42-screen-1-home-dashboard--isometric-living-elora)
    - 4.3 [Screen 2: Selected Crop Block & Plant Drawer Bottom Sheet](#43-screen-2-selected-crop-block--plant-drawer-bottom-sheet)
    - 4.4 [Screen 3: Plant Details & Care Schedule](#44-screen-3-plant-details--care-schedule)
    - 4.5 [Screen 4: Scan Camera Viewfinder & Framing Reticle](#45-screen-4-scan-camera-viewfinder--framing-reticle)
    - 4.6 [Screen 5: Crop Diagnosis Results & 3-Step Recovery Action Plan](#46-screen-5-crop-diagnosis-results--3-step-recovery-action-plan)
-   - 4.7 [Screen 6: Garden Assistant AI Chat Interface](#47-screen-6-garden-assistant-ai-chat-interface)
+   - 4.7 [Screen 6: Elora Assistant AI Chat Interface](#47-screen-6-elora-assistant-ai-chat-interface)
    - 4.8 [Screen 7: Community Feed & Social Journal](#48-screen-7-community-feed--social-journal)
 5. [Section 4: Existing System Comparative Analysis — Plantix](#5-section-4-existing-system-comparative-analysis--plantix)
    - 5.1 [Overview of Plantix (PEAT GmbH)](#51-overview-of-plantix-peat-gmbh)
    - 5.2 [Architectural & Workflow Evaluation](#52-architectural--workflow-evaluation)
    - 5.3 [Strengths, Limitations, and Agronomic Bias](#53-strengths-limitations-and-agronomic-bias)
-   - 5.4 [Comparative Feature Matrix: Plantix vs. Garden](#54-comparative-feature-matrix-plantix-vs-garden)
+   - 5.4 [Comparative Feature Matrix: Plantix vs. Elora](#54-comparative-feature-matrix-plantix-vs-elora)
 6. [Section 5: Literature Survey Contribution — Crop Health Analysis](#6-section-5-literature-survey-contribution--crop-health-analysis)
    - 6.1 [Agronomic Context & Pathogen Taxonomy (Tomato & Chilli)](#61-agronomic-context--pathogen-taxonomy-tomato--chilli)
    - 6.2 [Deep Learning Paradigms for Plant Foliar Disease Classification](#62-deep-learning-paradigms-for-plant-foliar-disease-classification)
    - 6.3 [Critical Review of Key Literature](#63-critical-review-of-key-literature)
    - 6.4 [Synthesis of Methodologies, Datasets, and Performance Metrics](#64-synthesis-of-methodologies-datasets-and-performance-metrics)
-   - 6.5 [Research Gaps and Garden's Engineering Response](#65-research-gaps-and-gardens-engineering-response)
+   - 6.5 [Research Gaps and Elora's Engineering Response](#65-research-gaps-and-eloras-engineering-response)
    - 6.6 [Academic References](#66-academic-references)
 
 ---
 
 ## 1. Introduction and Architectural Overview
 
-The **Garden** platform is an intelligent agricultural support ecosystem designed to bridge advanced computer vision, stateful agentic workflows, and micro-climate analytics directly to smallholder farmers and domestic growers.
+The **Elora** platform is an intelligent agricultural support ecosystem designed to bridge advanced computer vision, stateful agentic workflows, and micro-climate analytics directly to smallholder farmers and domestic growers.
 
 As **Member 5** in the report distribution and **Dev 1** in the technical implementation:
-1. **Design Role (Member 5)**: Author of the complete UI/UX design foundation in Figma (`https://www.figma.com/design/i3Jq3mO3o724r7J8JjkKLv/My-Garden?m=dev`) and authoritative screen specifications (`docs/screens/`). Responsible for delivering the system-wide Class Diagrams, Object-Oriented Class Specifications, and UI Wireframe blueprints for all seven primary screens.
+1. **Design Role (Member 5)**: Author of the complete UI/UX design foundation in Figma (`https://www.figma.com/design/i3Jq3mO3o724r7J8JjkKLv/My-Elora?m=dev`) and authoritative screen specifications (`docs/screens/`). Responsible for delivering the system-wide Class Diagrams, Object-Oriented Class Specifications, and UI Wireframe blueprints for all seven primary screens.
 2. **Implementation Role (Dev 1)**: Owner of the **Crop Health Analysis** vertical slice covering **Tomato and Chilli** crops across both leaf disease diagnosis (`CNN-TOM-DIS`, `CNN-CHL-DIS`) and produce quality assessment (`CNN-TOM-QLT`, `CNN-CHL-QLT`), implementing the Flutter camera and diagnosis screens (`Scan camera.png`, `Crop diagnosis results.png`), the FastAPI backend service (`/api/v1/crop-health/analyze`), and the model contract bindings.
 
 ---
@@ -57,7 +57,7 @@ As **Member 5** in the report distribution and **Dev 1** in the technical implem
 
 ### 2.1 High-Level Layered System Class Diagram
 
-The Garden architecture follows strict **Clean Architecture** principles across four decoupled layers:
+The Elora architecture follows strict **Clean Architecture** principles across four decoupled layers:
 1. **Presentation Layer (Client - Flutter/Riverpod)**: UI widgets, reactive state notifiers, view models, and API clients.
 2. **API & Controller Layer (Backend - FastAPI)**: HTTP endpoints, authentication guards, and Pydantic request/response transfer objects.
 3. **Application & Domain Service Layer (Backend)**: Encapsulated business rules, session coordinators, and multi-model dispatchers.
@@ -94,7 +94,7 @@ classDiagram
             +reset() void
         }
 
-        class GardenApiClient {
+        class EloraApiClient {
             -Client _httpClient
             -String _baseUrl
             -String _jwtToken
@@ -215,8 +215,8 @@ classDiagram
     %% RELATIONSHIPS
     ScanCameraScreen --> CropHealthNotifier : watches / invokes
     CropDiagnosisScreen --> CropHealthNotifier : reads state
-    CropHealthNotifier --> GardenApiClient : delegates network I/O
-    GardenApiClient ..> CropHealthRouter : HTTP REST (/api/v1/crop-health)
+    CropHealthNotifier --> EloraApiClient : delegates network I/O
+    EloraApiClient ..> CropHealthRouter : HTTP REST (/api/v1/crop-health)
     CropHealthRouter --> CropAnalysisRequest : validates
     CropHealthRouter --> CropHealthService : delegates
     CropHealthRouter ..> CropAnalysisResponse : returns
@@ -450,7 +450,7 @@ Below is the formal Object-Oriented class dictionary defining responsibilities, 
 | Relationship Type | Source Class | Target Class | Multiplicity | Architectural Rationale |
 |---|---|---|---|---|
 | **Association / Invocative** | `ScanCameraScreen` | `CropHealthNotifier` | $1 \to 1$ | UI delegates capture and network transitions to the Riverpod state notifier. |
-| **Dependency** | `CropHealthNotifier` | `GardenApiClient` | $1 \to 1$ | State notifier depends on shared HTTP client for network transport. |
+| **Dependency** | `CropHealthNotifier` | `EloraApiClient` | $1 \to 1$ | State notifier depends on shared HTTP client for network transport. |
 | **Generalization / Realization** | `TomatoDiseaseClassifier` | `IModelPipeline` | $1 \dots * \to 1$ | Implements the uniform contract for disease inference. |
 | **Generalization / Realization** | `ChilliDiseaseClassifier` | `IModelPipeline` | $1 \dots * \to 1$ | Implements the uniform contract for chilli pathogen inference. |
 | **Composition** | `AnalysisSession` | `DiseaseDetection` | $1 \to 0..1$ | A disease detection record cannot exist without an owning analysis session (`ON DELETE CASCADE`). |
@@ -464,7 +464,7 @@ Below is the formal Object-Oriented class dictionary defining responsibilities, 
 
 ### 4.1 Design Principles and Token Foundation
 
-The Garden design system strictly adheres to the visual foundation established in `mobile/lib/core/theme/app_theme.dart` and the Figma foundation:
+The Elora design system strictly adheres to the visual foundation established in `mobile/lib/core/theme/app_theme.dart` and the Figma foundation:
 
 - **Cream (`#F8F6EF`)**: Primary canvas scaffold background and card undertones.
 - **Deep Green (`#173B2B`)**: Dominant brand anchor, navigation fills, primary buttons, high-priority titles.
@@ -477,7 +477,7 @@ The Garden design system strictly adheres to the visual foundation established i
 
 ---
 
-### 4.2 Screen 1: Home Dashboard — Isometric Living Garden
+### 4.2 Screen 1: Home Dashboard — Isometric Living Elora
 
 ![Mobile app](../screens/Mobile%20app.png)  
 *Figure 1: Home Dashboard canonical visual specification (`docs/screens/Mobile app.png`)*
@@ -485,10 +485,10 @@ The Garden design system strictly adheres to the visual foundation established i
 #### Layout Schematic & Wireframe Blueprint:
 ```text
 +-------------------------------------------------------+
-|  (Avatar)   My Garden  [ 650 / 1000 XP • Lvl 2 ] (Bell) | <- Curved Mint Top Bar (#A6E3C3)
+|  (Avatar)   My Elora  [ 650 / 1000 XP • Lvl 2 ] (Bell) | <- Curved Mint Top Bar (#A6E3C3)
 +-------------------------------------------------------+
 |                                                       |
-|   [Field Green Canvas: 3D Isometric Living Garden]    |
+|   [Field Green Canvas: 3D Isometric Living Elora]    |
 |                                                       |
 |        +-----------+          +-----------+           |
 |        |  Citrus   |          |   Roses   |           |
@@ -506,16 +506,16 @@ The Garden design system strictly adheres to the visual foundation established i
 |        +-----------+          +-----------+           |
 |                                                       |
 +-------------------------------------------------------+
-|   [Garden]   [Community]   ((SCAN))   [Chat]   [More] | <- Curved Deep Green Dock (#1E4D3B)
+|   [Elora]   [Community]   ((SCAN))   [Chat]   [More] | <- Curved Deep Green Dock (#1E4D3B)
 +-------------------------------------------------------+
 ```
 
 #### Structural Component Hierarchy:
 1. **Top Header Bar**: Height $68\text{ dp}$, background `Color(0xFFA6E3C3)` with `BorderRadius.vertical(bottom: Radius.circular(24))`.
    - Left: Circular avatar ($40\text{ dp}$) displaying user thumbnail.
-   - Center: "My Garden" title with embedded progress pill (`650 / 1000 XP • Level 2`).
+   - Center: "My Elora" title with embedded progress pill (`650 / 1000 XP • Level 2`).
    - Right: Notification bell icon with unread badge indicator.
-2. **Main Viewport (Isometric Garden Canvas)**:
+2. **Main Viewport (Isometric Elora Canvas)**:
    - Full-bleed background in Field Green (`#52B788`).
    - 5 interactive 3D isometric crop blocks (Citrus top-left, Roses top-right, Tomato center, Banana bottom-left, Chilli bottom-right).
    - Tapping any plot triggers a radiant green glow boundary and slides up the Plant Drawer.
@@ -532,9 +532,9 @@ The Garden design system strictly adheres to the visual foundation established i
 #### Layout Schematic & Wireframe Blueprint:
 ```text
 +-------------------------------------------------------+
-|  (Avatar)   My Garden  [ 650 / 1000 XP • Lvl 2 ] (Bell) |
+|  (Avatar)   My Elora  [ 650 / 1000 XP • Lvl 2 ] (Bell) |
 +-------------------------------------------------------+
-|   [Dimmed Isometric Garden Canvas]                    |
+|   [Dimmed Isometric Elora Canvas]                    |
 |                                                       |
 |              +=====================+                  |
 |              ||  Tomato • 10 Plants || <- Active Glow |
@@ -559,7 +559,7 @@ The Garden design system strictly adheres to the visual foundation established i
 
 #### Structural Component Hierarchy:
 1. **Selection State**: Dimmed isometric canvas with the targeted block illuminated by a $3\text{ px}$ radiant green halo. Title badge updates dynamically to `"[Crop Name] • [N] Plants"`.
-2. **Slide-Up Bottom Sheet**: Modal container with corner radius $24\text{ px}$, background `GardenColors.cream`.
+2. **Slide-Up Bottom Sheet**: Modal container with corner radius $24\text{ px}$, background `EloraColors.cream`.
    - Top: Centered drag handle bar ($36 \times 4\text{ dp}$, `#CBD5E1`).
    - Header: Crop category title and quick-add plant icon button.
    - Plant Card List: Vertical scrollable list of plant checkup cards with thumbnail, nickname, last inspection timestamp, and color-coded condition badges (`Healthy` in `#4F8A5B`, `Early Blight` in `#B34D45`).
@@ -623,7 +623,7 @@ The Garden design system strictly adheres to the visual foundation established i
 ```text
 +-------------------------------------------------------+
 |  (< Back)    Scan plant                 ( ? Help )    |
-|              My Garden                                | <- Mint Header Bar
+|              My Elora                                | <- Mint Header Bar
 +-------------------------------------------------------+
 |  [Flash: Off]                                         |
 |                                                       |
@@ -643,7 +643,7 @@ The Garden design system strictly adheres to the visual foundation established i
 ```
 
 #### Structural Component Hierarchy:
-1. **Top Header**: Curved mint header ($68\text{ dp}$), circular back button, title "Scan plant", subtitle "My Garden", help `?` icon.
+1. **Top Header**: Curved mint header ($68\text{ dp}$), circular back button, title "Scan plant", subtitle "My Elora", help `?` icon.
 2. **Viewfinder Overlay**: Full-screen hardware camera feed with centered $280 \times 280\text{ dp}$ high-contrast white reticle guidelines for framing leaves.
 3. **In-Viewfinder Badges**:
    - Top-left: Flash toggle pill button (`Off` / `On`).
@@ -664,7 +664,7 @@ The Garden design system strictly adheres to the visual foundation established i
 ```text
 +-------------------------------------------------------+
 |  (< Back)    Scan results               ( ? Help )    |
-|              My Garden                                | <- Mint Header Bar
+|              My Elora                                | <- Mint Header Bar
 +-------------------------------------------------------+
 |                                                       |
 |  +-------------------------------------------------+  |
@@ -724,17 +724,17 @@ The Garden design system strictly adheres to the visual foundation established i
 
 ---
 
-### 4.7 Screen 6: Garden Assistant AI Chat Interface
+### 4.7 Screen 6: Elora Assistant AI Chat Interface
 
-![Garden AI chat](../screens/Garden%20AI%20chat.png)  
-*Figure 6: Garden Assistant AI Chat (`docs/screens/Garden AI chat.png`)*
+![Elora AI chat](../screens/Elora%20AI%20chat.png)  
+*Figure 6: Elora Assistant AI Chat (`docs/screens/Elora AI chat.png`)*
 
 #### Layout Schematic & Wireframe Blueprint:
 ```text
 +-------------------------------------------------------+
-|  (Avatar)   My Garden  [ 650 / 1000 XP • Lvl 2 ] (Bell) |
+|  (Avatar)   My Elora  [ 650 / 1000 XP • Lvl 2 ] (Bell) |
 +-------------------------------------------------------+
-|  (Sprout)  Garden assistant                   (...)   |
+|  (Sprout)  Elora assistant                   (...)   |
 |            • AI-powered • Here to help you grow       |
 +-------------------------------------------------------+
 |                                                       |
@@ -757,21 +757,21 @@ The Garden design system strictly adheres to the visual foundation established i
 |  +-------------------------------------------------+  |
 |                                                       |
 +-------------------------------------------------------+
-|  [ (Camera)  Ask your garden assistant...    (( ^ )) ]| <- Pill Input Field
+|  [ (Camera)  Ask your Elora assistant...    (( ^ )) ]| <- Pill Input Field
 |           A little AI help for a happier garden.      |
 +-------------------------------------------------------+
 ```
 
 #### Structural Component Hierarchy:
 1. **Top Header Bar**: Mint bar with XP / Level progression indicator.
-2. **Subheader Tile**: Assistant avatar, green status bullet, title "Garden assistant", subtitle "• AI-powered • Here to help you grow", overflow menu (`...`).
+2. **Subheader Tile**: Assistant avatar, green status bullet, title "Elora assistant", subtitle "• AI-powered • Here to help you grow", overflow menu (`...`).
 3. **Conversational Feed**: Scrollable message list with:
    - Assistant Bubbles: Left-aligned white cards (`#FFFFFF`), $20\text{ px}$ radius, Ink typography.
    - User Bubbles: Right-aligned Leaf Green containers (`#52B788`), $20\text{ px}$ radius, dark ink typography.
 4. **Anchored Input Dock**:
    - Elevated full-width white pill container ($56\text{ dp}$ height, $32\text{ px}$ corner radius).
    - Left: Camera icon button to attach leaf images directly into the chat session.
-   - Center: Multi-line text field with placeholder: "Ask your garden assistant...".
+   - Center: Multi-line text field with placeholder: "Ask your Elora assistant...".
    - Right: Circular deep green send button ($40\text{ dp}$) with white upward arrow.
    - Footer: Centered muted caption: "A little AI help for a happier garden."
 
@@ -785,7 +785,7 @@ The Garden design system strictly adheres to the visual foundation established i
 #### Layout Schematic & Wireframe Blueprint:
 ```text
 +-------------------------------------------------------+
-|  (Avatar)   My Garden  [ 650 / 1000 XP • Lvl 2 ] (Bell) |
+|  (Avatar)   My Elora  [ 650 / 1000 XP • Lvl 2 ] (Bell) |
 +-------------------------------------------------------+
 |  [ [For You]   [Following] ]                 (( + ))  | <- Segmented Filter
 +-------------------------------------------------------+
@@ -808,7 +808,7 @@ The Garden design system strictly adheres to the visual foundation established i
 |  +-------------------------------------------+-----+  |
 |                                                       |
 +-------------------------------------------------------+
-|   [Garden]   [Community]   ((SCAN))   [Chat]   [More] | <- Bottom Dock
+|   [Elora]   [Community]   ((SCAN))   [Chat]   [More] | <- Bottom Dock
 +-------------------------------------------------------+
 ```
 
@@ -879,7 +879,7 @@ sequenceDiagram
    - Plantix's primary business model is sustained through partnerships with agrochemical multinational corporations (e.g., Bayer Crop Science, Syngenta). Consequently, treatment screens aggressively prioritize synthetic chemical brand recommendations over biological or cultural remedies, often leading smallholders into expensive and ecologically harmful pesticide overuse.
 2. **Proprietary Black-Box AI & Lack of Transparent Model Contracts**:
    - Plantix does not disclose model architectures, confidence distributions, or top-k alternatives to users. In rural areas with visual symptom overlap (e.g., differentiating Early Blight from Septoria Leaf Spot or nutrient deficiency), an erroneous single-label prediction can cause devastating misapplication of chemicals.
-3. **Disconnected Living Garden Context**:
+3. **Disconnected Living Elora Context**:
    - Plantix treats each leaf scan as an isolated, transactional event. It lacks an integrated, living visual garden model. A grower cannot track plant progress across developmental growth stages, visualize garden plots in 3D, or schedule predictive micro-climate irrigation.
 4. **Absence of Stateful Conversational Intelligence**:
    - The platform provides static text recommendations. It lacks a conversational AI agronomist capable of understanding multi-turn context (e.g., *"I sprayed copper fungicide two days ago, but it just rained 30mm. Should I re-spray?"*).
@@ -888,9 +888,9 @@ sequenceDiagram
 
 ---
 
-### 5.4 Comparative Feature Matrix: Plantix vs. Garden
+### 5.4 Comparative Feature Matrix: Plantix vs. Elora
 
-| Evaluation Dimension | Plantix (PEAT GmbH) | Garden (Our Platform) |
+| Evaluation Dimension | Plantix (PEAT GmbH) | Elora (Our Platform) |
 |---|---|---|
 | **Mobile Architecture** | Native Android / Webview wrapper | Cross-platform **Flutter (Material 3)** with shared design tokens |
 | **Backend Architecture** | Proprietary cloud monolith | Asynchronous **FastAPI** micro-modules with strict `/api/v1` contracts |
@@ -898,7 +898,7 @@ sequenceDiagram
 | **Target Crop AI Scope** | 500+ generalist diseases (broad, shallow) | Targeted deep models: **5 key crops, 10 specialized CNNs** (both Disease & Produce Quality) |
 | **Produce Quality Grading** | ❌ Not available (Disease/pest only) | ✅ **Dedicated Quality Assessment CNNs** (ripeness index, defect %, commercial grade) |
 | **Conversational AI** | ❌ None (Static treatment cards) | ✅ **Stateful LangGraph AI Agronomist** with LangSmith tracing and `pgvector` memory |
-| **Living Garden Model** | ❌ Disjointed photo log | ✅ **3D Isometric Living Garden Canvas** with plot selection and plant drawers |
+| **Living Elora Model** | ❌ Disjointed photo log | ✅ **3D Isometric Living Elora Canvas** with plot selection and plant drawers |
 | **Gamification & Habit Formation** | ❌ None (Utility tool only) | ✅ **Gamified Experience Points (XP)** and level progression (`650 / 1000 XP • Level 2`) |
 | **Treatment Guidance Philosophy**| Heavy synthetic agrochemical bias | **Grower-first cultural & organic action plans** (3-step icon recovery plan above the fold) |
 | **Micro-Climate Integration** | Basic 3-day weather forecast | **Predictive Farming Engine** (Open-Meteo precipitation/ET0 automated irrigation schedules) |
@@ -985,22 +985,22 @@ Over the past five years, research in plant pathology computer vision has evolve
 
 ---
 
-### 6.5 Research Gaps and Garden's Engineering Response
+### 6.5 Research Gaps and Elora's Engineering Response
 
 Review of the academic literature highlights four unresolved engineering challenges in computer-vision-based crop health monitoring:
 
 1. **The Laboratory-to-Field Generalization Gap**:
    - Models trained purely on flat, uniform laboratory datasets (e.g., PlantVillage) fail in natural agricultural environments due to soil debris, weed foliage, shadows, and varying natural daylight.
-   - *Garden's Response*: Our mobile scanning interface enforces a high-contrast $280 \times 280\text{ dp}$ corner framing reticle (`Scan camera.png`) that guides growers to isolate the affected leaf blade, while our data pipeline applies heavy Albumentations transforms (random solar flare, shadow injection, Gaussian noise, perspective distortion).
+   - *Elora's Response*: Our mobile scanning interface enforces a high-contrast $280 \times 280\text{ dp}$ corner framing reticle (`Scan camera.png`) that guides growers to isolate the affected leaf blade, while our data pipeline applies heavy Albumentations transforms (random solar flare, shadow injection, Gaussian noise, perspective distortion).
 2. **Single-Label Disease Classification Without Produce Quality Context**:
    - Existing literature almost exclusively isolates leaf pathology, ignoring produce ripeness, harvest timing, and marketable defect grading.
-   - *Garden's Response*: Garden treats crop health holistically by deploying two separate CNNs per crop: leaf pathology diagnosis (`CNN-TOM-DIS`, `CNN-CHL-DIS`) and harvest quality grading (`CNN-TOM-QLT`, `CNN-CHL-QLT`).
+   - *Elora's Response*: Elora treats crop health holistically by deploying two separate CNNs per crop: leaf pathology diagnosis (`CNN-TOM-DIS`, `CNN-CHL-DIS`) and harvest quality grading (`CNN-TOM-QLT`, `CNN-CHL-QLT`).
 3. **Absence of Actionable, Phased Recovery Guidance**:
    - Prior systems output raw disease names and probability percentages, leaving the grower stranded without clear cultural or recovery actions.
-   - *Garden's Response*: Diagnostic outputs are automatically mapped to an authoritative, 3-step icon-guided recovery plan displayed above the scroll fold (`Crop diagnosis results.png`), prioritizing organic hygiene and airflow improvement before chemical interventions.
+   - *Elora's Response*: Diagnostic outputs are automatically mapped to an authoritative, 3-step icon-guided recovery plan displayed above the scroll fold (`Crop diagnosis results.png`), prioritizing organic hygiene and airflow improvement before chemical interventions.
 4. **Disconnected Agricultural Context**:
    - Pathogen germination is governed by environmental micro-climate (temperature, relative humidity, leaf wetness duration). A visual scan devoid of weather context produces false positives.
-   - *Garden's Response*: Garden bridges computer vision with the Open-Meteo predictive weather engine and LangGraph agronomic agent, cross-referencing CNN predictions with recent precipitation and humidity history.
+   - *Elora's Response*: Elora bridges computer vision with the Open-Meteo predictive weather engine and LangGraph agronomic agent, cross-referencing CNN predictions with recent precipitation and humidity history.
 
 ---
 

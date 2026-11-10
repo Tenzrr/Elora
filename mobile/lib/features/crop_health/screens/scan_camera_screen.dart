@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:garden_mobile/core/theme/app_theme.dart';
-import 'package:garden_mobile/features/crop_health/screens/crop_diagnosis_results_screen.dart';
-import 'package:garden_mobile/features/crop_health/widgets/viewfinder_reticle.dart';
+import 'package:elora_mobile/core/theme/app_theme.dart';
+import 'package:elora_mobile/features/crop_health/screens/crop_diagnosis_results_screen.dart';
+import 'package:elora_mobile/features/crop_health/widgets/viewfinder_reticle.dart';
 
 /// Camera scanner screen for crop foliage disease detection.
 /// Strictly implements the visual composition of docs/screens/Scan camera.png.
@@ -55,7 +55,7 @@ class _ScanCameraScreenState extends ConsumerState<ScanCameraScreen> {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
-      backgroundColor: GardenColors.cream,
+      backgroundColor: EloraColors.cream,
       builder: (context) {
         return Padding(
           padding: const EdgeInsets.all(24.0),
@@ -68,7 +68,7 @@ class _ScanCameraScreenState extends ConsumerState<ScanCameraScreen> {
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
-                  color: GardenColors.deepGreen,
+                  color: EloraColors.deepGreen,
                 ),
               ),
               SizedBox(height: 12),
@@ -79,7 +79,7 @@ class _ScanCameraScreenState extends ConsumerState<ScanCameraScreen> {
                 style: TextStyle(
                   fontSize: 14,
                   height: 1.5,
-                  color: GardenColors.ink,
+                  color: EloraColors.ink,
                 ),
               ),
               SizedBox(height: 18),
@@ -148,7 +148,7 @@ class _ScanCameraScreenState extends ConsumerState<ScanCameraScreen> {
                       child: IconButton(
                         icon: const Icon(
                           Icons.arrow_back,
-                          color: GardenColors.deepGreen,
+                          color: EloraColors.deepGreen,
                           size: 20,
                         ),
                         onPressed: () => Navigator.of(context).maybePop(),
@@ -165,15 +165,15 @@ class _ScanCameraScreenState extends ConsumerState<ScanCameraScreen> {
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
-                              color: GardenColors.deepGreen,
+                              color: EloraColors.deepGreen,
                               fontFamily: 'Inter',
                             ),
                           ),
                           Text(
-                            'My Garden',
+                            'My Elora',
                             style: TextStyle(
                               fontSize: 12,
-                              color: GardenColors.deepGreen,
+                              color: EloraColors.deepGreen,
                               fontFamily: 'Inter',
                             ),
                           ),
@@ -191,7 +191,7 @@ class _ScanCameraScreenState extends ConsumerState<ScanCameraScreen> {
                       child: IconButton(
                         icon: const Icon(
                           Icons.help_outline,
-                          color: GardenColors.deepGreen,
+                          color: EloraColors.deepGreen,
                           size: 20,
                         ),
                         onPressed: _showHelpModal,
@@ -320,7 +320,7 @@ class _ScanCameraScreenState extends ConsumerState<ScanCameraScreen> {
                             width: 60,
                             height: 60,
                             decoration: const BoxDecoration(
-                              color: GardenColors.deepGreen,
+                              color: EloraColors.deepGreen,
                               shape: BoxShape.circle,
                             ),
                             child: const Icon(

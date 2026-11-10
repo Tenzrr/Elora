@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 /// Shared visual foundation for every feature slice.
-class GardenColors {
+class EloraColors {
   static const deepGreen = Color(0xFF173B2B);
   static const leafGreen = Color(0xFF4F8A5B);
   static const mint = Color(0xFFDCEFE0);
@@ -11,21 +11,21 @@ class GardenColors {
   static const danger = Color(0xFFB34D45);
 }
 
-class GardenTheme {
+class EloraTheme {
   static ThemeData light() {
     final scheme = ColorScheme.fromSeed(
-      seedColor: GardenColors.leafGreen,
+      seedColor: EloraColors.leafGreen,
       brightness: Brightness.light,
-      surface: GardenColors.cream,
+      surface: EloraColors.cream,
     );
     return ThemeData(
       useMaterial3: true,
       colorScheme: scheme,
-      scaffoldBackgroundColor: GardenColors.cream,
+      scaffoldBackgroundColor: EloraColors.cream,
       fontFamily: 'Inter',
       appBarTheme: const AppBarTheme(
-        backgroundColor: GardenColors.cream,
-        foregroundColor: GardenColors.ink,
+        backgroundColor: EloraColors.cream,
+        foregroundColor: EloraColors.ink,
         elevation: 0,
       ),
       inputDecorationTheme: InputDecorationTheme(

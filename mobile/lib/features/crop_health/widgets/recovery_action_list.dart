@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:garden_mobile/core/theme/app_theme.dart';
-import 'package:garden_mobile/features/crop_health/models/crop_health_models.dart';
+import 'package:elora_mobile/core/theme/app_theme.dart';
+import 'package:elora_mobile/features/crop_health/models/crop_health_models.dart';
 
 /// Renders the structured, icon-guided 3-step recovery action plan.
 /// Conforms strictly to docs/screens/Crop diagnosis results.png.
@@ -52,7 +52,7 @@ class RecoveryActionList extends StatelessWidget {
             style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
-              color: GardenColors.ink,
+              color: EloraColors.ink,
               fontFamily: 'Inter',
             ),
           ),
@@ -73,12 +73,12 @@ class RecoveryActionList extends StatelessWidget {
             width: 38,
             height: 38,
             decoration: BoxDecoration(
-              color: GardenColors.mint,
+              color: EloraColors.mint,
               shape: BoxShape.circle,
             ),
             child: Icon(
               _getIcon(step.icon),
-              color: GardenColors.deepGreen,
+              color: EloraColors.deepGreen,
               size: 20,
             ),
           ),
@@ -92,7 +92,7 @@ class RecoveryActionList extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
-                    color: GardenColors.ink,
+                    color: EloraColors.ink,
                     fontFamily: 'Inter',
                   ),
                 ),
@@ -101,7 +101,7 @@ class RecoveryActionList extends StatelessWidget {
                   step.description,
                   style: const TextStyle(
                     fontSize: 13,
-                    color: GardenColors.muted,
+                    color: EloraColors.muted,
                     height: 1.35,
                     fontFamily: 'Inter',
                   ),

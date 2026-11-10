@@ -1,10 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:garden_mobile/core/theme/app_theme.dart';
-import 'package:garden_mobile/features/crop_health/models/crop_health_models.dart';
-import 'package:garden_mobile/features/crop_health/providers/crop_health_provider.dart';
-import 'package:garden_mobile/features/crop_health/widgets/recovery_action_list.dart';
+import 'package:elora_mobile/core/theme/app_theme.dart';
+import 'package:elora_mobile/features/crop_health/models/crop_health_models.dart';
+import 'package:elora_mobile/features/crop_health/providers/crop_health_provider.dart';
+import 'package:elora_mobile/features/crop_health/widgets/recovery_action_list.dart';
 
 /// Screen displaying the diagnostic scan findings, symptom tags, and actionable recovery plan.
 /// Strictly implements the visual composition of docs/screens/Crop diagnosis results.png.
@@ -40,7 +40,7 @@ class _CropDiagnosisResultsScreenState
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Diagnosis saved to plant checkup history.'),
-        backgroundColor: GardenColors.deepGreen,
+        backgroundColor: EloraColors.deepGreen,
       ),
     );
   }
@@ -51,7 +51,7 @@ class _CropDiagnosisResultsScreenState
     final result = state.result;
 
     return Scaffold(
-      backgroundColor: GardenColors.cream,
+      backgroundColor: EloraColors.cream,
       body: SafeArea(
         top: false,
         child: Column(
@@ -67,13 +67,13 @@ class _CropDiagnosisResultsScreenState
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           CircularProgressIndicator(
-                            color: GardenColors.leafGreen,
+                            color: EloraColors.leafGreen,
                           ),
                           SizedBox(height: 16),
                           Text(
                             'Analyzing leaf symptoms...',
                             style: TextStyle(
-                              color: GardenColors.ink,
+                              color: EloraColors.ink,
                               fontWeight: FontWeight.w500,
                               fontFamily: 'Inter',
                             ),
@@ -151,7 +151,7 @@ class _CropDiagnosisResultsScreenState
             child: IconButton(
               icon: const Icon(
                 Icons.arrow_back,
-                color: GardenColors.deepGreen,
+                color: EloraColors.deepGreen,
                 size: 20,
               ),
               onPressed: () => Navigator.of(context).maybePop(),
@@ -168,15 +168,15 @@ class _CropDiagnosisResultsScreenState
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
-                    color: GardenColors.deepGreen,
+                    color: EloraColors.deepGreen,
                     fontFamily: 'Inter',
                   ),
                 ),
                 Text(
-                  'My Garden',
+                  'My Elora',
                   style: TextStyle(
                     fontSize: 12,
-                    color: GardenColors.deepGreen,
+                    color: EloraColors.deepGreen,
                     fontFamily: 'Inter',
                   ),
                 ),
@@ -193,7 +193,7 @@ class _CropDiagnosisResultsScreenState
             child: IconButton(
               icon: const Icon(
                 Icons.help_outline,
-                color: GardenColors.deepGreen,
+                color: EloraColors.deepGreen,
                 size: 20,
               ),
               onPressed: () {},
@@ -278,12 +278,12 @@ class _CropDiagnosisResultsScreenState
                 width: 44,
                 height: 44,
                 decoration: BoxDecoration(
-                  color: GardenColors.mint,
+                  color: EloraColors.mint,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: const Icon(
                   Icons.coronavirus_outlined,
-                  color: GardenColors.deepGreen,
+                  color: EloraColors.deepGreen,
                   size: 24,
                 ),
               ),
@@ -297,7 +297,7 @@ class _CropDiagnosisResultsScreenState
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: GardenColors.deepGreen,
+                        color: EloraColors.deepGreen,
                         fontFamily: 'Inter',
                       ),
                     ),
@@ -306,7 +306,7 @@ class _CropDiagnosisResultsScreenState
                       '$cropDisplay • illustrative scan',
                       style: const TextStyle(
                         fontSize: 13,
-                        color: GardenColors.muted,
+                        color: EloraColors.muted,
                         fontFamily: 'Inter',
                       ),
                     ),
@@ -350,7 +350,7 @@ class _CropDiagnosisResultsScreenState
           style: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.w600,
-            color: GardenColors.ink,
+            color: EloraColors.ink,
             fontFamily: 'Inter',
           ),
         ),
@@ -362,14 +362,14 @@ class _CropDiagnosisResultsScreenState
             return Container(
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
               decoration: BoxDecoration(
-                color: GardenColors.mint.withValues(alpha: 0.55),
+                color: EloraColors.mint.withValues(alpha: 0.55),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Text(
                 symptom,
                 style: const TextStyle(
                   fontSize: 13,
-                  color: GardenColors.deepGreen,
+                  color: EloraColors.deepGreen,
                   fontWeight: FontWeight.w500,
                   fontFamily: 'Inter',
                 ),
@@ -388,14 +388,14 @@ class _CropDiagnosisResultsScreenState
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Icon(Icons.info_outline, size: 16, color: GardenColors.muted),
+        const Icon(Icons.info_outline, size: 16, color: EloraColors.muted),
         const SizedBox(width: 8),
         Expanded(
           child: Text(
             note,
             style: const TextStyle(
               fontSize: 12,
-              color: GardenColors.muted,
+              color: EloraColors.muted,
               height: 1.35,
               fontFamily: 'Inter',
             ),
@@ -424,8 +424,8 @@ class _CropDiagnosisResultsScreenState
                 ),
               ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: GardenColors.mint,
-                foregroundColor: GardenColors.deepGreen,
+                backgroundColor: EloraColors.mint,
+                foregroundColor: EloraColors.deepGreen,
                 elevation: 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
@@ -451,7 +451,7 @@ class _CropDiagnosisResultsScreenState
                 ),
               ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: GardenColors.deepGreen,
+                backgroundColor: EloraColors.deepGreen,
                 foregroundColor: Colors.white,
                 elevation: 0,
                 shape: RoundedRectangleBorder(

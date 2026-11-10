@@ -1,5 +1,5 @@
-name: garden_mobile
-description: Garden crop intelligence mobile application.
+name: elora_mobile
+description: Elora crop intelligence mobile application.
 publish_to: "none"
 version: 0.1.0+1
 environment:

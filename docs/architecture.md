@@ -1,4 +1,4 @@
-# Garden architecture
+# Elora architecture
 
 The application is split into five vertical slices. Each slice owns its Flutter screens, FastAPI routes, database queries, and AI integration. Shared infrastructure stays deliberately small: authentication, database session management, API schemas, model contracts, theme tokens, and observability.
 
