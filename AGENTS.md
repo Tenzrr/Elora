@@ -1,10 +1,10 @@
-# Garden agent instructions
+# Elora agent instructions
 
 These rules apply to coding agents and contributors working in this repository.
 
 ## Product and platform
 
-Garden is a Flutter mobile app backed by a FastAPI service. Do not create a web frontend, desktop UI, or a second mobile framework unless the project owner explicitly changes the platform decision.
+Elora is a Flutter mobile app backed by a FastAPI service. Do not create a web frontend, desktop UI, or a second mobile framework unless the project owner explicitly changes the platform decision.
 
 ## Before editing
 

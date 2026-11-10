@@ -1,6 +1,6 @@
-# Garden
+# Elora
 
-Garden is a Flutter mobile app with a FastAPI backend for crop intelligence. This repository is organised so each developer can own a complete vertical slice: mobile UI, API/database work, and AI/model integration. Read `WORK_DISTRIBUTION.md` before starting work and `AGENTS.md` when using an AI coding agent.
+Elora is a Flutter mobile app with a FastAPI backend for crop intelligence. This repository is organised so each developer can own a complete vertical slice: mobile UI, API/database work, and AI/model integration. Read `WORK_DISTRIBUTION.md` before starting work and `AGENTS.md` when using an AI coding agent.
 
 ## Stack
 
@@ -31,7 +31,7 @@ docs/         architecture, contribution, UI, and integration contracts
 3. Run the API from `backend/` with `uvicorn app.main:app --reload`.
 4. Run the Flutter app from `mobile/` with `flutter run`.
 
-The GitHub remote is configured as `https://github.com/Tenzrr/Garden.git`.
+The GitHub remote is configured as `https://github.com/Tenzrr/Elora.git`.
 
 ## Parallel development rule
 

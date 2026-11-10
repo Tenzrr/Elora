@@ -1,4 +1,4 @@
-# Garden Architecture
+# Elora architecture
 
 > **Notice: Specification Migrated**  
 > This overview has been migrated to the authoritative technical specification:  
