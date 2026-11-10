@@ -1,19 +1,21 @@
 # Elora architecture
 
-The application is split into five vertical slices. Each slice owns its Flutter screens, FastAPI routes, database queries, and AI integration. Shared infrastructure stays deliberately small: authentication, database session management, API schemas, model contracts, theme tokens, and observability.
+> **Notice: Specification Migrated**  
+> This overview has been migrated to the authoritative technical specification:  
+> 👉 [Garden Technical Requirements Document (Garden_TRD.md)](specifications/Garden_TRD.md)
 
-## Feature ownership
+---
 
-| Developer | Module | Complete crop ownership |
-|---|---|---|
-| Dev 1 | Crop Health Analysis | Tomato and chilli: disease + quality CNNs (4 total) |
-| Dev 2 | Produce Quality Assessment | Citrus: disease + quality CNNs (2 total) |
-| Dev 3 | Predictive Farming Analytics | Banana: disease + quality CNNs (2 total) |
-| Dev 4 | Personalized Agricultural Agent | Roses: disease + quality CNNs (2 total) |
-| Dev 5 | Community and User Accounts | Chrysanthemum: disease + quality CNNs (2 total) |
+## Summary
 
-Model ownership stays with the crop owner. A feature may call another developer's model through the shared model contract rather than importing private module code.
+The Garden platform is split into five vertical slices, coordinated through a shared infrastructure kernel:
 
-## Agentic AI boundary
+| Developer | Module | Complete Crop Ownership | Primary Paths |
+|---|---|---|---|
+| **Dev 1** | Crop Health Analysis | Tomato and Chilli (4 CNNs) | `mobile/lib/features/crop_health/`, `backend/app/modules/crop_health/` |
+| **Dev 2** | Produce Quality Assessment | Citrus (2 CNNs) | `mobile/lib/features/produce_quality/`, `backend/app/modules/produce_quality/` |
+| **Dev 3** | Predictive Farming Analytics | Banana (2 CNNs) | `mobile/lib/features/predictive_farming/`, `backend/app/modules/predictive_farming/` |
+| **Dev 4** | Personalized Agricultural Agent | Roses (2 CNNs) | `mobile/lib/features/agricultural_agent/`, `backend/app/modules/agricultural_agent/`, `ai/agent/` |
+| **Dev 5** | Community and User Accounts | Chrysanthemum (2 CNNs) | `mobile/lib/features/community/`, `backend/app/modules/community/` |
 
-LangChain provides tools and retrievers, LangGraph owns the stateful workflow, and LangSmith provides tracing and evaluation. The agent must call backend tools through typed functions; it should not access database tables directly.
+For full system architecture, database specifications, AI authority boundaries, and quality requirements, refer to [specifications/Garden_TRD.md](specifications/Garden_TRD.md).
