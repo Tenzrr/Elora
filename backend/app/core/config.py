@@ -11,6 +11,8 @@ class Settings(BaseSettings):
     database_url: SecretStr | None = None
     database_schema: str = "integration"
     database_require_tls: bool = True
+    database_ca_file: str | None = None
+    require_database_at_startup: bool = False
     firebase_project_id: str = ""
     google_application_credentials: str | None = None
     asset_bucket: str = ""

@@ -36,7 +36,7 @@ jobs:
       - run: python -m pip install --require-hashes -r backend/requirements.lock
       - run: python -m compileall backend/app
       - run: python -m pytest
-      - run: python -m alembic -c backend/alembic.ini heads
+      - run: python -c "from alembic.config import Config; from alembic.script import ScriptDirectory; ScriptDirectory.from_config(Config('backend/alembic.ini')).get_current_head()"
 
   android:
     runs-on: ubuntu-latest

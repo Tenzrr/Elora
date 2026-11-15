@@ -19,6 +19,8 @@ def migrations(connection):
                       version_table_schema=schema, include_schemas=True)
     with context.begin_transaction():
         context.run_migrations()
+    connection.execute(text(f'REVOKE ALL ON "{schema}".alembic_version FROM "elora_{schema}_app"'))
+    connection.commit()
 
 
 async def online():

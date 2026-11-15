@@ -26,9 +26,22 @@ def create_app(settings: Settings | None = None, engine=None):
         app.state.engine = engine
         if engine is None and settings.database_url:
             app.state.engine = make_engine(settings)
-        yield
-        if engine is None and app.state.engine is not None:
-            await app.state.engine.dispose()
+        try:
+            if settings.require_database_at_startup:
+                if app.state.engine is None:
+                    raise RuntimeError("Database configuration is required")
+                try:
+                    async with app.state.engine.connect() as connection:
+                        for table in ("users", "plants"):
+                            await connection.execute(text(
+                                f'SELECT id FROM "{settings.database_schema}".{table} LIMIT 0'
+                            ))
+                except Exception:
+                    raise RuntimeError("Database workspace is unavailable or not migrated") from None
+            yield
+        finally:
+            if engine is None and app.state.engine is not None:
+                await app.state.engine.dispose()
 
     app = FastAPI(title="Elora API", version="0.2.0", lifespan=lifespan)
     app.state.settings = settings

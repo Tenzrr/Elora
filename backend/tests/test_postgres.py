@@ -2,18 +2,16 @@
 import asyncio
 import json
 import os
-from pathlib import Path
 import subprocess
 import sys
 
 import pytest
 from sqlalchemy import text
-from sqlalchemy.ext.asyncio import create_async_engine
 
 pytestmark = pytest.mark.skipif(not os.environ.get("TEST_DATABASE_URL"), reason="PostgreSQL integration runs in CI")
 
 
-def test_migrations_and_database_role_isolation(tmp_path, monkeypatch):
+def test_migrations_and_database_role_isolation(tmp_path):
     from app.core.config import Settings
     from app.db.session import make_engine
     from app.main import create_app
@@ -52,6 +50,10 @@ def test_migrations_and_database_role_isolation(tmp_path, monkeypatch):
                 with pytest.raises(Exception) as error:
                     await conn.execute(text("SELECT * FROM dev2.users"))
                 assert "permission denied" in str(error.value).lower()
+                await conn.rollback()
+                assert not await conn.scalar(text(
+                    "SELECT has_table_privilege('dev1.alembic_version', 'UPDATE')"
+                ))
         finally:
             await engine.dispose()
     asyncio.run(isolation())

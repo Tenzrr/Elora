@@ -14,6 +14,7 @@ Foundation branch: `chore/shared-development-foundation`. This is shared prepara
 ## Coordinator: Supabase and Firebase
 
 1. Create the Free Supabase project. Save its database password privately. In Connect select **Session pooler, port 5432**; don't use the transaction pooler or guess its hostname.
+   Download the public server CA through Database Settings to `backend/certs/supabase-root.crt`. The client keeps certificate/hostname verification enabled. This public trust anchor can be reviewed and committed; it is not a private key.
 2. Create the Firebase development project. Enable Authentication > Email/Password and Google. Add Android app package `app.elora.elora_mobile`.
 3. Add each developer's debug SHA-1 to that same app. For this machine: `C5:27:D4:06:34:06:73:64:12:84:BF:4E:09:2A:51:29:D7:29:62:99`. Get another machine's value with `keytool -list -v -keystore <user-home>/.android/debug.keystore -alias androiddebugkey -storepass android -keypass android`.
 4. Download the updated Android `google-services.json` to `mobile/android/app/google-services.json` (ignored). Firebase client configuration is not an Admin SDK private key.

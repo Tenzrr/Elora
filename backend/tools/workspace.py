@@ -14,6 +14,7 @@ from sqlalchemy.engine import make_url
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from app.core.config import Settings
+from app.db.session import database_ssl
 
 
 async def provision(schema, output, password=None):
@@ -24,9 +25,10 @@ async def provision(schema, output, password=None):
         raise ValueError("Configure DATABASE_ADMIN_URL privately")
     require_tls = os.environ.get("APP_ENV") != "test"
     url = make_url(raw_url)
+    tls_settings = Settings(_env_file=None, database_url=raw_url, database_schema=schema)
     connection = await asyncpg.connect(
         url.set(drivername="postgresql").render_as_string(hide_password=False),
-        ssl=__import__("ssl").create_default_context() if require_tls else False,
+        ssl=database_ssl(tls_settings),
         statement_cache_size=0,
     )
     owner, runtime = f"elora_{schema}_owner", f"elora_{schema}_app"
@@ -55,6 +57,12 @@ async def provision(schema, output, password=None):
             await connection.execute(
                 f'GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA "{schema}" TO "{runtime}"')
             await connection.execute("CREATE EXTENSION IF NOT EXISTS vector")
+            namespace = await connection.fetchval(
+                "SELECT quote_ident(n.nspname) FROM pg_extension e JOIN pg_namespace n "
+                "ON n.oid=e.extnamespace WHERE e.extname='vector'")
+            await connection.execute(f'GRANT USAGE ON SCHEMA {namespace} TO "{owner}", "{runtime}"')
+            if await connection.fetchval("SELECT to_regclass($1)", schema + ".alembic_version"):
+                await connection.execute(f'REVOKE ALL ON "{schema}".alembic_version FROM "{runtime}"')
     finally:
         await connection.close()
     suffix = "." + os.environ["SUPABASE_PROJECT_REF"] if os.environ.get("SUPABASE_PROJECT_REF") else ""
@@ -76,14 +84,19 @@ async def retire(schema):
     load_dotenv(".env.coordinator")
     if not re.fullmatch(r"pr_[1-9][0-9]*", schema):
         raise ValueError("Only disposable PR schemas may be retired")
-    url = make_url(os.environ["DATABASE_ADMIN_URL"]).set(drivername="postgresql")
+    raw_url = os.environ["DATABASE_ADMIN_URL"]
+    url = make_url(raw_url).set(drivername="postgresql")
+    tls_settings = Settings(_env_file=None, database_url=raw_url, database_schema=schema)
     conn = await asyncpg.connect(url.render_as_string(hide_password=False),
-                                ssl=__import__("ssl").create_default_context(), statement_cache_size=0)
+                                ssl=database_ssl(tls_settings), statement_cache_size=0)
     try:
         async with conn.transaction():
+            await conn.execute("SELECT pg_advisory_xact_lock(hashtext($1))", "elora-provision")
             await conn.execute(f'DROP SCHEMA IF EXISTS "{schema}" CASCADE')
             for role in [f"elora_{schema}_app", f"elora_{schema}_owner"]:
                 if await conn.fetchval("SELECT 1 FROM pg_roles WHERE rolname=$1", role):
+                    await conn.execute(f'GRANT "{role}" TO CURRENT_USER')
+                    await conn.execute(f'DROP OWNED BY "{role}"')
                     await conn.execute(f'DROP ROLE "{role}"')
     finally:
         await conn.close()
