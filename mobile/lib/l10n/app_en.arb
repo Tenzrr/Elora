@@ -40,5 +40,12 @@
   "conflict": "This plant changed. Reload it before editing.",
   "authFailed": "Sign-in could not be completed. Check your details or try again.",
   "googleSetup": "Google sign-in needs the shared development configuration.",
-  "loading": "Loading"
+  "loading": "Loading",
+  "qualityTab": "Quality",
+  "farmingTab": "Farming",
+  "scanTab": "Scan",
+  "chatTab": "Chat",
+  "profile": "My profile",
+  "displayName": "Display name",
+  "profileSaved": "Profile saved."
 }

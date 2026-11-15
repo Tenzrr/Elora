@@ -4,9 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../core/network/api_client.dart';
 import '../core/providers.dart';
 import '../l10n/generated/app_localizations.dart';
-import '../main.dart' show LanguagePicker;
-
-import 'package:go_router/go_router.dart';
 
 const cropSlugs = [
   'tomato',
@@ -18,8 +15,7 @@ const cropSlugs = [
 ];
 
 class GardenScreen extends ConsumerWidget {
-  const GardenScreen({this.module, super.key});
-  final String? module;
+  const GardenScreen({super.key});
 
   Future<void> editPlant(
     BuildContext context,
@@ -153,64 +149,9 @@ class GardenScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final t = AppLocalizations.of(context)!;
-    final titles = [
-      t.garden,
-      t.cropHealth,
-      t.quality,
-      t.farming,
-      t.assistant,
-      t.community,
-    ];
-    final modules = [
-      'garden',
-      'crop-health',
-      'quality',
-      'farming',
-      'assistant',
-      'community',
-    ];
-    final index = modules.indexOf(module ?? 'garden');
-    final selected = index < 0 ? 0 : index;
     final profile = ref.watch(profileProvider);
     return Scaffold(
-      appBar: AppBar(
-        title: Text(titles[selected]),
-        actions: [
-          const LanguagePicker(),
-          IconButton(
-            tooltip: t.signOut,
-            icon: const Icon(Icons.logout),
-            onPressed: () async {
-              try {
-                await ref.read(firebaseAuthProvider).signOut();
-              } catch (_) {
-                if (context.mounted) {
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(SnackBar(content: Text(t.actionFailed)));
-                }
-              }
-            },
-          ),
-        ],
-      ),
-      drawer: Drawer(
-        child: SafeArea(
-          child: ListView(
-            children: [
-              for (var i = 0; i < modules.length; i++)
-                ListTile(
-                  title: Text(titles[i]),
-                  selected: selected == i,
-                  onTap: () {
-                    Navigator.pop(context);
-                    context.go(i == 0 ? '/garden' : '/feature/${modules[i]}');
-                  },
-                ),
-            ],
-          ),
-        ),
-      ),
-      floatingActionButton: selected == 0 && profile.asData?.value != null
+      floatingActionButton: profile.asData?.value != null
           ? FloatingActionButton(
               tooltip: t.addPlant,
               onPressed: () => editPlant(context, ref),
@@ -233,14 +174,6 @@ class GardenScreen extends ConsumerWidget {
         ),
         data: (profile) {
           if (profile == null) return const SizedBox.shrink();
-          if (selected != 0) {
-            return Center(
-              child: Padding(
-                padding: const EdgeInsets.all(24),
-                child: Text(t.notImplemented, textAlign: TextAlign.center),
-              ),
-            );
-          }
           return ref
               .watch(plantsProvider)
               .when(
