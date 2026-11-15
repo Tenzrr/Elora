@@ -1,0 +1,60 @@
+%%{init: {"theme":"base","themeVariables":{"primaryColor":"#ffffff","primaryTextColor":"#000000","primaryBorderColor":"#000000","lineColor":"#000000","secondaryColor":"#ffffff","tertiaryColor":"#ffffff","background":"#ffffff","fontSize":"24px","classFontSize":"24px","classTitleFontSize":"28px"}}}%%
+classDiagram
+direction TB
+
+class User {
+  +id
+  +name
+  +createPlant()
+}
+class Plant {
+  +id
+  +crop
+  +nickname
+}
+class CropType {
+  <<enumeration>>
+  TOMATO
+  CHILLI
+  CITRUS
+  BANANA
+  ROSES
+  CHRYSANTHEMUM
+}
+class QualityScanScreen {
+  +capture()
+  +selectImage()
+}
+class QualityController {
+  +assess(Plant)
+  +getHistory(Plant)
+}
+class QualityService {
+  +assessImage(CropType)
+  +recommendHarvest(Assessment)
+}
+class AnalysisSession {
+  +id
+  +createdAt
+  +model
+  +complete()
+}
+class QualityAssessment {
+  +grade
+  +ripeness
+  +defectPercent
+  +shelfLifeDays
+}
+class CropModel {
+  <<interface>>
+  +predict(CropType)
+}
+
+User "1" --> "0..*" Plant : owns
+Plant "0..1" --> "0..*" AnalysisSession : assessed in
+QualityScanScreen ..> QualityController : sends image
+QualityController ..> QualityService : requests grading
+QualityController ..> AnalysisSession : saves assessment
+QualityService ..> CropModel : selects model
+CropModel ..> CropType : supports six crops
+AnalysisSession "1" *-- "0..1" QualityAssessment : stores result

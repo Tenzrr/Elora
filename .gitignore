@@ -25,3 +25,7 @@ models/weights/
 coverage/
 Thumbs.db
 .DS_Store
+
+# Local developer tools and temporary output
+/tmp/
+/.dist/

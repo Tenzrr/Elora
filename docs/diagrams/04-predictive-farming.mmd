@@ -1,0 +1,71 @@
+%%{init: {"theme":"base","class":{"rankSpacing":200,"nodeSpacing":18,"padding":14},"themeVariables":{"primaryColor":"#ffffff","primaryTextColor":"#000000","primaryBorderColor":"#000000","lineColor":"#000000","secondaryColor":"#ffffff","tertiaryColor":"#ffffff","background":"#ffffff","fontSize":"28px","classFontSize":"28px","classTitleFontSize":"32px"}}}%%
+classDiagram
+direction TB
+
+class User {
+  +id
+}
+class Plant {
+  +id
+  +crop
+  +area
+}
+class CommunityPost {
+  +id
+  +content
+  +publish()
+}
+class CommunityDiseaseReport {
+  +crop
+  +disease
+  +area
+}
+class CommunityReportProvider {
+  <<interface>>
+  +getReports()
+}
+class WeatherProvider {
+  <<external>>
+  +fetchForecast()
+}
+class WeatherSnapshot {
+  +temperature
+  +humidity
+  +rainfall
+}
+class PredictiveFarmingService {
+  +predictRisk()
+  +createAdvice()
+  +alertNearbyFarms()
+}
+class FarmRiskAlert {
+  +crop
+  +disease
+  +riskLevel
+  +radiusKm
+}
+class IrrigationSchedule {
+  +nextTime
+  +volumeMl
+  +status
+}
+class CareRecommendation {
+  +action
+  +reason
+}
+
+User "1" --> "0..*" Plant : owns
+User "1" --> "0..*" CommunityPost : shares
+CommunityPost "1" *-- "0..1" CommunityDiseaseReport : may report
+CommunityReportProvider ..> CommunityDiseaseReport : provides
+PredictiveFarmingService ..> CommunityReportProvider : reads reports
+WeatherProvider ..> WeatherSnapshot : returns forecast
+PredictiveFarmingService ..> WeatherProvider : requests forecast
+PredictiveFarmingService ..> Plant : checks nearby plants
+PredictiveFarmingService ..> WeatherSnapshot : checks conditions
+PredictiveFarmingService ..> FarmRiskAlert : issues alerts
+User "1" --> "0..*" FarmRiskAlert : receives
+PredictiveFarmingService ..> CareRecommendation : creates advice
+Plant "1" --> "0..*" IrrigationSchedule : has schedule
+IrrigationSchedule ..> WeatherSnapshot : uses forecast
+IrrigationSchedule ..> CareRecommendation : explains action

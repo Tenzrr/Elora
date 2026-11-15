@@ -1,0 +1,59 @@
+%%{init: {"theme":"base","themeVariables":{"primaryColor":"#ffffff","primaryTextColor":"#000000","primaryBorderColor":"#000000","lineColor":"#000000","secondaryColor":"#ffffff","tertiaryColor":"#ffffff","background":"#ffffff","fontSize":"24px","classFontSize":"24px","classTitleFontSize":"28px"}}}%%
+classDiagram
+direction TB
+
+class User {
+  +id
+  +name
+}
+class Plant {
+  +id
+  +crop
+  +nickname
+}
+class AgentThread {
+  +id
+  +title
+  +updatedAt
+}
+class AgentMessage {
+  +sender
+  +content
+  +createdAt
+}
+class AgentToolRun {
+  +toolName
+  +durationMs
+  +createdAt
+}
+class AgentMemory {
+  +category
+  +crop
+  +content
+}
+class AssistantService {
+  +sendMessage(AgentThread)
+  +validateReply(String)
+}
+class AgentWorkflow {
+  +classifyIntent(String)
+  +synthesizeReply()
+}
+class BackendTool {
+  <<interface>>
+  +execute(Input)
+}
+class KnowledgeRetriever {
+  +search(String)
+  +rankSources(List)
+}
+
+User "1" --> "0..*" AgentThread : starts
+Plant "0..1" --> "0..*" AgentThread : provides context
+AgentThread "1" *-- "1..*" AgentMessage : contains
+AgentThread "1" *-- "0..*" AgentToolRun : records
+AssistantService ..> AgentWorkflow : coordinates
+AgentWorkflow ..> BackendTool : invokes
+AgentWorkflow ..> KnowledgeRetriever : retrieves context
+KnowledgeRetriever ..> AgentMemory : searches
+BackendTool ..> Plant : reads plant history
