@@ -1,19 +1,28 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/services.dart';
 
 import 'core/config.dart';
+import 'core/elora_shell.dart';
 import 'core/providers.dart';
 import 'core/theme/app_theme.dart';
 import 'l10n/generated/app_localizations.dart';
 import 'screens/auth_screen.dart';
 import 'screens/garden_screen.dart';
+import 'screens/profile_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  LicenseRegistry.addLicense(() async* {
+    yield LicenseEntryWithLineBreaks(const [
+      'Inter',
+    ], await rootBundle.loadString('assets/fonts/OFL.txt'));
+  });
   const config = AppConfig.fromEnvironment();
   String? startupError;
   if (config.configured) {
@@ -80,11 +89,29 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(path: '/auth', builder: (_, state) => const AuthScreen()),
       GoRoute(path: '/verify', builder: (_, state) => const VerifyScreen()),
-      GoRoute(path: '/garden', builder: (_, state) => const GardenScreen()),
-      GoRoute(
-        path: '/feature/:module',
-        builder: (_, state) =>
-            GardenScreen(module: state.pathParameters['module']),
+      ShellRoute(
+        builder: (_, state, child) =>
+            EloraShell(path: state.uri.path, child: child),
+        routes: [
+          GoRoute(path: '/garden', builder: (_, state) => const GardenScreen()),
+          GoRoute(
+            path: '/profile',
+            builder: (_, state) => const ProfileScreen(),
+          ),
+          for (final module in EloraModule.values)
+            GoRoute(
+              path: module.path,
+              builder: (context, state) => Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Text(
+                    AppLocalizations.of(context)!.notImplemented,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+            ),
+        ],
       ),
     ],
   );
