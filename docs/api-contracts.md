@@ -1,32 +1,7 @@
-# Garden API Contracts
+# Elora API direction
 
-> **Notice: Specification Migrated**  
-> This contract has been migrated to the authoritative API specification:  
-> 👉 [Garden API and Integration Contract (Garden_API_and_Integration_Contract.md)](specifications/Garden_API_and_Integration_Contract.md)
+The [finalized SRS](specifications/Elora_SRS.md), section 4.3, owns the public API inventory. Read the [implementation guidance](specifications/Elora_Implementation_Decisions.md) before integration.
 
----
+Use Firebase identity and ownership checks; common scans use `/api/v1/scans`, multipart `image`, durable jobs and explicit abstention. The SRS adds model downloads/offline-result sync, farming estimates, assistant media and community rewards. Derive exact OpenAPI/schema fixtures before implementation. Historical module-specific analyze routes are not a compatibility obligation.
 
-## Summary
-
-All public endpoints are served under `/api/v1`. Responses use JSON and return a standard `error` object (`{ "error": { "code", "message", "details" } }`) on failure.
-
-### Core endpoint inventory
-
-- **System**:
-  - `GET /health` — Service health check
-  - `GET /api/v1` — API version and info
-- **Crop Health (Dev 1)**:
-  - `POST /api/v1/crop-health/analyze` — Tomato and Chilli leaf disease detection
-  - `GET /api/v1/crop-health/history` — User diagnostic history
-- **Produce Quality (Dev 2)**:
-  - `POST /api/v1/produce-quality/analyze` — Citrus quality and ripeness grading
-- **Predictive Farming (Dev 3)**:
-  - `GET /api/v1/predictive-farming/weather` — Micro-climate weather forecast
-  - `GET /api/v1/predictive-farming/recommendations` — Irrigation and farming advisories
-- **Agricultural Agent (Dev 4)**:
-  - `POST /api/v1/agricultural-agent/chat` — LangGraph agent chat endpoint
-- **Community (Dev 5)**:
-  - `GET /api/v1/community/feed` — Community feed
-  - `POST /api/v1/community/posts` — Share garden updates
-
-For detailed request/response schemas, status codes, and headers, see [specifications/Garden_API_and_Integration_Contract.md](specifications/Garden_API_and_Integration_Contract.md).
+The current prototype and descriptive model JSON do not implement this contract. Authentication and feature APIs remain future work after cleanup.

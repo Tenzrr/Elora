@@ -13,6 +13,10 @@ Elora is a Flutter mobile app backed by a FastAPI service. Do not create a web f
 3. Check the current branch and working tree.
 4. Search for existing shared utilities before creating a new one.
 
+### Specification baseline
+
+Read `docs/specifications/Elora_SRS.md`, its source record, subordinate implementation/dataset guidance, and `docs/project-management/INTERIM_PLAN.md` before implementing a slice. The finalized SRS is immutable during repository cleanup and supersedes historical drafts, Garden specifications and prototype behaviour. Correct supporting guidance rather than rewriting its requirements. Reconcile affected schemas/migrations before feature integration. The SRS and report completion wording do not prove implementation; actual status requires PR/test/demo evidence. Six crops require twelve server models and six approved Android disease variants. Follow the SRS's provider benchmarks, 60% disease cutoff, reviewed farming estimates, speech/files, and posting XP rules.
+
 ## Architecture rules
 
 - Mobile UI belongs under `mobile/lib/`.

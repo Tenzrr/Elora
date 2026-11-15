@@ -2,6 +2,18 @@
 
 Elora is a mobile-first application. The client is built with Flutter/Dart in `mobile/`; the service layer is built with FastAPI/Python in `backend/`. Every developer owns a complete vertical slice: Flutter screens, FastAPI routes, database queries, and AI/model integration.
 
+Implementation follows the [finalized SRS](docs/specifications/Elora_SRS.md), subordinate [implementation guidance](docs/specifications/Elora_Implementation_Decisions.md) and [dataset catalogue](docs/datasets/Elora_Dataset_Catalog.md). Use the [November 16–19 interim tracker](docs/project-management/INTERIM_PLAN.md) for actual status and deadlines. Reports retain their intended submission-state wording and are not a completion tracker.
+
+| Developer | Team member | GitHub |
+|---|---|---|
+| Dev 1 | Athauda K. G. | `Kavee-ginty` |
+| Dev 2 | Dulaksha Dulan | `dulakshadulan` |
+| Dev 3 | Perera H.D.S | `Dimanya-Perera` |
+| Dev 4 | Herath P.H.S.N | `SadeepaNHerath` |
+| Dev 5 | Sansayan K. | `sansajan3103` |
+
+Initial integration coordinator: Dev 1. Shared-change reviewer: Dev 3, plus affected module owners. Shared authentication/Android/database preparation is separate from individual feature delivery. Dev 3–5 train their assigned CNNs later as learning/release work; their interim evaluation focuses on their main modules.
+
 ## Ownership
 
 | Developer | Module | Complete crop CNN ownership | Primary paths |

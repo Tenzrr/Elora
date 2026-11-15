@@ -1,38 +1,46 @@
 # Elora
 
-Elora is a Flutter mobile app with a FastAPI backend for crop intelligence. This repository is organised so each developer can own a complete vertical slice: mobile UI, API/database work, and AI/model integration. Read `WORK_DISTRIBUTION.md` before starting work and `AGENTS.md` when using an AI coding agent.
+Elora is an Android-first Flutter application with a FastAPI backend for crop intelligence, farming advice, an agricultural assistant and community plant records. Five developers own vertical slices; six crops have twelve server models and approved offline Android disease variants.
 
-## Stack
+## Start here
 
-- Flutter/Dart mobile client
-- FastAPI/Python backend
-- PostgreSQL with `pgvector`
-- TensorFlow/Keras, TensorFlow Lite, and OpenCV for computer vision
-- Gemini or OpenAI for conversational AI
-- LangChain for tools and retrieval
-- LangGraph for stateful agent workflows
-- LangSmith for tracing and evaluation
-- Open-Meteo for weather data
+1. Read the [finalized SRS](docs/specifications/Elora_SRS.md) and its [source record](docs/specifications/Elora_SRS.source.json). Do not edit its requirements during cleanup.
+2. Read [ownership](WORK_DISTRIBUTION.md), the [interim plan](docs/project-management/INTERIM_PLAN.md), and [agent instructions](AGENTS.md).
+3. Use [implementation guidance](docs/specifications/Elora_Implementation_Decisions.md) and the [dataset catalogue](docs/datasets/Elora_Dataset_Catalog.md). They cannot override the SRS.
+4. Follow [contribution rules](CONTRIBUTING.md). Feature PRs target `develop`.
 
-## Repository layout
+## Repository status
 
-```text
-mobile/       Flutter app, shared theme, networking, and feature slices
-backend/      FastAPI app, database layer, and feature modules
-ai/           CNN training/inference, preprocessing, agents, and evaluation
-shared/       API/model contracts shared across services
-docs/         architecture, contribution, UI, and integration contracts
+Development day one is **15 November 2026**. Earlier analysis/report work is preserved. Report completion statements describe the intended submission state; the interim tracker records actual development evidence.
+
+This documentation PR precedes a separate code-cleanup PR. Until that merges, existing crop-health code is historical prototype code, including simulated predictions, and must not count as completed development. Authentication, shared hosting and the developer foundation follow cleanup; they are not implemented here.
+
+## Layout and intended stack
+
+- `mobile/`: Flutter Android client, shared theme and feature modules.
+- `backend/`: FastAPI, database layer and feature modules.
+- `ai/`: training, preprocessing, inference, agent tools and evaluation.
+- `shared/`: integration contracts; current descriptive JSON needs reconciliation.
+- `docs/`: finalized requirements, design references, research and delivery plan.
+
+The SRS selects Flutter, FastAPI, PostgreSQL/pgvector, TensorFlow/Keras and Android disease variants, Firebase identity/messaging, LangChain/LangGraph/LangSmith, Google Cloud infrastructure and Open-Meteo. Generation, embedding and speech settings require benchmark approval; no specific provider model or embedding dimension is frozen here.
+
+## Current scaffold startup
+
+Use Python 3.12, compatible Flutter stable, Android SDK/JDK 17 and Docker Compose. This starts the scaffold, not the finalized feature system.
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\python -m pip install -r backend/requirements.txt
+Copy-Item .env.example .env
+docker compose up -d db
+.\.venv\Scripts\python -m uvicorn app.main:app --app-dir backend --reload
 ```
 
-## Local setup
+From `mobile/`, run `flutter pub get` and `flutter run`, selecting an Android emulator or phone. API diagnostic: `GET http://localhost:8000/health`. Environment loading and Firebase are subsequent foundation work; keep credentials out of Git.
 
-1. Copy `.env.example` to `.env` and fill in local values.
-2. Start PostgreSQL and pgvector with `docker compose up -d db`.
-3. Run the API from `backend/` with `uvicorn app.main:app --reload`.
-4. Run the Flutter app from `mobile/` with `flutter run`.
+## Checks and workflow
 
-The GitHub remote is configured as `https://github.com/Tenzrr/Elora.git`.
+Run `python -m compileall backend/app` and `docker compose config --quiet`. Use `flutter analyze`, `flutter test` and `flutter build apk --debug` for mobile. The code-cleanup PR supplies the scaffold backend test command and CI; report unavailable checks honestly.
 
-## Parallel development rule
-
-Developers work in feature branches and merge small pull requests into `develop`. The contracts in `docs/` and `shared/` are the integration boundary; update them before changing a public API or model output.
+Use [Tenzrr/Elora](https://github.com/Tenzrr/Elora). Integrate focused PRs into `develop`; `main` holds reviewed baselines. Do not force-push shared branches.

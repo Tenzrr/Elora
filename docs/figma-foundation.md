@@ -1,13 +1,5 @@
-# Garden Figma Foundation
+# Elora UI references
 
-The shared UI foundation is based on the My Elora Figma file supplied by the project owner:
+Inspect the matching PNG under [screens](screens/) before implementing mobile UI. The [Figma reference](https://www.figma.com/design/i3Jq3mO3o724r7J8JjkKLv/My-Garden?m=dev) and PNGs guide composition; the [finalized SRS](specifications/Elora_SRS.md) controls required behavior.
 
-- https://www.figma.com/design/i3Jq3mO3o724r7J8JjkKLv/My-Elora
-
-## Summary
-
-The shared UI foundation is based on the **My Garden** Figma design system:
-- **Figma Design Link**: [My Garden Figma (Dev Mode)](https://www.figma.com/design/i3Jq3mO3o724r7J8JjkKLv/My-Garden?m=dev)
-- **Local Screen Exports**: Located in [`docs/screens/`](screens/)
-
-All mobile features must strictly adhere to the Material 3 design foundation, token definitions (`GardenColors.cream`, `GardenColors.leafGreen`, `GardenColors.deepGreen`), screen PNG compositions, and component guidelines defined in `mobile/lib/core/theme/app_theme.dart` and [specifications/Garden_UI_UX_Design_Specification.md](specifications/Garden_UI_UX_Design_Specification.md).
+Preserve the shared cream/leaf-green/deep-green theme. Extend components for authentication, six crops, English/Sinhala/Tamil, accessibility, offline model status, uncertainty, reporting, rewards and recoverable failure. Sample XP, crop counts and diagnosis text in references are not runtime facts. A neutral cleanup shell is not a completed feature screen.

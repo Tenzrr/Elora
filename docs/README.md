@@ -1,67 +1,21 @@
-# Garden documentation
+# Elora documentation
 
-This folder contains the canonical product specifications, architecture contracts, UI design guidelines, and system integration standards for the **Garden** crop intelligence platform.
+## Authority
 
-## Structure
+The [finalized SRS](specifications/Elora_SRS.md) is authoritative. Its [source record](specifications/Elora_SRS.source.json) identifies the unchanged Google Doc revision. The repository snapshot preserves every source paragraph in order; original layout, drawings and styling remain in Google Docs.
 
-```text
-docs/
-|-- screens/                        # Authoritative UI screen PNGs from Figma
-|   |-- Mobile app.png
-|   |-- Block selected.png
-|   |-- Plant 1 details.png
-|   |-- Scan camera.png
-|   |-- Crop diagnosis results.png
-|   |-- Garden AI chat.png
-|   `-- Community.png
-|-- specifications/
-|   |-- Garden_PRD.md
-|   |-- Garden_TRD.md
-|   |-- Garden_UI_UX_Design_Specification.md
-|   |-- Garden_Backend_Schema_and_Data_Model.md
-|   |-- Garden_App_Flow_and_Screen_State_Specification.md
-|   `-- Garden_API_and_Integration_Contract.md
-|-- operations/
-|   |-- ci.md
-|   `-- environments.md
-|-- project-management/
-|   |-- Garden_Development_Task_Table.md
-|   `-- Garden_Development_Network_Plan.md
-|-- architecture.md                 # Redirect reference to Garden_TRD.md
-|-- api-contracts.md                # Redirect reference to Garden_API_and_Integration_Contract.md
-|-- figma-foundation.md             # Redirect reference to Garden_UI_UX_Design_Specification.md
-`-- model-contract.md               # Redirect reference to Garden_TRD.md and shared/schemas/
-```
+[Implementation guidance](specifications/Elora_Implementation_Decisions.md) and the [dataset catalogue](datasets/Elora_Dataset_Catalog.md) are subordinate. Resolve conflicts by following the finalized SRS and correcting supporting guidance. Do not modify the finalized requirements during cleanup.
 
-## Authority order for implementation
+## Working references
 
-When implementing features, resolving conflicts, or planning tasks, adhere to the following strict order of precedence:
+- [Ownership](../WORK_DISTRIBUTION.md) and [November 16–19 interim plan](project-management/INTERIM_PLAN.md)
+- [API direction](api-contracts.md), [model direction](model-contract.md), [architecture](architecture.md), and [UI references](figma-foundation.md)
+- [Screen PNGs](screens/) and [class descriptions](diagrams/class-descriptions.md)
+- [Cleanup disposition](operations/CLEANUP_DISPOSITION.md) and [historical archive](archive/README.md)
+- [Preserved design report](reports/member5_detailed_system_and_ui_design.md) and [quality dataset research](reports/Quality_Dataset_Label_Feasibility.md)
 
-1. `specifications/Garden_PRD.md` defines product vision, scope, user stories, vertical slice requirements, and business rules.
-2. `specifications/Garden_TRD.md` defines system architecture, technical constraints, AI authority boundaries, and service-level objectives.
-3. `screens/*.png` defines the canonical visual composition, layout, and appearance of each primary screen (synchronized with [My Garden Figma](https://www.figma.com/design/i3Jq3mO3o724r7J8JjkKLv/My-Garden?m=dev)).
-4. `specifications/Garden_UI_UX_Design_Specification.md` defines design tokens, visual language, component hierarchies, accessibility rules, and screen state contracts.
-5. `specifications/Garden_Backend_Schema_and_Data_Model.md` defines stored entities, PostgreSQL/`pgvector` tables, relationships, constraints, indexes, and migrations.
-6. `specifications/Garden_App_Flow_and_Screen_State_Specification.md` defines Flutter routes, screen states, navigation transitions, error recovery, and offline resilience.
-7. `specifications/Garden_API_and_Integration_Contract.md` defines public endpoints under `/api/v1`, request/response schemas, error envelopes, and contract tests.
-8. `shared/schemas/model_contract.json` defines the machine-enforced boundary for all 10 crop CNN models.
-9. The live codebase (`mobile/`, `backend/`, `ai/`) reflects the current implementation of the authoritative specifications above.
+Garden-named specifications are historical references only. Their auth, platform, model counts, scan routes and unsupported output metrics cannot override the final SRS. Diagram classes and sample screen values are design evidence, not completed implementation.
 
-Coding agents must open and inspect the matching PNG from `docs/screens/` before implementing or modifying any Flutter screen or component. When visual behavior in code conflicts with the PNG, adjust the code to follow the PNG and the design specification.
+Reports retain their authored completion statements for submission purposes. Actual status belongs in the interim tracker and PR evidence. The [live interim report](https://docs.google.com/document/d/12-olpE7F1eYZEHgXh0AcgxZq0KpAGZ9D8-8xQEjyVLA/edit) remains unchanged.
 
-## Module ownership & parallel development
-
-Garden is organized into five developer-owned vertical slices, coordinated through shared infrastructure:
-
-- **Dev 1 (Crop Health Analysis)**: Tomato and Chilli disease and quality CNNs (4 total), `mobile/lib/features/crop_health/`, `backend/app/modules/crop_health/`.
-- **Dev 2 (Produce Quality Assessment)**: Citrus disease and quality CNNs (2 total), `mobile/lib/features/produce_quality/`, `backend/app/modules/produce_quality/`.
-- **Dev 3 (Predictive Farming Analytics)**: Banana disease and quality CNNs (2 total), Open-Meteo weather integration, `mobile/lib/features/predictive_farming/`, `backend/app/modules/predictive_farming/`.
-- **Dev 4 (Personalized Agricultural Agent)**: Roses disease and quality CNNs (2 total), LangChain, LangGraph, LangSmith, and pgvector semantic retrieval, `mobile/lib/features/agricultural_agent/`, `backend/app/modules/agricultural_agent/`, `ai/agent/`.
-- **Dev 5 (Community and User Accounts)**: Chrysanthemum disease and quality CNNs (2 total), user profiles, plant logs, community feed, `mobile/lib/features/community/`, `backend/app/modules/community/`.
-
-### Instructions for coding agents and contributors
-
-- **Read before editing**: Check `WORK_DISTRIBUTION.md`, `AGENTS.md`, and the relevant specification document before modifying code.
-- **Never import private module code**: All cross-module interactions must proceed via the public `/api/v1` API or the shared model contract.
-- **Shared kernel**: Modifications to `mobile/lib/core/`, `backend/app/core/`, `backend/app/db/`, `backend/app/shared/`, `shared/`, or `docs/` require an explicit PR documenting cross-module impact.
-- **Verification**: Run `python -m compileall backend/app` and `docker compose config --quiet` before submitting backend changes.
+Inspect the matching PNG before implementing mobile UI. Extend shared components for SRS-required localization, offline, safety and failure states. Feature owners use public contracts; shared navigation/theme, migrations, schemas and CI need an identified reviewer.
