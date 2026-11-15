@@ -4,11 +4,13 @@ Baseline: 15 November 2026, development day one. Four workdays: **16–19 Novemb
 
 ## Status and evidence
 
-Requirements/report preparation is completed analysis work. October feature prototypes are scheduled for removal and do not count as new development. Reports retain their intentional submission-state completion wording. This tracker starts every individual deliverable as **Not started — completion evidence not yet recorded**.
+Requirements/report preparation is completed analysis work. October feature prototypes were removed from the development baseline. Reports retain their intentional submission-state completion wording. This tracker starts every individual deliverable as **Not started — completion evidence not yet recorded**.
 
 Target approximately 20% of each core module; owners must map the demonstrated subset to their full SRS scope. No percentage is established by shared setup, mocks, commit counts or documentation. Dev 3–5 CNNs remain later learning/release work, not a four-day requirement.
 
 ## Deliverables
+
+Open your four-day dependency table and longer-term milestones through the [team guide](../../WORK_DISTRIBUTION.md).
 
 | Owner | November 16–19 deliverable | Evidence | Status |
 |---|---|---|---|
@@ -22,7 +24,7 @@ Dev 2 does not need CNN training solely for symmetry. Samples cannot be presente
 
 ## Dependencies and dates
 
-Shared preparation supplies authentication, Android navigation/theme/localization, API/errors, profile/plant identifiers and migrations, uploads, contracts and checks. Hosted development requires an approved estimate; local Firebase emulation/PostgreSQL remains available. Foundation work is subsequent to cleanup and is not yet complete.
+Shared preparation supplies authentication, Android theme/localization, API errors, profile and plant identifiers, migrations, image validation, contracts and checks. Follow the [development setup guide](../operations/DEVELOPMENT_SETUP.md) to run FastAPI locally against your assigned Supabase workspace and the shared Firebase project. Cloud API hosting and previews are follow-up work. The team uses the shared Android tab assignments in the team guide.
 
 | Date | Exit checkpoint |
 |---|---|

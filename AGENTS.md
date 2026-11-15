@@ -8,8 +8,8 @@ Elora is a Flutter mobile app backed by a FastAPI service. Do not create a web f
 
 ## Before editing
 
-1. Read `README.md`, `WORK_DISTRIBUTION.md`, and the relevant file under `docs/`.
-2. Identify the owning developer and module for the files being changed.
+1. Start with the [team guide](WORK_DISTRIBUTION.md) for project scope, shared rules, milestones, and links to the five developer plans. Use the [setup guide](docs/operations/DEVELOPMENT_SETUP.md) for tools, workspaces and Firebase onboarding.
+2. Identify the owning developer and module for the files being changed. Read their plan and the relevant contracts before proposing changes.
 3. Check the current branch and working tree.
 4. Search for existing shared utilities before creating a new one.
 
@@ -71,10 +71,10 @@ Before submitting a change, run the smallest relevant checks. For backend change
 
 ```powershell
 python -m compileall backend/app
-docker compose config --quiet
+python -m pytest
 ```
 
-For mobile changes, run `flutter analyze` and the relevant Flutter tests when Flutter is installed. If a tool is unavailable, report that clearly instead of claiming the check passed.
+The legacy Compose file is archived; no local Docker/database is required. Use the shared development guide and CI's disposable PostgreSQL check instead of running Compose locally. For mobile changes, run `flutter analyze` and relevant Flutter tests. If a tool is unavailable, report that clearly instead of claiming the check passed.
 
 ## Git workflow
 

@@ -28,3 +28,13 @@ Thumbs.db
 # Local developer tools and temporary output
 /tmp/
 /.dist/
+mobile/lib/l10n/generated/
+mobile/config/*.json
+!mobile/config/example.json
+.secrets/
+.env.*
+!.env.example
+!.env.*.example
+**/service-account*.json
+**/*-adminsdk-*.json
+mobile/android/app/google-services.json
