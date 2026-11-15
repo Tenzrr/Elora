@@ -13,7 +13,7 @@ Elora is an Android-first Flutter application with a FastAPI backend for crop in
 
 Development day one is **15 November 2026**. Earlier analysis/report work is preserved. Report completion statements describe the intended submission state; the interim tracker records actual development evidence.
 
-This documentation PR precedes a separate code-cleanup PR. Until that merges, existing crop-health code is historical prototype code, including simulated predictions, and must not count as completed development. Authentication, shared hosting and the developer foundation follow cleanup; they are not implemented here.
+The October crop-health prototype, simulated predictions and Windows application have been removed. The app and API now provide neutral startup scaffolds. Authentication, shared hosting and the developer foundation follow cleanup; they are not implemented here.
 
 ## Layout and intended stack
 
@@ -27,7 +27,7 @@ The SRS selects Flutter, FastAPI, PostgreSQL/pgvector, TensorFlow/Keras and Andr
 
 ## Current scaffold startup
 
-Use Python 3.12, compatible Flutter stable, Android SDK/JDK 17 and Docker Compose. This starts the scaffold, not the finalized feature system.
+Use Python 3.12, Flutter 3.47.5 / Dart 3.13.4, Android SDK/JDK 17 (or a compatible newer JDK) and Docker Compose. This starts the scaffold, not the finalized feature system.
 
 ```powershell
 python -m venv .venv
@@ -41,6 +41,6 @@ From `mobile/`, run `flutter pub get` and `flutter run`, selecting an Android em
 
 ## Checks and workflow
 
-Run `python -m compileall backend/app` and `docker compose config --quiet`. Use `flutter analyze`, `flutter test` and `flutter build apk --debug` for mobile. The code-cleanup PR supplies the scaffold backend test command and CI; report unavailable checks honestly.
+Install test dependencies with `python -m pip install -r backend/requirements-dev.txt`, then run `python -m pytest` from the repository root. Run `python -m compileall backend/app` and `docker compose config --quiet`. From `mobile/`, run `flutter analyze`, `flutter test` and `flutter build apk --debug`. CI runs these scaffold checks; report unavailable checks honestly.
 
 Use [Tenzrr/Elora](https://github.com/Tenzrr/Elora). Integrate focused PRs into `develop`; `main` holds reviewed baselines. Do not force-push shared branches.
