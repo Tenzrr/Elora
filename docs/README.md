@@ -10,7 +10,7 @@ The [finalized SRS](specifications/Elora_SRS.md) is authoritative. Its [source r
 
 - [Shared development setup](operations/DEVELOPMENT_SETUP.md): Git/Flutter/Python locally, Supabase/Firebase and isolated workspaces; no local Docker required
 
-- [Ownership](../WORK_DISTRIBUTION.md) and [November 16–19 interim plan](project-management/INTERIM_PLAN.md)
+- [Team guide and individual developer plans](../WORK_DISTRIBUTION.md) and [November 16–19 interim tracker](project-management/INTERIM_PLAN.md)
 - [API direction](api-contracts.md), [model direction](model-contract.md), [architecture](architecture.md), and [UI references](figma-foundation.md)
 - [Screen PNGs](screens/) and [class descriptions](diagrams/class-descriptions.md)
 - [Cleanup disposition](operations/CLEANUP_DISPOSITION.md) and [historical archive](archive/README.md)
