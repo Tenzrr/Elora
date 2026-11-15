@@ -1,18 +1,27 @@
-# Elora work distribution
+# Elora team guide and work distribution
 
 Elora is a mobile-first application. The client is built with Flutter/Dart in `mobile/`; the service layer is built with FastAPI/Python in `backend/`. Every developer owns a complete vertical slice: Flutter screens, FastAPI routes, database queries, and AI/model integration.
 
-Implementation follows the [finalized SRS](docs/specifications/Elora_SRS.md), subordinate [implementation guidance](docs/specifications/Elora_Implementation_Decisions.md) and [dataset catalogue](docs/datasets/Elora_Dataset_Catalog.md). Use the [November 16–19 interim tracker](docs/project-management/INTERIM_PLAN.md) for actual status and deadlines. Reports retain their intended submission-state wording and are not a completion tracker.
+First follow the [development setup guide](docs/operations/DEVELOPMENT_SETUP.md) and open your plan below. Coding agents also follow [AGENTS.md](AGENTS.md).
 
-| Developer | Team member | GitHub |
-|---|---|---|
-| Dev 1 | Athauda K. G. | `Kavee-ginty` |
-| Dev 2 | Dulaksha Dulan | `dulakshadulan` |
-| Dev 3 | Perera H.D.S | `Dimanya-Perera` |
-| Dev 4 | Herath P.H.S.N | `SadeepaNHerath` |
-| Dev 5 | Sansayan K. | `sansajan3103` |
+The [finalized SRS](docs/specifications/Elora_SRS.md) governs scope. Use the [implementation guidance](docs/specifications/Elora_Implementation_Decisions.md), [dataset catalogue](docs/datasets/Elora_Dataset_Catalog.md), [shared API contracts](docs/api-contracts.md), and [Android guide](mobile/README.md) when building. The [interim tracker](docs/project-management/INTERIM_PLAN.md) records dates and completion evidence. Reports retain their intended submission-state wording.
+
+| Developer | Team member | GitHub | Workspace | Android tab and plan |
+|---|---|---|---|---|
+| Dev 1 | Athauda K. G. | `Kavee-ginty` | `dev1` | [Scan](docs/project-management/developers/dev1-crop-health.md) |
+| Dev 2 | Dulaksha Dulan | `dulakshadulan` | `dev2` | [Quality](docs/project-management/developers/dev2-produce-quality.md) |
+| Dev 3 | Perera H.D.S | `Dimanya-Perera` | `dev3` | [Farming](docs/project-management/developers/dev3-predictive-farming.md) |
+| Dev 4 | Herath P.H.S.N | `SadeepaNHerath` | `dev4` | [Chat](docs/project-management/developers/dev4-agricultural-agent.md) |
+| Dev 5 | Sansayan K. | `sansajan3103` | `dev5` | [Community](docs/project-management/developers/dev5-community-accounts.md) |
 
 Initial integration coordinator: Dev 1. Shared-change reviewer: Dev 3, plus affected module owners. Shared authentication/Android/database preparation is separate from individual feature delivery. Dev 3–5 train their assigned CNNs later as learning/release work; their interim evaluation focuses on their main modules.
+
+## Delivery checkpoints
+
+- **November 16–19, 2026.** Target about 20% of each core module through its agreed demonstrable slice. The plan tables assume access to the shared development setup and show proposed work windows, dependencies, and the critical path. Parallel rows can overlap within a developer’s workdays. Each owner decides their own implementation approach and raises blockers that change the shared dates or contracts.
+- **November 20–22.** Review and integrate the individual PRs, then rehearse the group demo.
+- **November 23.** Present the group demo and each developer’s own contribution. Bring a running example or recorded evidence, the related requirement IDs and PR, and the limits of what was built.
+- **April 2027.** Final delivery. Exact date is pending.
 
 ## Ownership
 
@@ -75,4 +84,4 @@ Integration coordination rotates weekly. The coordinator checks compatibility an
 - Do not create duplicate global theme colors, API clients, database sessions, or model response types.
 - Do not edit another developer's feature folder without coordinating first.
 - Do not commit secrets, datasets, trained weights, or generated build folders.
-- Use mock responses when a dependent API or model is unfinished.
+- Label development fixtures clearly when a dependent API or model is unfinished. In a demo, distinguish fixture evidence from live behavior.

@@ -4,9 +4,9 @@ Elora is an Android-first Flutter application with a FastAPI backend for crop in
 
 ## Start here
 
-1. Read the [finalized SRS](docs/specifications/Elora_SRS.md) and its [source record](docs/specifications/Elora_SRS.source.json). Do not edit its requirements during cleanup.
-2. Read [ownership](WORK_DISTRIBUTION.md), the [interim plan](docs/project-management/INTERIM_PLAN.md), and [agent instructions](AGENTS.md).
-3. Use [implementation guidance](docs/specifications/Elora_Implementation_Decisions.md) and the [dataset catalogue](docs/datasets/Elora_Dataset_Catalog.md). They cannot override the SRS.
+1. Open the [team guide](WORK_DISTRIBUTION.md) for ownership, deadlines, and your individual development plan. Agents also read [AGENTS.md](AGENTS.md).
+2. Follow the [development setup guide](docs/operations/DEVELOPMENT_SETUP.md) to install tools, submit your Android SHA-1, and verify your workspace.
+3. Read the [finalized SRS](docs/specifications/Elora_SRS.md) and its [source record](docs/specifications/Elora_SRS.source.json). Use the [implementation guidance](docs/specifications/Elora_Implementation_Decisions.md) and [dataset catalogue](docs/datasets/Elora_Dataset_Catalog.md) as supporting references.
 4. Follow [contribution rules](CONTRIBUTING.md). Feature PRs target `develop`.
 
 ## Repository status
@@ -27,16 +27,7 @@ The SRS selects Flutter, FastAPI, PostgreSQL/pgvector, TensorFlow/Keras and Andr
 
 ## Shared development startup
 
-Use Git, Python 3.12 and Flutter 3.47.5 / Dart 3.13.4 with Android SDK/JDK 17 (or a compatible newer JDK). **No local Docker or PostgreSQL is required.** Follow the [shared development setup guide](docs/operations/DEVELOPMENT_SETUP.md) for Supabase/Firebase, private configuration and per-developer workspaces. The finalized SRS deployment target remains unchanged; Supabase is development-only.
-
-```powershell
-python -m venv .venv
-.\.venv\Scripts\python -m pip install --require-hashes -r backend/requirements.lock
-# Receive your scoped development configuration; follow the setup guide.
-.\.venv\Scripts\python -m uvicorn app.main:app --app-dir backend --reload
-```
-
-From `mobile/`, run `flutter pub get --enforce-lockfile` and `flutter run --dart-define-from-file=config/dev.json`. Select an Android emulator or phone. API diagnostic: `GET http://localhost:8000/health`. Missing cloud configuration produces a setup screen, not simulated data. Keep credentials out of Git.
+Use Git, Python 3.12 and Flutter 3.47.5 / Dart 3.13.4 with the Android SDK and JDK 17. Each developer runs FastAPI locally against Firebase and their assigned Supabase schema. **No local Docker or PostgreSQL is required.** Installation commands, private configuration and verification are in the [shared development setup guide](docs/operations/DEVELOPMENT_SETUP.md).
 
 ## Checks and workflow
 
