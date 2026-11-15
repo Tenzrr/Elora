@@ -4,7 +4,6 @@ import asyncio
 import json
 import os
 from pathlib import Path
-import re
 import secrets
 import sys
 
@@ -80,37 +79,14 @@ async def provision(schema, output, password=None):
     return runtime_url
 
 
-async def retire(schema):
-    load_dotenv(".env.coordinator")
-    if not re.fullmatch(r"pr_[1-9][0-9]*", schema):
-        raise ValueError("Only disposable PR schemas may be retired")
-    raw_url = os.environ["DATABASE_ADMIN_URL"]
-    url = make_url(raw_url).set(drivername="postgresql")
-    tls_settings = Settings(_env_file=None, database_url=raw_url, database_schema=schema)
-    conn = await asyncpg.connect(url.render_as_string(hide_password=False),
-                                ssl=database_ssl(tls_settings), statement_cache_size=0)
-    try:
-        async with conn.transaction():
-            await conn.execute("SELECT pg_advisory_xact_lock(hashtext($1))", "elora-provision")
-            await conn.execute(f'DROP SCHEMA IF EXISTS "{schema}" CASCADE')
-            for role in [f"elora_{schema}_app", f"elora_{schema}_owner"]:
-                if await conn.fetchval("SELECT 1 FROM pg_roles WHERE rolname=$1", role):
-                    await conn.execute(f'GRANT "{role}" TO CURRENT_USER')
-                    await conn.execute(f'DROP OWNED BY "{role}"')
-                    await conn.execute(f'DROP ROLE "{role}"')
-    finally:
-        await conn.close()
-    print(f"Disposable workspace {schema} retired.")
-
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("action", choices=["create", "retire"])
+    parser.add_argument("action", choices=["create"])
     parser.add_argument("schema")
     parser.add_argument("--output", default=".secrets/workspace.json")
     args = parser.parse_args()
     try:
-        asyncio.run(provision(args.schema, args.output) if args.action == "create" else retire(args.schema))
+        asyncio.run(provision(args.schema, args.output))
     except Exception as exc:
         print(f"Workspace operation failed ({type(exc).__name__}); check private configuration.", file=sys.stderr)
         sys.exit(1)

@@ -6,8 +6,8 @@ Foundation branch: `chore/shared-development-foundation`. This is shared prepara
 
 - Supabase project `idptcxheihiakwttvkgo` (`elora-dev`), Mumbai/ap-south-1: development PostgreSQL only.
 - Firebase project `elora-dev-9f6b9`: email/Google identity.
-- Cloud SQL remains the intended deployment database in the SRS. No production environment is created here.
-- Integration, dev1–dev5 and PR previews use separate schemas and roles. Application data is not exposed through Supabase's Data API. Flutter always calls FastAPI.
+- Each developer runs FastAPI locally. Cloud Run, branch previews and cloud image storage are follow-up work. The SRS describes the intended deployment.
+- The shared `integration` workspace and personal `dev1`–`dev5` workspaces use separate schemas and roles. Flutter calls FastAPI. Keep these schemas out of Supabase's exposed Data API schemas.
 - Supabase's free limits/pausing apply; use synthetic data. No paid upgrade is implicit.
 - All five developers need Git, Flutter 3.47.5/Dart 3.13.4 and Python 3.12. No local Docker, PostgreSQL, Supabase CLI or Firebase CLI is required.
 
@@ -46,7 +46,7 @@ flutter pub get --enforce-lockfile
 flutter run --dart-define-from-file=config/dev.json
 ```
 
-The config's API_BASE_URL is the API **origin**, without /api/v1. Android emulator uses `http://10.0.2.2:8000`; a phone uses the computer's reachable LAN address (bind Uvicorn to 0.0.0.0 for that explicit development use). Integration/preview configurations use their HTTPS origin. Never place a database password or server credential in Flutter configuration.
+Set API_BASE_URL to the local API origin. Android emulators use `http://10.0.2.2:8000`. A phone uses the computer's reachable LAN address. Bind Uvicorn to `0.0.0.0` for that explicit development use on a trusted network. Keep database passwords and server credentials out of Flutter configuration.
 
 ## Contracts and verification
 
@@ -54,12 +54,8 @@ The foundation implements Firebase session/profile and owned plant CRUD, not cro
 
 `python -m pytest` runs cloud-free tests. PostgreSQL integration runs in CI with a disposable PostgreSQL/pgvector service, checking migrations and runtime role isolation. Set TEST_DATABASE_URL only for a disposable CI database, never the shared hosted project. `flutter analyze`, `flutter test` and `flutter build apk --debug` verify Android without credentials; missing configuration shows a setup screen.
 
-Do not set DATABASE_REQUIRE_TLS=false for Supabase; that switch is test-only. Schema changes are Alembic revisions, reviewed and serialized at deployment. Developers cannot reset integration/other schemas. Legacy Compose/init SQL is preserved under `docs/archive/`; existing volumes/public tables are untouched and are not automatically imported.
+Keep TLS verification enabled for Supabase. The coordinator applies reviewed Alembic revisions to the shared integration schema. Developers have access to their assigned workspaces. Historical Compose and initialization SQL live under `docs/archive/`.
 
 The current plant workspace lists the first 100 owned records. The API provides cursor pagination for the complete feature UI. Private profile/plant providers reset on authentication changes. No crop model or percentage is reported as trained/completed.
-
-## Costs and cloud rollout
-
-Cloud Run integration/previews, a private image bucket, builds/artifacts and secrets are prepared separately. Before provisioning, approve an itemized estimate and billing/account ownership. Preview services scale to zero and are capped/expired, but this does not impose a billing hard cap. The cloud workflows stay disabled until configuration and cost approval are recorded.
 
 References: [Supabase connections](https://supabase.com/docs/guides/database/connecting-to-postgres), [Firebase Flutter auth](https://firebase.google.com/docs/auth/flutter/start), [Firebase token verification](https://firebase.google.com/docs/auth/admin/verify-id-tokens).

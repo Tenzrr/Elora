@@ -13,14 +13,14 @@ Elora is an Android-first Flutter application with a FastAPI backend for crop in
 
 Development day one is **15 November 2026**. Earlier analysis/report work is preserved. Report completion statements describe the intended submission state; the interim tracker records actual development evidence.
 
-The October prototype and Windows application have been removed. The foundation branch adds Firebase identity, profiles/owned plants, Android navigation/localization, image helpers and isolated hosted-development database workspaces. Live service verification and billable hosting are separate gates; this is not completed individual feature work.
+The foundation provides Firebase identity, profiles and owned plants, Android navigation and localization, image validation, and isolated Supabase workspaces. Each developer runs FastAPI locally. Hosted APIs and branch previews are follow-up work.
 
 ## Layout and intended stack
 
 - `mobile/`: Flutter Android client, shared theme and feature modules.
 - `backend/`: FastAPI, database layer and feature modules.
 - `ai/`: training, preprocessing, inference, agent tools and evaluation.
-- `shared/`: integration contracts; current descriptive JSON needs reconciliation.
+- `shared/`: integration contracts and assessment result schema.
 - `docs/`: finalized requirements, design references, research and delivery plan.
 
 The SRS selects Flutter, FastAPI, PostgreSQL/pgvector, TensorFlow/Keras and Android disease variants, Firebase identity/messaging, LangChain/LangGraph/LangSmith, Google Cloud infrastructure and Open-Meteo. Generation, embedding and speech settings require benchmark approval; no specific provider model or embedding dimension is frozen here.

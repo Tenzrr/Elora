@@ -38,4 +38,3 @@ mobile/config/*.json
 **/service-account*.json
 **/*-adminsdk-*.json
 mobile/android/app/google-services.json
-gha-creds-*.json

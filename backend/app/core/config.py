@@ -12,15 +12,13 @@ class Settings(BaseSettings):
     database_schema: str = "integration"
     database_require_tls: bool = True
     database_ca_file: str | None = None
-    require_database_at_startup: bool = False
     firebase_project_id: str = ""
     google_application_credentials: str | None = None
-    asset_bucket: str = ""
 
     @model_validator(mode="after")
     def validate_workspace(self):
-        if not re.fullmatch(r"integration|dev[1-5]|pr_[1-9][0-9]*", self.database_schema):
-            raise ValueError("Use integration, dev1–dev5 or pr_<number> as DATABASE_SCHEMA")
+        if not re.fullmatch(r"integration|dev[1-5]", self.database_schema):
+            raise ValueError("Use integration or dev1–dev5 as DATABASE_SCHEMA")
         if not self.database_require_tls and self.app_env != "test":
             raise ValueError("Unencrypted database connections are allowed only in tests")
         if self.database_url and not self.database_url.get_secret_value().startswith("postgresql+asyncpg://"):

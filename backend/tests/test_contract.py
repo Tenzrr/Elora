@@ -1,9 +1,16 @@
 import copy
+import hashlib
 import json
 from pathlib import Path
 
 import pytest
 from jsonschema import Draft202012Validator, FormatChecker
+
+
+def test_finalized_srs_matches_source_hash():
+    metadata = json.loads(Path("docs/specifications/Elora_SRS.source.json").read_text())
+    text = Path("docs/specifications/Elora_SRS.md").read_text(encoding="utf-8")
+    assert hashlib.sha256(text.encode()).hexdigest() == metadata["text_sha256"]
 
 
 def test_assessment_and_abstention_contract():

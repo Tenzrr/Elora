@@ -18,7 +18,7 @@ bearer = HTTPBearer(auto_error=False)
 
 @lru_cache
 def firebase_app(project_id: str, credential_path: str | None = None):
-    # ADC on Cloud Run; scoped development credentials locally. No credential file in Git.
+    # The development credential lives outside version control.
     credential = firebase_credentials.Certificate(credential_path) if credential_path else None
     return firebase_admin.initialize_app(credential, options={"projectId": project_id}, name=project_id)
 

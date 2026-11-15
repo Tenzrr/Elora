@@ -10,7 +10,7 @@ python backend/tools/workspace.py create dev1 --output .secrets/dev1.json
 python -m alembic -c backend/alembic.ini upgrade head
 ```
 
-Run from the repository root. The migration sets the workspace owner role. One linear Alembic head is required; coordinate revision conflicts before merge. Integration migrations run once in the deployment workflow, never in API startup. A failed migration prevents rollout.
+Run from the repository root. The migration sets the workspace owner role. Keep one linear Alembic head and resolve revision conflicts before merge. The coordinator applies reviewed integration migrations explicitly with `python backend/tools/migrate.py integration`.
 
 The old public-schema init.sql is historical scaffolding only. It is not run by the foundation. Existing local Docker volumes/public tables are not deleted, reset or imported. If they contain wanted data, export and review it before a separate migration; do not match Firebase identities by email.
 

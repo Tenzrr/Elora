@@ -14,6 +14,6 @@ flutter build apk --debug
 flutter run --dart-define-from-file=config/dev.json
 ```
 
-Select an Android emulator or connected Android phone. Point API_BASE_URL at the integration HTTPS URL or a local Python API. For an emulator talking to Python on the same machine, use `http://10.0.2.2:8000`. A physical phone needs the host's reachable LAN address. HTTP is available in debug builds only.
+Select an Android emulator or connected Android phone. Point API_BASE_URL at your local Python API. For an emulator on the same machine, use `http://10.0.2.2:8000`. A physical phone needs the host's reachable LAN address. HTTP is available in debug builds only.
 
 The debug APK is for development. Release signing and production transport configuration are not established by a debug build. Do not use the template's debug signing as production signing.

@@ -25,7 +25,7 @@ Supporting guidance reconciled on 15 November 2026. The [finalized SRS](Elora_SR
 ## Preparation and evidence
 
 1. Finish cleanup and align shared branches.
-2. Prepare shared auth/profile/plants, Android basics, migrations, networking and uploads. The [development-only Supabase/Firebase setup](../operations/DEVELOPMENT_SETUP.md) replaces the requirement for local Docker/PostgreSQL on five machines. Dev 1 owns these development projects. Keep Cloud SQL as the finalized SRS deployment target. Hosted Google Cloud resources still need an approved estimate; cloud-free unit tests and disposable PostgreSQL CI provide the test fallback.
+2. Prepare shared auth/profile/plants, Android basics, migrations, networking and image validation. Each developer runs FastAPI locally with the [development Supabase/Firebase setup](../operations/DEVELOPMENT_SETUP.md). Dev 1 owns these development projects. Plan hosted API deployment, branch previews and cloud image storage separately.
 3. Deliver the [four-day checkpoint](../project-management/INTERIM_PLAN.md), separately from public-release scope.
 4. Complete remaining features, all twelve server/six device model variants, independent evaluation, security/load/localization and operational release gates.
 
