@@ -1,0 +1,51 @@
+%%{init: {"theme":"base","themeVariables":{"primaryColor":"#ffffff","primaryTextColor":"#000000","primaryBorderColor":"#000000","lineColor":"#000000","secondaryColor":"#ffffff","tertiaryColor":"#ffffff","background":"#ffffff","fontSize":"24px","classFontSize":"24px","classTitleFontSize":"28px"}}}%%
+classDiagram
+direction TB
+
+class User {
+  +id
+  +displayName
+  +avatarUrl
+  +updateProfile()
+}
+class AccountService {
+  +register(String)
+  +authenticate(String)
+  +updateProfile(User)
+}
+class CommunityPost {
+  +id
+  +crop
+  +title
+  +content
+  +publish()
+}
+class CommunityComment {
+  +content
+  +createdAt
+  +submit()
+}
+class CommunityLike {
+  +createdAt
+  +add()
+}
+class CommunityService {
+  +getFeed(String)
+  +createPost(User)
+  +addComment(CommunityPost)
+}
+class FeedFilter {
+  +crop
+  +limit
+  +offset
+  +apply()
+}
+
+AccountService ..> User : manages account
+User "1" --> "0..*" CommunityPost : authors
+CommunityComment "0..*" --> "1" User : written by
+CommunityLike "0..*" --> "1" User : given by
+CommunityPost "1" *-- "0..*" CommunityComment : contains
+CommunityPost "1" *-- "0..*" CommunityLike : receives
+CommunityService ..> CommunityPost : manages
+CommunityService ..> FeedFilter : applies

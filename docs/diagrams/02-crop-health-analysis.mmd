@@ -1,0 +1,73 @@
+%%{init: {"theme":"base","themeVariables":{"primaryColor":"#ffffff","primaryTextColor":"#000000","primaryBorderColor":"#000000","lineColor":"#000000","secondaryColor":"#ffffff","tertiaryColor":"#ffffff","background":"#ffffff","fontSize":"24px","classFontSize":"24px","classTitleFontSize":"28px"}}}%%
+classDiagram
+direction TB
+
+class User {
+  +id
+  +name
+  +createPlant()
+}
+class Plant {
+  +id
+  +crop
+  +nickname
+  +addLog()
+}
+class CropType {
+  <<enumeration>>
+  TOMATO
+  CHILLI
+  CITRUS
+  BANANA
+  ROSES
+  CHRYSANTHEMUM
+}
+class ScanCameraScreen {
+  +capture()
+  +selectImage()
+}
+class CropHealthController {
+  +analyze(Plant)
+  +getHistory(Plant)
+}
+class CropHealthService {
+  +analyzeImage(CropType)
+  +createPlan(Detection)
+}
+class AnalysisSession {
+  +id
+  +createdAt
+  +model
+  +complete()
+}
+class DiseaseDetection {
+  +label
+  +confidence
+  +severity
+  +getGuidance()
+}
+class RecoveryPlan {
+  +advisory
+  +getSteps()
+}
+class RecoveryStep {
+  +order
+  +action
+  +details
+  +complete()
+}
+class CropModel {
+  <<interface>>
+  +predict(CropType)
+}
+
+User "1" --> "0..*" Plant : owns
+ScanCameraScreen ..> CropHealthController : sends image
+CropHealthController ..> CropHealthService : requests scan
+CropHealthService ..> CropModel : selects model
+CropModel ..> CropType : supports six crops
+CropHealthController ..> AnalysisSession : saves scan
+Plant "0..1" --> "0..*" AnalysisSession : has scans
+AnalysisSession "1" *-- "0..1" DiseaseDetection : stores result
+CropHealthService ..> RecoveryPlan : creates plan
+RecoveryPlan "1" *-- "1..*" RecoveryStep : contains

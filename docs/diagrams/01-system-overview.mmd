@@ -1,0 +1,61 @@
+%%{init: {"theme":"base","class":{"rankSpacing":350,"nodeSpacing":30,"padding":20},"themeVariables":{"primaryColor":"#ffffff","primaryTextColor":"#000000","primaryBorderColor":"#000000","lineColor":"#000000","secondaryColor":"#ffffff","tertiaryColor":"#ffffff","background":"#ffffff","fontSize":"26px","classFontSize":"26px","classTitleFontSize":"30px"}}}%%
+classDiagram
+direction TB
+
+class User {
+  +id
+  +name
+  +createPlant()
+}
+class Plant {
+  +id
+  +crop
+  +nickname
+  +addLog()
+}
+class PlantLog {
+  +type
+  +loggedAt
+  +record()
+}
+class AnalysisSession {
+  +id
+  +crop
+  +task
+  +model
+  +complete()
+}
+class AnalysisResult {
+  +label
+  +confidence
+  +getGuidance()
+}
+class CareRecommendation {
+  +type
+  +description
+  +schedule()
+}
+class Conversation {
+  +id
+  +sendMessage()
+}
+class Message {
+  +role
+  +content
+  +display()
+}
+class CommunityPost {
+  +id
+  +caption
+  +publish()
+}
+
+User "1" --> "0..*" Plant : owns
+Plant "1" *-- "0..*" PlantLog : records
+User "1" --> "0..*" AnalysisSession : submits
+Plant "0..1" --> "0..*" AnalysisSession : relates to
+AnalysisSession "1" *-- "0..1" AnalysisResult : produces
+Plant "1" --> "0..*" CareRecommendation : receives
+User "1" --> "0..*" Conversation : starts
+Conversation "1" *-- "1..*" Message : contains
+User "1" --> "0..*" CommunityPost : authors
