@@ -71,10 +71,10 @@ Before submitting a change, run the smallest relevant checks. For backend change
 
 ```powershell
 python -m compileall backend/app
-docker compose config --quiet
+python -m pytest
 ```
 
-For mobile changes, run `flutter analyze` and the relevant Flutter tests when Flutter is installed. If a tool is unavailable, report that clearly instead of claiming the check passed.
+The legacy Compose file is archived; no local Docker/database is required. Use the shared development guide and CI's disposable PostgreSQL check instead of running Compose locally. For mobile changes, run `flutter analyze` and relevant Flutter tests. If a tool is unavailable, report that clearly instead of claiming the check passed.
 
 ## Git workflow
 
