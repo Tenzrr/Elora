@@ -1,5 +1,9 @@
-fastapi>=0.115,<1
+fastapi>=0.121,<1
 uvicorn[standard]>=0.30,<1
 sqlalchemy[asyncio]>=2.0,<3
 asyncpg>=0.29,<1
 alembic>=1.14,<2
+pydantic-settings>=2.6,<3
+firebase-admin>=7,<8
+pillow>=12,<13
+google-cloud-storage>=3,<4

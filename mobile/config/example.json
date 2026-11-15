@@ -1,0 +1,8 @@
+{
+  "API_BASE_URL": "http://10.0.2.2:8000",
+  "FIREBASE_PROJECT_ID": "elora-dev-9f6b9",
+  "FIREBASE_API_KEY": "",
+  "FIREBASE_APP_ID": "",
+  "FIREBASE_SENDER_ID": "",
+  "GOOGLE_WEB_CLIENT_ID": ""
+}
