@@ -1,6 +1,6 @@
 # Shared foundation API
 
-The [finalized SRS](specifications/Elora_SRS.md) remains authoritative. This document defines the implemented foundation subset. OpenAPI is generated at `/openapi.json`; no model inference, community, weather or assistant endpoints are implemented here.
+The [finalized SRS](specifications/Elora_SRS.md) remains authoritative. OpenAPI for the implemented foundation is generated at `/openapi.json`.
 
 | Route | Contract |
 |---|---|
@@ -23,4 +23,21 @@ Errors use `{"error":{"code":"...","message":"...","details":null}}` and X-Reque
 
 Example If-Match: `"1"`. A stale update/delete returns 409 and must reload; never silently overwrite. Mobile automatically refreshes/replays only reads. Unknown-outcome writes require checking current state before another attempt.
 
-Shared scan result validation is in [model_contract.json](../shared/schemas/model_contract.json). It is not a working scan API. Feature owners implement the rest of the SRS route inventory through reviewed contracts.
+## Interim shared scan contract
+
+Dev 1 owns the shared upload and status API. Dev 2 owns the Quality screen. The following contract is agreed for the interim demo and awaits implementation.
+
+| Area | Agreed behavior |
+|---|---|
+| Submit and read | Both screens submit to `POST /api/v1/scans` and read status or results from `GET /api/v1/scans/{id}`. Both routes require a verified Firebase user. |
+| Multipart fields | Send `image`, `crop_slug`, and `task`. The Dev 1 demo uses `tomato` and `disease` with a leaf photo. The Dev 2 demo uses `citrus` and `quality` with a fruit photo. |
+| Citrus subtype | Require `subtype=orange` or `subtype=lemon` for citrus quality. Omit `subtype` for tomato disease. For citrus quality, a missing or unsupported subtype returns `422` with `INVALID_SUBTYPE`. |
+| Plant link | `plant_id` is optional. When supplied, it must identify a plant owned by the caller and matching `crop_slug`. |
+| Image validation | Reuse the shared validator for decoded JPEG, PNG, and WebP, up to 10 MiB and 20 megapixels. The scan route returns `413` for an upload over the byte limit, `415` for unsupported formats, and `422` for corrupt images or invalid dimensions. |
+| Job status | Return `202` with `scan_id` and `status_url` once a durable job is recorded. The app handles `queued`, `running`, `completed`, and `failed` and keeps the selected photo and form values available for retry. |
+| Retry identity | Send a client-generated UUID in `Idempotency-Key`. Reuse it for the same upload and selections. Use a new key after changing the photo or selections. |
+| Assessed result | Use the [shared assessment schema](../shared/schemas/model_contract.json). Citrus quality uses `label_id` values `fresh` and `spoiled`, displayed as **Fresh** and **Spoiled**, with prediction confidence and model version. |
+| Unable to assess | Return `completed` with `outcome=unable_to_assess`, a reason, and null `label_id` and `confidence`. Show relevant guidance, such as taking a clearer photo. |
+| Model and job failure | If model unavailability prevents submission, return `503` with `MODEL_UNAVAILABLE`. If an accepted job later fails, return `failed` through the status endpoint. In either case the app shows the failure and offers retry. |
+
+Prepare shared demo fixtures for Fresh, Spoiled, unable to assess, invalid subtype, and model unavailable. Dev 2 can use labelled fixtures to demonstrate the Quality screen while Dev 1 validates the upload path and trains the tomato disease baseline.
