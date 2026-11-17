@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:elora_mobile/core/config.dart';
 import 'package:elora_mobile/core/network/api_client.dart';
 import 'package:elora_mobile/core/providers.dart';
 import 'package:elora_mobile/core/theme/app_theme.dart';
@@ -78,7 +77,8 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.enterText(find.byType(TextField), 'My tomato leaves are yellow');
+    await tester.enterText(
+        find.byType(TextField), 'My tomato leaves are yellow');
     await tester.tap(find.byTooltip('Send message'));
     await tester.pump();
 
@@ -89,5 +89,69 @@ void main() {
 
     expect(find.text('Check soil moisture before watering.'), findsOneWidget);
     expect(find.byType(AssistantChatBubble), findsNWidgets(2));
+  });
+
+  testWidgets('tapping camera attachment shows guidance snackbar', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      ProviderScope(
+        child: MaterialApp(
+          theme: EloraTheme.light(),
+          home: const Scaffold(body: ChatScreen()),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byTooltip('Attach photo'));
+    await tester.pumpAndSettle();
+
+    expect(
+      find.text(
+        'To scan a plant leaf for disease diagnosis, use the Scan tab in the bottom bar.',
+      ),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('server error displays inline notification banner', (
+    tester,
+  ) async {
+    final mockClient = MockClient((request) async {
+      return http.Response(
+        jsonEncode({'error': {'code': 'SERVICE_UNAVAILABLE'}}),
+        503,
+      );
+    });
+
+    final api = EloraApiClient(
+      baseUrl: 'https://example.com',
+      token: (_) async => 'token123',
+      client: mockClient,
+    );
+    addTearDown(api.close);
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          apiProvider.overrideWithValue(api),
+        ],
+        child: MaterialApp(
+          theme: EloraTheme.light(),
+          home: const Scaffold(body: ChatScreen()),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.enterText(find.byType(TextField), 'Failing message test');
+    await tester.tap(find.byTooltip('Send message'));
+    await tester.pumpAndSettle();
+
+    expect(
+      find.text('Unable to reach assistant. Please check your connection.'),
+      findsOneWidget,
+    );
   });
 }
