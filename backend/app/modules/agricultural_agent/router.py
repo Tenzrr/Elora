@@ -5,6 +5,10 @@ from uuid import UUID, uuid4
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from ai.agent.prompts.agronomist_system import (
+    CHEMICAL_SAFETY_REFUSAL_MESSAGE,
+    is_chemical_pesticide_query,
+)
 from app.core.auth import Actor, current_actor
 from app.db.session import get_db
 from app.modules.agricultural_agent.schemas import (
@@ -46,6 +50,14 @@ async def chat_turn(body: ChatRequest, actor: Owner, db: DB):
             plant_context_text = f" Context for your {plant.crop_slug} in {plant.growing_area}."
         else:
             plant_context_text = " Requested plant was not found in your garden."
+
+    if is_chemical_pesticide_query(body.message):
+        return ChatResponse(
+            thread_id=thread_id,
+            response=CHEMICAL_SAFETY_REFUSAL_MESSAGE,
+            tools_executed=tools_executed,
+            created_at=current_timestamp(),
+        )
 
     guidance = (
         "Welcome to Elora Agricultural Assistant. "
