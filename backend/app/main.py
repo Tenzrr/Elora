@@ -13,6 +13,7 @@ from starlette.exceptions import HTTPException
 from app.core.auth import current_actor
 from app.core.config import Settings, get_settings
 from app.db.session import get_db, make_engine
+from app.modules.predictive_farming.router import router as farming_router
 from app.shared.router import router
 
 logger = logging.getLogger("elora")
@@ -91,6 +92,7 @@ def create_app(settings: Settings | None = None, engine=None):
         return {"status": "ready"}
 
     app.include_router(router)
+    app.include_router(farming_router)
     return app
 
 
