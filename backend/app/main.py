@@ -13,6 +13,7 @@ from starlette.exceptions import HTTPException
 from app.core.auth import current_actor
 from app.core.config import Settings, get_settings
 from app.db.session import get_db, make_engine
+from app.modules.agricultural_agent.router import router as agricultural_agent_router
 from app.modules.predictive_farming.router import router as farming_router
 from app.shared.router import router
 
@@ -92,6 +93,7 @@ def create_app(settings: Settings | None = None, engine=None):
         return {"status": "ready"}
 
     app.include_router(router)
+    app.include_router(agricultural_agent_router)
     app.include_router(farming_router)
     return app
 

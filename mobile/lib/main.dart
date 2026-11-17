@@ -11,6 +11,7 @@ import 'core/config.dart';
 import 'core/elora_shell.dart';
 import 'core/providers.dart';
 import 'core/theme/app_theme.dart';
+import 'features/agricultural_agent/screens/chat_screen.dart';
 import 'l10n/generated/app_localizations.dart';
 import 'screens/auth_screen.dart';
 import 'screens/garden_screen.dart';
@@ -101,15 +102,17 @@ final routerProvider = Provider<GoRouter>((ref) {
           for (final module in EloraModule.values)
             GoRoute(
               path: module.path,
-              builder: (context, state) => Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(24),
-                  child: Text(
-                    AppLocalizations.of(context)!.notImplemented,
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
+              builder: (context, state) => module == EloraModule.assistant
+                  ? const ChatScreen()
+                  : Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(24),
+                        child: Text(
+                          AppLocalizations.of(context)!.notImplemented,
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
             ),
         ],
       ),
