@@ -55,7 +55,7 @@ Zero-total-float activities (technical CPM): D4A, I1B, I2, I3, I5, D4B, D4C, D4D
 
 Rehearsal-ready target: **2026-11-22**; forecast is **2 days after that target**. Presentation is **23 November**. This is an evidence/remaining-effort scenario; existing work may reduce it once verified. Do not promise all originally planned work without that verification. Prioritise contract handoffs and small demonstrable slices; keep actual assistant tool execution stretch and trained model evidence separate if inference integration is unfinished.
 
-[Full interim CPM source](interim-cpm.mmd) · [Developer capacity Gantt source](interim-schedule.mmd)
+[Full interim CPM source](interim-cpm.mmd) · [Download PNG](png/interim-cpm.png) · [Developer capacity Gantt source](interim-schedule.mmd)
 
 <details>
 <summary>Open exact interim dependency diagram (red = zero total float)</summary>
@@ -166,6 +166,8 @@ Against April 1 the forecast buffer is **29 days**; against April 30 it is **58 
 
 This compact view shows only zero-float activities and their driving edges. Noncritical branches remain in the exact full network below. Durations include the declared provisional elapsed lead times.
 
+[Download critical-path overview PNG](png/critical-path-overview.png)
+
 ```mermaid
 flowchart LR
   classDef critical fill:#ffe2e2,stroke:#c62828,stroke-width:3px
@@ -191,7 +193,7 @@ flowchart LR
   R3 --> RG
 ```
 
-[Full release CPM source](release-cpm.mmd) · [Developer capacity Gantt source](release-schedule.mmd)
+[Full release CPM source](release-cpm.mmd) · [Download PNG](png/release-cpm.png) · [Developer capacity Gantt source](release-schedule.mmd)
 
 <details>
 <summary>Open exact release dependency diagram (red = zero total float)</summary>

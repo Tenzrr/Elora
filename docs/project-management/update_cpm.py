@@ -250,8 +250,9 @@ def main():
             report += ['### Critical-path overview', '',
                        'This compact view shows only zero-float activities and their driving edges. '
                        'Noncritical branches remain in the exact full network below. Durations include the declared provisional elapsed lead times.', '',
+                       '[Download critical-path overview PNG](png/critical-path-overview.png)', '',
                        '```mermaid',summary.rstrip(),'```','']
-        report += [f'[Full {scope} CPM source]({scope}-cpm.mmd) · [Developer capacity Gantt source]({scope}-schedule.mmd)', '',
+        report += [f'[Full {scope} CPM source]({scope}-cpm.mmd) · [Download PNG](png/{scope}-cpm.png) · [Developer capacity Gantt source]({scope}-schedule.mmd)', '',
                    '<details>', f'<summary>Open exact {scope} dependency diagram (red = zero total float)</summary>', '',
                    '```mermaid', mmd.rstrip(), '```', '', '</details>', '',
                    '| ID / issue | Owner | Effort | Predecessors | ES–EF / LS–LF / float | Capacity dates |',
