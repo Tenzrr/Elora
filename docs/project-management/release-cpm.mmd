@@ -1,0 +1,257 @@
+flowchart LR
+  classDef critical fill:#ffe2e2,stroke:#c62828,stroke-width:3px
+  classDef gate fill:#fff3cd,stroke:#9a6700
+  subgraph owner0["External acceptance"]
+    RG["RG #96: External reviews and product-owner acceptance gate<br/>0h / 7 calendar days"]
+  end
+  subgraph owner1["Developer 1"]
+    S1["S1 #52: Freeze shared API, model and cross-module handoff contracts<br/>9h / 3 calendar days"]
+    D1B["D1B #55: Android capture, disease results and reviewed guidance<br/>15h / 5 calendar days"]
+    D1D["D1D #57: Audit tomato/chilli datasets and freeze four label maps<br/>12h / 4 calendar days"]
+    S2["S2 #53: Private media, durable workers and deployment preparation<br/>18h / 6 calendar days"]
+    D1A["D1A #54: Durable shared scan jobs and versioned model registry<br/>18h / 6 calendar days"]
+    D1E["D1E #58: Train and calibrate four tomato/chilli server models<br/>30h / 10 calendar days"]
+    D1C["D1C #56: Owned scan saving, history and deletion service<br/>12h / 4 calendar days"]
+    D1F["D1F #59: Independent tomato/chilli and Android variant validation<br/>18h / 14 calendar days"]
+    D1G["D1G #60: Signed offline disease package delivery and local inference<br/>18h / 6 calendar days"]
+    D1H["D1H #61: Offline photo queue and once-only local result sync<br/>18h / 6 calendar days"]
+    D1I["D1I #62: Integrate twelve server models and six Android disease packs<br/>12h / 4 calendar days"]
+    R1["R1 #93: Integrated security, replay, load and recovery verification<br/>24h / 8 calendar days"]
+    R3["R3 #95: Release operations, provenance, rollback and handover<br/>18h / 6 calendar days"]
+  end
+  subgraph owner2["Developer 2"]
+    D2A["D2A #63: Quality categories, subtype rules and consumer fixtures<br/>9h / 3 calendar days"]
+    D2C["D2C #65: Audit and train citrus disease and quality models<br/>24h / 8 calendar days"]
+    D2D["D2D #66: Independent citrus evaluation and Android disease variant<br/>18h / 14 calendar days"]
+    D2B["D2B #64: Quality UI connected to common jobs, saving and queue<br/>18h / 6 calendar days"]
+    D2E["D2E #67: Cross-crop quality acceptance and guidance review<br/>15h / 5 calendar days"]
+    D2F["D2F #68: Quality workflow translations and device acceptance<br/>12h / 4 calendar days"]
+    R2["R2 #94: Android accessibility, language and complete demo verification<br/>18h / 6 calendar days"]
+  end
+  subgraph owner3["Developer 3"]
+    D3A["D3A #69: Weather/location service, freshness and typed read contract<br/>12h / 4 calendar days"]
+    D3B["D3B #70: Owned care task persistence, revisions and mutation service<br/>18h / 6 calendar days"]
+    D3E["D3E #73: Audit, train and calibrate banana model pair<br/>24h / 8 calendar days"]
+    D3C["D3C #71: Reviewed care rules and forecast-based recommendations<br/>15h / 5 calendar days"]
+    D3F["D3F #74: Independent banana evaluation and Android disease variant<br/>18h / 14 calendar days"]
+    D3D["D3D #72: Care reminders integrated with notification preferences<br/>12h / 4 calendar days"]
+    D3G["D3G #75: Reviewed watering, harvest-window and irrigation scenarios<br/>24h / 8 calendar days"]
+    D3H["D3H #76: Private harvest observations, crop advice and market values<br/>24h / 8 calendar days"]
+    D3I["D3I #77: Privacy-preserving regional risk alerts<br/>15h / 5 calendar days"]
+    D3J["D3J #78: Farming methods, translations and device acceptance<br/>15h / 5 calendar days"]
+  end
+  subgraph owner4["Developer 4"]
+    D4E["D4E #14: Chat thread/message persistence and canonical service routes<br/>12h / 4 calendar days"]
+    D4M1["D4M1 #22: Rose disease dataset, training and calibration<br/>15h / 5 calendar days"]
+    D4M2["D4M2 #23: Rose growth-stage dataset, training and calibration<br/>15h / 5 calendar days"]
+    D4P["D4P #79: Select generation, embedding and speech providers<br/>15h / 5 calendar days"]
+    D4F["D4F #15: Conversation history UI and thread switching<br/>9h / 3 calendar days"]
+    D4G["D4G #16: Approved knowledge schema and ingestion pipeline<br/>12h / 4 calendar days"]
+    D4I["D4I #18: Two-phase confirmed care actions<br/>18h / 6 calendar days"]
+    D4K["D4K #20: Private photo/document attachments and safe extraction<br/>12h / 4 calendar days"]
+    D4L["D4L #21: Three-language speech input and reply playback<br/>15h / 5 calendar days"]
+    D4Q["D4Q #80: Reviewed gardening FAQ in three languages<br/>9h / 3 calendar days"]
+    D4N["D4N #24: Validated rose artifacts through common inference<br/>18h / 14 calendar days"]
+    D4H["D4H #17: Cited retrieval and typed plant, scan and weather reads<br/>15h / 5 calendar days"]
+    D4J["D4J #19: LangGraph orchestration, checkpoints and bounded tools<br/>18h / 6 calendar days"]
+    D4O["D4O #25: Assistant safety, privacy and three-language acceptance<br/>18h / 6 calendar days"]
+  end
+  subgraph owner5["Developer 5"]
+    D5A["D5A #81: Account, garden and profile lifecycle completion<br/>15h / 5 calendar days"]
+    D5B["D5B #82: Private diary, care-log service and shared offline outbox<br/>21h / 7 calendar days"]
+    D5J["D5J #90: Collect local chrysanthemum stages and train model pair<br/>30h / 21 calendar days"]
+    D5C["D5C #83: Notification devices, preferences and quiet-hours service<br/>12h / 4 calendar days"]
+    D5D["D5D #84: Community publishing, feeds, interactions and public sharing<br/>24h / 8 calendar days"]
+    D5K["D5K #91: Independent chrysanthemum evaluation and disease variant<br/>18h / 14 calendar days"]
+    D5E["D5E #85: Blocking, reports and restricted review operations<br/>18h / 6 calendar days"]
+    D5G["D5G #87: Idempotent care/post XP, badges and reward ledger<br/>18h / 6 calendar days"]
+    D5F["D5F #86: Consent, exports, deletion and retention lifecycle<br/>24h / 8 calendar days"]
+    D5H["D5H #88: Private forest and opt-in leaderboard<br/>12h / 4 calendar days"]
+    D5I["D5I #89: Opt-in district observations and aggregate statistics<br/>18h / 6 calendar days"]
+    D5L["D5L #92: Accounts/community/privacy translations and acceptance<br/>15h / 5 calendar days"]
+  end
+  click S1 "https://github.com/Tenzrr/Elora/issues/52"
+  class S1 critical
+  S1 --> D1B
+  click D1B "https://github.com/Tenzrr/Elora/issues/55"
+  S1 --> D1D
+  click D1D "https://github.com/Tenzrr/Elora/issues/57"
+  S1 --> D2A
+  click D2A "https://github.com/Tenzrr/Elora/issues/63"
+  S1 --> D3A
+  click D3A "https://github.com/Tenzrr/Elora/issues/69"
+  S1 --> D3B
+  click D3B "https://github.com/Tenzrr/Elora/issues/70"
+  S1 --> D3E
+  click D3E "https://github.com/Tenzrr/Elora/issues/73"
+  S1 --> D4E
+  click D4E "https://github.com/Tenzrr/Elora/issues/14"
+  S1 --> D4M1
+  click D4M1 "https://github.com/Tenzrr/Elora/issues/22"
+  S1 --> D4M2
+  click D4M2 "https://github.com/Tenzrr/Elora/issues/23"
+  S1 --> D4P
+  click D4P "https://github.com/Tenzrr/Elora/issues/79"
+  S1 --> D5A
+  click D5A "https://github.com/Tenzrr/Elora/issues/81"
+  S1 --> D5B
+  click D5B "https://github.com/Tenzrr/Elora/issues/82"
+  S1 --> D5J
+  click D5J "https://github.com/Tenzrr/Elora/issues/90"
+  class D5J critical
+  S1 --> S2
+  click S2 "https://github.com/Tenzrr/Elora/issues/53"
+  S1 --> D1A
+  S2 --> D1A
+  click D1A "https://github.com/Tenzrr/Elora/issues/54"
+  D1D --> D1E
+  click D1E "https://github.com/Tenzrr/Elora/issues/58"
+  D2A --> D2C
+  click D2C "https://github.com/Tenzrr/Elora/issues/65"
+  D3A --> D3C
+  D3B --> D3C
+  click D3C "https://github.com/Tenzrr/Elora/issues/71"
+  D3E --> D3F
+  click D3F "https://github.com/Tenzrr/Elora/issues/74"
+  D4E --> D4F
+  click D4F "https://github.com/Tenzrr/Elora/issues/15"
+  D4P --> D4G
+  S2 --> D4G
+  click D4G "https://github.com/Tenzrr/Elora/issues/16"
+  D4E --> D4I
+  D3B --> D4I
+  D5B --> D4I
+  click D4I "https://github.com/Tenzrr/Elora/issues/18"
+  D4E --> D4K
+  S2 --> D4K
+  click D4K "https://github.com/Tenzrr/Elora/issues/20"
+  D4P --> D4L
+  D4E --> D4L
+  click D4L "https://github.com/Tenzrr/Elora/issues/21"
+  D4P --> D4Q
+  click D4Q "https://github.com/Tenzrr/Elora/issues/80"
+  D5A --> D5C
+  S2 --> D5C
+  click D5C "https://github.com/Tenzrr/Elora/issues/83"
+  D5A --> D5D
+  S2 --> D5D
+  click D5D "https://github.com/Tenzrr/Elora/issues/84"
+  D5J --> D5K
+  click D5K "https://github.com/Tenzrr/Elora/issues/91"
+  class D5K critical
+  D1A --> D1C
+  click D1C "https://github.com/Tenzrr/Elora/issues/56"
+  D1E --> D1F
+  click D1F "https://github.com/Tenzrr/Elora/issues/59"
+  D2C --> D2D
+  click D2D "https://github.com/Tenzrr/Elora/issues/66"
+  D3B --> D3D
+  D5C --> D3D
+  click D3D "https://github.com/Tenzrr/Elora/issues/72"
+  D3C --> D3G
+  click D3G "https://github.com/Tenzrr/Elora/issues/75"
+  D3C --> D3H
+  click D3H "https://github.com/Tenzrr/Elora/issues/76"
+  D4M1 --> D4N
+  D4M2 --> D4N
+  D1A --> D4N
+  click D4N "https://github.com/Tenzrr/Elora/issues/24"
+  D5D --> D5E
+  click D5E "https://github.com/Tenzrr/Elora/issues/85"
+  D5B --> D5G
+  D3B --> D5G
+  D5D --> D5G
+  click D5G "https://github.com/Tenzrr/Elora/issues/87"
+  D1A --> D1G
+  D1B --> D1G
+  D1F --> D1G
+  click D1G "https://github.com/Tenzrr/Elora/issues/60"
+  D2A --> D2B
+  D1A --> D2B
+  D1C --> D2B
+  D5B --> D2B
+  click D2B "https://github.com/Tenzrr/Elora/issues/64"
+  D4G --> D4H
+  D1C --> D4H
+  D3A --> D4H
+  click D4H "https://github.com/Tenzrr/Elora/issues/17"
+  D5A --> D5F
+  S2 --> D5F
+  D4E --> D5F
+  D1C --> D5F
+  click D5F "https://github.com/Tenzrr/Elora/issues/86"
+  D5G --> D5H
+  D5E --> D5H
+  click D5H "https://github.com/Tenzrr/Elora/issues/88"
+  D1C --> D1H
+  D1G --> D1H
+  D5B --> D1H
+  click D1H "https://github.com/Tenzrr/Elora/issues/61"
+  D1A --> D1I
+  D1F --> D1I
+  D1G --> D1I
+  D2D --> D1I
+  D3F --> D1I
+  D4N --> D1I
+  D5K --> D1I
+  click D1I "https://github.com/Tenzrr/Elora/issues/62"
+  class D1I critical
+  D4E --> D4J
+  D4H --> D4J
+  D4I --> D4J
+  click D4J "https://github.com/Tenzrr/Elora/issues/19"
+  D5F --> D5I
+  D5E --> D5I
+  click D5I "https://github.com/Tenzrr/Elora/issues/89"
+  D2B --> D2E
+  D1I --> D2E
+  click D2E "https://github.com/Tenzrr/Elora/issues/67"
+  class D2E critical
+  D3A --> D3I
+  D5I --> D3I
+  click D3I "https://github.com/Tenzrr/Elora/issues/77"
+  D4J --> D4O
+  D4K --> D4O
+  D4L --> D4O
+  D4Q --> D4O
+  D4N --> D4O
+  click D4O "https://github.com/Tenzrr/Elora/issues/25"
+  D5C --> D5L
+  D5D --> D5L
+  D5E --> D5L
+  D5F --> D5L
+  D5H --> D5L
+  D5I --> D5L
+  D5K --> D5L
+  click D5L "https://github.com/Tenzrr/Elora/issues/92"
+  D2E --> D2F
+  click D2F "https://github.com/Tenzrr/Elora/issues/68"
+  class D2F critical
+  D3D --> D3J
+  D3G --> D3J
+  D3H --> D3J
+  D3I --> D3J
+  D3F --> D3J
+  click D3J "https://github.com/Tenzrr/Elora/issues/78"
+  D1H --> R1
+  D1I --> R1
+  D2F --> R1
+  D3J --> R1
+  D4O --> R1
+  D5L --> R1
+  click R1 "https://github.com/Tenzrr/Elora/issues/93"
+  class R1 critical
+  R1 --> R2
+  click R2 "https://github.com/Tenzrr/Elora/issues/94"
+  class R2 critical
+  R1 --> R3
+  S2 --> R3
+  D5F --> R3
+  click R3 "https://github.com/Tenzrr/Elora/issues/95"
+  class R3 critical
+  R2 --> RG
+  R3 --> RG
+  click RG "https://github.com/Tenzrr/Elora/issues/96"
+  class RG critical
+  class RG gate
+  linkStyle 12,36,76,83,98,106,110,111,114,115 stroke:#c62828,stroke-width:3px

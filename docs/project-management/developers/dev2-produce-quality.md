@@ -6,6 +6,8 @@ Own the produce quality flow and train the citrus disease and quality CNNs. Work
 
 ## Four-day plan
 
+For current issue IDs, cross-developer blockers and capacity, use the [Dev 2 issue map](../dev2-issue-map.md) and [common CPM](../TEAM_DEPENDENCIES.md). The table below preserves the original four-day baseline; its technical paths do not account for one developer's limited hours.
+
 | Task | Depends on | Planned window | Working days | Exit evidence |
 | --- | --- | --- | ---: | --- |
 | A · Confirm citrus subtype, request and result shape with Dev 1 | — | Nov 16 | 1 | Orange/lemon inputs and agreed categorical response fixture |
