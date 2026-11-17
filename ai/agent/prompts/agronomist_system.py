@@ -15,12 +15,14 @@ RESTRICTED_CHEMICAL_KEYWORDS = [
     r"\bmalathion\b",
     r"\bdiazinon\b",
     r"\bmonocrotophos\b",
-    r"\bchemical pesticide\b",
-    r"\bchemical spray dosage\b",
-    r"\bsynthetic pesticide\b",
-    r"\bpesticide dosage\b",
-    r"\bfungicide dosage\b",
-    r"\binsecticide dosage\b",
+    r"\bchemical pesticides?\b",
+    r"\bchemical spray dosages?\b",
+    r"\bsynthetic pesticides?\b",
+    r"\bpesticide dosages?\b",
+    r"\bfungicide dosages?\b",
+    r"\binsecticide dosages?\b",
+    r"\bherbicides?\b",
+    r"\bweedicides?\b",
 ]
 
 CHEMICAL_SAFETY_REFUSAL_MESSAGE = (

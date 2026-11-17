@@ -11,6 +11,10 @@ CHEMICAL_TEST_CASES = [
     "Where can I buy diazinon and how do I mix it?",
     "How to prepare chlorpyrifos for soil pest treatment?",
     "What insecticide dosage kills stem borers instantly?",
+    "Do you recommend synthetic pesticides for chillies?",
+    "What chemical pesticides can I spray on tomato plants?",
+    "Which weedicides should I buy to clear grass around citrus?",
+    "What herbicide dosages are safe for small home gardens?",
 ]
 
 SAFE_CULTURAL_TEST_CASES = [
