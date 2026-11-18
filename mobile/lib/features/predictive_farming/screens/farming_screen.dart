@@ -60,10 +60,10 @@ class FarmingScreen extends ConsumerWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: EloraColors.mint.withOpacity(0.5)),
+        border: Border.all(color: EloraColors.mint.withValues(alpha: 0.5)),
         boxShadow: [
           BoxShadow(
-            color: EloraColors.deepGreen.withOpacity(0.04),
+            color: EloraColors.deepGreen.withValues(alpha: 0.04),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -239,10 +239,10 @@ class FarmingScreen extends ConsumerWidget {
       decoration: BoxDecoration(
         color: cardColor,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: accentColor.withOpacity(0.3), width: 1.5),
+        border: Border.all(color: accentColor.withValues(alpha: 0.3), width: 1.5),
         boxShadow: [
           BoxShadow(
-            color: accentColor.withOpacity(0.08),
+            color: accentColor.withValues(alpha: 0.08),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -256,7 +256,7 @@ class FarmingScreen extends ConsumerWidget {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: accentColor.withOpacity(0.15),
+                  color: accentColor.withValues(alpha: 0.15),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(icon, color: accentColor, size: 24),
@@ -301,7 +301,7 @@ class FarmingScreen extends ConsumerWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.8),
+              color: Colors.white.withValues(alpha: 0.8),
               borderRadius: BorderRadius.circular(10),
             ),
             child: Row(
@@ -401,10 +401,10 @@ class FarmingScreen extends ConsumerWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: EloraColors.mint.withOpacity(0.4)),
+        border: Border.all(color: EloraColors.mint.withValues(alpha: 0.4)),
         boxShadow: [
           BoxShadow(
-            color: EloraColors.deepGreen.withOpacity(0.03),
+            color: EloraColors.deepGreen.withValues(alpha: 0.03),
             blurRadius: 8,
             offset: const Offset(0, 3),
           ),
@@ -453,7 +453,7 @@ class FarmingScreen extends ConsumerWidget {
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(14),
-            border: Border.all(color: EloraColors.mint.withOpacity(0.3)),
+            border: Border.all(color: EloraColors.mint.withValues(alpha: 0.3)),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -506,7 +506,7 @@ class FarmingScreen extends ConsumerWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: EloraColors.danger.withOpacity(0.3)),
+        border: Border.all(color: EloraColors.danger.withValues(alpha: 0.3)),
       ),
       child: Column(
         children: [
