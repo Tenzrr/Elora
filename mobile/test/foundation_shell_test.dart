@@ -14,6 +14,8 @@ import 'package:http/testing.dart';
 
 class _VerifiedUser extends Fake implements User {
   @override
+  String get uid => 'foundation-fixture-user';
+  @override
   bool get emailVerified => true;
 }
 

@@ -16,6 +16,7 @@ import 'l10n/generated/app_localizations.dart';
 import 'screens/auth_screen.dart';
 import 'screens/garden_screen.dart';
 import 'screens/profile_screen.dart';
+import 'features/crop_health/scan_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -104,6 +105,8 @@ final routerProvider = Provider<GoRouter>((ref) {
               path: module.path,
               builder: (context, state) => module == EloraModule.assistant
                   ? const ChatScreen()
+                  : module == EloraModule.cropHealth
+                  ? const ScanScreen()
                   : Center(
                       child: Padding(
                         padding: const EdgeInsets.all(24),
