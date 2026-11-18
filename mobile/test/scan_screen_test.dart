@@ -144,6 +144,19 @@ void main() {
     'picker cancellation and permission failure keep the selected photo',
     (tester) async {
       var mode = 0;
+      final api = EloraApiClient(
+        baseUrl: _config.apiUrl,
+        token: (_) async => 'fixture-token',
+        client: MockClient(
+          (request) async => request.method == 'POST'
+              ? http.Response('{"scan_id":"fixture-job"}', 202)
+              : http.Response(
+                  '{"status":"failed","error":{"code":"MODEL_UNAVAILABLE"}}',
+                  200,
+                ),
+        ),
+      );
+      addTearDown(api.close);
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
@@ -153,6 +166,7 @@ void main() {
             ),
             profileProvider.overrideWith((ref) async => null),
             plantsProvider.overrideWith((ref) async => []),
+            apiProvider.overrideWithValue(api),
             scanImagePickerProvider.overrideWithValue((_) async {
               if (mode == 1) {
                 throw PlatformException(code: 'camera_access_denied');
@@ -183,6 +197,13 @@ void main() {
       await tester.pumpAndSettle();
       expect(container.read(scanProvider).bytes, bytes);
       expect(find.textContaining('Photo access failed'), findsOneWidget);
+      final submit = find.byType(FilledButton);
+      await _reveal(tester, submit);
+      await tester.tap(submit);
+      await tester.pumpAndSettle();
+      expect(find.textContaining('Photo access failed'), findsNothing);
+      expect(container.read(scanProvider).error, 'MODEL_UNAVAILABLE');
+      expect(container.read(scanProvider).operationId, key);
       expect(tester.takeException(), isNull);
       await tester.pumpWidget(const SizedBox.shrink());
     },

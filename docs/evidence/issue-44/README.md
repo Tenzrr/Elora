@@ -18,6 +18,7 @@ returns the existing job; it does not rerun analysis. Re-select a photo after a
 future model integration to create a new operation.
 
 Shared contract prerequisite: [PR #101](https://github.com/Tenzrr/Elora/pull/101).
+Feature draft: [PR #102](https://github.com/Tenzrr/Elora/pull/102).
 It restores the agreement from `5c72db8`, which was missing from `develop`.
 The feature branch starts at `fe9ce48`, with the contract as a separate commit.
 Both PRs target `develop`; review/merge the contract first. No PR was merged by

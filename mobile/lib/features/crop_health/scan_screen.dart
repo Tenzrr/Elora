@@ -182,7 +182,10 @@ class _ScanScreenState extends ConsumerState<ScanScreen>
         FilledButton(
           onPressed: disabled || scan.bytes == null
               ? null
-              : () => unawaited(_controller.submit()),
+              : () {
+                  setState(() => _selectionError = null);
+                  unawaited(_controller.submit());
+                },
           child: Text(
             scan.operationId != null &&
                     (scan.scanId != null || scan.error != null)
@@ -192,7 +195,12 @@ class _ScanScreenState extends ConsumerState<ScanScreen>
         ),
         if (scan.scanId != null)
           OutlinedButton(
-            onPressed: disabled ? null : () => unawaited(_controller.refresh()),
+            onPressed: disabled
+                ? null
+                : () {
+                    setState(() => _selectionError = null);
+                    unawaited(_controller.refresh());
+                  },
             child: Text(t.scanRefresh),
           ),
       ],
