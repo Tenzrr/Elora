@@ -1,0 +1,22 @@
+flowchart LR
+  classDef critical fill:#ffe2e2,stroke:#c62828,stroke-width:3px
+  S1["D1: Freeze shared API, model and cross-module handoff contracts<br/>3 days"]:::critical
+  D5J["D5: Collect local chrysanthemum stages and train model pair<br/>21 days"]:::critical
+  S1 --> D5J
+  D5K["D5: Independent chrysanthemum evaluation and disease variant<br/>14 days"]:::critical
+  D5J --> D5K
+  D1I["D1: Integrate twelve server models and six Android disease packs<br/>4 days"]:::critical
+  D5K --> D1I
+  D2E["D2: Cross-crop quality acceptance and guidance review<br/>5 days"]:::critical
+  D1I --> D2E
+  D2F["D2: Quality workflow translations and device acceptance<br/>4 days"]:::critical
+  D2E --> D2F
+  R1["D1: Integrated security, replay, load and recovery verification<br/>8 days"]:::critical
+  D2F --> R1
+  R2["D2: Android accessibility, language and complete demo verification<br/>6 days"]:::critical
+  R1 --> R2
+  R3["D1: Release operations, provenance, rollback and handover<br/>6 days"]:::critical
+  R1 --> R3
+  RG["Reviewers: External reviews and product-owner acceptance gate<br/>7 days"]:::critical
+  R2 --> RG
+  R3 --> RG

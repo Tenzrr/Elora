@@ -6,6 +6,8 @@ Own weather, advice and care planning. Train the banana disease and quality CNNs
 
 ## Four-day plan
 
+For current issue IDs, cross-developer blockers and capacity, use the [Dev 3 issue map](../dev3-issue-map.md) and [common CPM](../TEAM_DEPENDENCIES.md). Dev 3 owns care-task persistence and mutations consumed by Dev 4's confirmed actions. The table below preserves the original four-day baseline; its technical paths do not account for one developer's limited hours.
+
 | Task | Depends on | Planned window | Working days | Exit evidence |
 | --- | --- | --- | ---: | --- |
 | A · Pick one test location and one explainable weather-based advisory | — | Nov 16 | 1 | Location input, forecast fields and draft rule inputs agreed |

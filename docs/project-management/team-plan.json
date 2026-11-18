@@ -1,0 +1,1742 @@
+{
+  "version": 1,
+  "baseline": "2026-11-17",
+  "release_start": "2026-11-24",
+  "interim_demo": "2026-11-23",
+  "interim_ready": "2026-11-22",
+  "final_deadline": null,
+  "capacity_hours_per_person_per_day": 3,
+  "working_days": "every day including weekends",
+  "estimate_status": "Provisional estimates by Codex; owners must validate remaining effort and external lead times. Full remaining scope assumed unless evidence supplied.",
+  "owners": {
+    "1": "Kavee-ginty",
+    "2": "dulakshadulan",
+    "3": "Dimanya-Perera",
+    "4": "SadeepaNHerath",
+    "5": "sansajan3103"
+  },
+  "tasks": [
+    {
+      "key": "F0",
+      "owner": 1,
+      "title": "Shared development foundation accepted",
+      "hours": 0,
+      "predecessors": [],
+      "requirements": [
+        "SEC-1",
+        "QUAL-3"
+      ],
+      "acceptance": [
+        "Merged PRs #6 and #7 supply development identity, plants and Android foundation; this does not establish feature completion"
+      ],
+      "scope": "foundation",
+      "issue": null,
+      "minimum_elapsed_days": 0,
+      "state": "done"
+    },
+    {
+      "key": "I1A",
+      "owner": 1,
+      "title": "Interim: authenticated tomato upload and status flow",
+      "hours": 6,
+      "predecessors": [
+        "F0"
+      ],
+      "requirements": [
+        "REQ-1.1",
+        "REQ-1.2",
+        "REQ-1.3"
+      ],
+      "acceptance": [
+        "Accept valid image and reject invalid input under agreed scan contract",
+        "Show real persistence and model availability honestly; fixtures visibly labelled"
+      ],
+      "scope": "interim",
+      "issue": 44,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "I1B",
+      "owner": 1,
+      "title": "Interim: tomato disease dataset and evaluated baseline",
+      "hours": 9,
+      "predecessors": [
+        "F0"
+      ],
+      "requirements": [
+        "REQ-1.6",
+        "QUAL-1"
+      ],
+      "acceptance": [
+        "Record rights, grouped split, held-out metrics and a prediction",
+        "Record actual run evidence and limits; do not claim independent field validation"
+      ],
+      "scope": "interim",
+      "issue": 45,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "I1C",
+      "owner": 1,
+      "title": "Interim: crop-health evidence and focused PR",
+      "hours": 3,
+      "predecessors": [
+        "I1A",
+        "I1B"
+      ],
+      "requirements": [
+        "REQ-1.3",
+        "REQ-1.4"
+      ],
+      "acceptance": [
+        "Link upload and separate trained-model evidence to requirements",
+        "Connect inference only when ready; disclose any integration gap"
+      ],
+      "scope": "interim",
+      "issue": 46,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "I2",
+      "owner": 2,
+      "title": "Interim: citrus quality flow and data feasibility",
+      "hours": 12,
+      "predecessors": [
+        "F0"
+      ],
+      "requirements": [
+        "REQ-2.1",
+        "REQ-2.3",
+        "REQ-2.5"
+      ],
+      "acceptance": [
+        "Agree inputs with D1 and supply Fresh/Spoiled and abstention fixtures",
+        "Demo image selection, subtype validation and result display with labelled fixtures",
+        "Document citrus data rights, class coverage and gaps; link focused PR"
+      ],
+      "scope": "interim",
+      "issue": 47,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "I3",
+      "owner": 3,
+      "title": "Interim: live location forecast and explained advisory",
+      "hours": 12,
+      "predecessors": [
+        "F0"
+      ],
+      "requirements": [
+        "REQ-3.1",
+        "REQ-3.2",
+        "REQ-3.4",
+        "REQ-3.6"
+      ],
+      "acceptance": [
+        "Fetch real forecast with source, units and timestamps",
+        "Explain one advisory and test stale/unavailable weather",
+        "Record working flow and focused PR"
+      ],
+      "scope": "interim",
+      "issue": 48,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "I5",
+      "owner": 5,
+      "title": "Interim: authenticated persisted text posts",
+      "hours": 12,
+      "predecessors": [
+        "F0"
+      ],
+      "requirements": [
+        "REQ-5.5",
+        "SEC-1"
+      ],
+      "acceptance": [
+        "Agree post contract and migration",
+        "Persist create/list with server-derived identity and connect Android",
+        "Verify two-user ownership and restart persistence; link focused PR"
+      ],
+      "scope": "interim",
+      "issue": 49,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D4A",
+      "owner": 4,
+      "title": "Chat contract and baseline endpoint",
+      "hours": 3,
+      "predecessors": [
+        "F0"
+      ],
+      "requirements": [
+        "REQ-4.1",
+        "REQ-4.8",
+        "QUAL-3"
+      ],
+      "acceptance": [
+        "Review PR #39 and remaining endpoint checks",
+        "Baseline mock endpoint does not prove a live provider response"
+      ],
+      "scope": "interim",
+      "issue": 10,
+      "minimum_elapsed_days": 0,
+      "state": "in_review"
+    },
+    {
+      "key": "D4B",
+      "owner": 4,
+      "title": "Typed owner-only plant context tool",
+      "hours": 3,
+      "predecessors": [
+        "D4A"
+      ],
+      "requirements": [
+        "REQ-4.2",
+        "SEC-1"
+      ],
+      "acceptance": [
+        "Review PR #40 and verify two-user isolation",
+        "Use only approved plant fields and a bounded database failure"
+      ],
+      "scope": "interim",
+      "issue": 11,
+      "minimum_elapsed_days": 0,
+      "state": "in_review"
+    },
+    {
+      "key": "D4C",
+      "owner": 4,
+      "title": "Mobile chat foundation",
+      "hours": 3,
+      "predecessors": [
+        "D4A"
+      ],
+      "requirements": [
+        "REQ-4.1",
+        "QUAL-2"
+      ],
+      "acceptance": [
+        "Review PR #42 and check design and failure recovery",
+        "Verify actual network integration separately from widget mocks"
+      ],
+      "scope": "interim",
+      "issue": 12,
+      "minimum_elapsed_days": 0,
+      "state": "in_review"
+    },
+    {
+      "key": "D4D",
+      "owner": 4,
+      "title": "Agronomist prompt and chemical safety boundaries",
+      "hours": 3,
+      "predecessors": [
+        "D4A"
+      ],
+      "requirements": [
+        "REQ-4.3",
+        "REQ-4.4",
+        "SAFE-2"
+      ],
+      "acceptance": [
+        "Review PR #41",
+        "Regex/prompt unit tests do not prove provider-level safety; retain live evaluation gate"
+      ],
+      "scope": "interim",
+      "issue": 13,
+      "minimum_elapsed_days": 0,
+      "state": "in_review"
+    },
+    {
+      "key": "I4",
+      "owner": 4,
+      "title": "Interim: real LLM turn, bounded failure and evidence",
+      "hours": 6,
+      "predecessors": [
+        "D4B",
+        "D4C",
+        "D4D"
+      ],
+      "requirements": [
+        "REQ-4.1",
+        "REQ-4.8"
+      ],
+      "acceptance": [
+        "Verify server-configured development provider and one real Android text response",
+        "Demonstrate a bounded provider failure and link PR/test/demo evidence",
+        "Actual tool execution remains stretch for this interim"
+      ],
+      "scope": "interim",
+      "issue": 50,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "IG",
+      "owner": 1,
+      "title": "Interim: reviewed integration, freeze and rehearsal",
+      "hours": 6,
+      "predecessors": [
+        "I1C",
+        "I2",
+        "I3",
+        "I4",
+        "I5"
+      ],
+      "requirements": [
+        "QUAL-3",
+        "QUAL-4"
+      ],
+      "acceptance": [
+        "Review five individual deliveries and resolve compatibility failures",
+        "Freeze demo scope, rehearse and record backups before November 23"
+      ],
+      "scope": "interim",
+      "issue": 51,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "S1",
+      "owner": 1,
+      "title": "Freeze shared API, model and cross-module handoff contracts",
+      "hours": 9,
+      "predecessors": [
+        "IG"
+      ],
+      "requirements": [
+        "QUAL-3",
+        "REQ-1.3",
+        "REQ-4.2"
+      ],
+      "acceptance": [
+        "Publish enforceable schemas, fixtures and canonical SRS route inventory",
+        "Agree care task/log IDs, revision and operation semantics with D3/D4/D5",
+        "Name migration owners and distinguish current interim adapters from final routes"
+      ],
+      "scope": "release",
+      "issue": 52,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "S2",
+      "owner": 1,
+      "title": "Private media, durable workers and deployment preparation",
+      "hours": 18,
+      "predecessors": [
+        "S1"
+      ],
+      "requirements": [
+        "SEC-2",
+        "SEC-3",
+        "PERF-5",
+        "OPS-3"
+      ],
+      "acceptance": [
+        "Specify private assets, signed access, job leases, retries and cleanup interfaces",
+        "Implement shared worker/storage foundations with owner isolation and secret redaction",
+        "Record budget/account approval before paid provisioning; no paid resources are provisioned by this planning task"
+      ],
+      "scope": "release",
+      "issue": 53,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D1A",
+      "owner": 1,
+      "title": "Durable shared scan jobs and versioned model registry",
+      "hours": 18,
+      "predecessors": [
+        "S1",
+        "S2"
+      ],
+      "requirements": [
+        "REQ-1.3",
+        "REQ-1.9",
+        "QUAL-3",
+        "PERF-5"
+      ],
+      "acceptance": [
+        "Implement durable /scans submission/status and model dispatch for both tasks",
+        "Preserve idempotent job state across retries/restarts and typed assessed/abstention results",
+        "Registry supports twelve server models without separate public crop endpoints"
+      ],
+      "scope": "release",
+      "issue": 54,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D1B",
+      "owner": 1,
+      "title": "Android capture, disease results and reviewed guidance",
+      "hours": 15,
+      "predecessors": [
+        "S1"
+      ],
+      "requirements": [
+        "REQ-1.1",
+        "REQ-1.2",
+        "REQ-1.4",
+        "REQ-1.5",
+        "REQ-1.6",
+        "SAFE-1"
+      ],
+      "acceptance": [
+        "Build camera/gallery, crop/organ guidance and recoverable permissions",
+        "Display prediction, calibrated confidence, version, abstention and cited guidance",
+        "Validate disease cutoff below/at/above 60 percent plus domain/image checks"
+      ],
+      "scope": "release",
+      "issue": 55,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D1C",
+      "owner": 1,
+      "title": "Owned scan saving, history and deletion service",
+      "hours": 12,
+      "predecessors": [
+        "D1A"
+      ],
+      "requirements": [
+        "REQ-1.7",
+        "REQ-5.17",
+        "DATA-1"
+      ],
+      "acceptance": [
+        "Implement owner-only link/save/list/delete and filtered cursor history",
+        "Separate saved and temporary assets and expose typed history to D4/D5",
+        "Prevent cross-user plant links and preserve original model/task/version"
+      ],
+      "scope": "release",
+      "issue": 56,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D1D",
+      "owner": 1,
+      "title": "Audit tomato/chilli datasets and freeze four label maps",
+      "hours": 12,
+      "predecessors": [
+        "I1B",
+        "S1"
+      ],
+      "requirements": [
+        "REQ-1.9",
+        "REQ-2.2",
+        "SAFE-4",
+        "DATA-5"
+      ],
+      "acceptance": [
+        "Audit rights, originals, duplicate groups, counts and tomato/chilli crop subsets",
+        "Freeze four manifests and preprocessing; held-out local data never leaks into training",
+        "Coordinate independent collection and reviewer availability early"
+      ],
+      "scope": "release",
+      "issue": 57,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D1E",
+      "owner": 1,
+      "title": "Train and calibrate four tomato/chilli server models",
+      "hours": 30,
+      "predecessors": [
+        "D1D"
+      ],
+      "requirements": [
+        "REQ-1.6",
+        "REQ-1.9",
+        "REQ-2.2",
+        "QUAL-1"
+      ],
+      "acceptance": [
+        "Train tomato/chilli disease and quality separately against simple baselines",
+        "Freeze calibration, disease 60 percent cutoff and separately validated quality thresholds",
+        "Publish four versioned artifacts, metrics, label maps and limitations"
+      ],
+      "scope": "release",
+      "issue": 58,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D1F",
+      "owner": 1,
+      "title": "Independent tomato/chilli and Android variant validation",
+      "hours": 18,
+      "predecessors": [
+        "D1E"
+      ],
+      "requirements": [
+        "QUAL-1",
+        "SAFE-4",
+        "REQ-1.10"
+      ],
+      "acceptance": [
+        "Collect BR-08 independent local field/challenge evidence for all four server models",
+        "Quantise both disease models, evaluate again and record device compatibility",
+        "Reviewer acceptance or failed gate is explicit; collection lead time is provisional"
+      ],
+      "scope": "release",
+      "issue": 59,
+      "minimum_elapsed_days": 14,
+      "state": "not_started"
+    },
+    {
+      "key": "D1G",
+      "owner": 1,
+      "title": "Signed offline disease package delivery and local inference",
+      "hours": 18,
+      "predecessors": [
+        "D1A",
+        "D1B",
+        "D1F"
+      ],
+      "requirements": [
+        "REQ-1.10",
+        "REQ-1.6",
+        "QUAL-2"
+      ],
+      "acceptance": [
+        "Implement optional per-crop downloads, signatures, checksums and atomic activation",
+        "Handle incompatible/revoked/interrupted packs, removal and device limits",
+        "Run validated local disease inference and show installed version/availability"
+      ],
+      "scope": "release",
+      "issue": 60,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D1H",
+      "owner": 1,
+      "title": "Offline photo queue and once-only local result sync",
+      "hours": 18,
+      "predecessors": [
+        "D1C",
+        "D1G",
+        "D5B"
+      ],
+      "requirements": [
+        "REQ-1.8",
+        "REQ-1.11",
+        "REQ-5.4",
+        "SAFE-5",
+        "QUAL-4"
+      ],
+      "acceptance": [
+        "Queue server-required photos explicitly and distinguish pending photo/local/server states",
+        "Sync saved local results under original account and operation; never trigger duplicate inference",
+        "Test restart, account switch, rejection, conflict and retry against shared outbox contract"
+      ],
+      "scope": "release",
+      "issue": 61,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D1I",
+      "owner": 1,
+      "title": "Integrate twelve server models and six Android disease packs",
+      "hours": 12,
+      "predecessors": [
+        "D1A",
+        "D1F",
+        "D1G",
+        "D2D",
+        "D3F",
+        "D4N",
+        "D5K"
+      ],
+      "requirements": [
+        "REQ-1.9",
+        "REQ-1.10",
+        "PERF-3"
+      ],
+      "acceptance": [
+        "Verify every crop/task pair and all six approved device releases",
+        "Validate preprocessing parity, abstention and manifests against consumer fixtures",
+        "Expose only approved artifacts; record timing evidence without claiming provisional targets are achieved"
+      ],
+      "scope": "release",
+      "issue": 62,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D2A",
+      "owner": 2,
+      "title": "Quality categories, subtype rules and consumer fixtures",
+      "hours": 9,
+      "predecessors": [
+        "S1",
+        "I2"
+      ],
+      "requirements": [
+        "REQ-2.2",
+        "REQ-2.3",
+        "REQ-2.4",
+        "REQ-2.5",
+        "REQ-2.7",
+        "REQ-2.8",
+        "SAFE-3"
+      ],
+      "acceptance": [
+        "Publish all six crop category mappings and supported subtypes with crop owners",
+        "Show appearance/food-safety limits and intended-green-chilli caveat",
+        "Unsupported numeric/severity/grade/shelf-life outputs stay disabled unless independently approved"
+      ],
+      "scope": "release",
+      "issue": 63,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D2B",
+      "owner": 2,
+      "title": "Quality UI connected to common jobs, saving and queue",
+      "hours": 18,
+      "predecessors": [
+        "D2A",
+        "D1A",
+        "D1C",
+        "D5B"
+      ],
+      "requirements": [
+        "REQ-2.1",
+        "REQ-2.5",
+        "REQ-2.6",
+        "REQ-2.7",
+        "REQ-1.8"
+      ],
+      "acceptance": [
+        "Replace interim fixtures with shared async job/status service",
+        "Save correct task/label/version and handling or stage advice; abstain visibly",
+        "Use shared offline photo outbox and ownership checks; do not build a second scan backend"
+      ],
+      "scope": "release",
+      "issue": 64,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D2C",
+      "owner": 2,
+      "title": "Audit and train citrus disease and quality models",
+      "hours": 24,
+      "predecessors": [
+        "D2A"
+      ],
+      "requirements": [
+        "REQ-2.3",
+        "REQ-1.9",
+        "QUAL-1"
+      ],
+      "acceptance": [
+        "Audit curated leaf and orange/lemon fruit sources, rights and local variety coverage",
+        "Train/calibrate two models and freeze thresholds, labels, preprocessing and model cards",
+        "Keep unsupported citrus varieties and organs outside validated scope"
+      ],
+      "scope": "release",
+      "issue": 65,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D2D",
+      "owner": 2,
+      "title": "Independent citrus evaluation and Android disease variant",
+      "hours": 18,
+      "predecessors": [
+        "D2C"
+      ],
+      "requirements": [
+        "SAFE-4",
+        "QUAL-1",
+        "REQ-1.10"
+      ],
+      "acceptance": [
+        "Evaluate both models independently with local and unsupported-input evidence",
+        "Supply validated citrus disease Android variant plus signed manifest metadata to D1",
+        "Record reviewer decisions, uncertainty intervals and any failed gate"
+      ],
+      "scope": "release",
+      "issue": 66,
+      "minimum_elapsed_days": 14,
+      "state": "not_started"
+    },
+    {
+      "key": "D2E",
+      "owner": 2,
+      "title": "Cross-crop quality acceptance and guidance review",
+      "hours": 15,
+      "predecessors": [
+        "D2B",
+        "D1I"
+      ],
+      "requirements": [
+        "REQ-2.1",
+        "REQ-2.2",
+        "REQ-2.3",
+        "REQ-2.4",
+        "REQ-2.6",
+        "SAFE-3"
+      ],
+      "acceptance": [
+        "Exercise every quality crop/task/subtype through real service",
+        "Verify calibrated threshold/abstention, source guidance and no fabricated numeric outputs",
+        "Check rose and chrysanthemum stage terminology with their owners"
+      ],
+      "scope": "release",
+      "issue": 67,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D2F",
+      "owner": 2,
+      "title": "Quality workflow translations and device acceptance",
+      "hours": 12,
+      "predecessors": [
+        "D2E"
+      ],
+      "requirements": [
+        "REQ-5.15",
+        "QUAL-2",
+        "QUAL-4"
+      ],
+      "acceptance": [
+        "Human-review English/Sinhala/Tamil quality labels, guidance and errors",
+        "Test denied permissions, restarts, queue and result layouts on target devices",
+        "Attach acceptance evidence to each relevant requirement"
+      ],
+      "scope": "release",
+      "issue": 68,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D3A",
+      "owner": 3,
+      "title": "Weather/location service, freshness and typed read contract",
+      "hours": 12,
+      "predecessors": [
+        "S1",
+        "I3"
+      ],
+      "requirements": [
+        "REQ-3.1",
+        "REQ-3.2",
+        "REQ-3.6"
+      ],
+      "acceptance": [
+        "Implement location search/manual selection and forecast source/units/times",
+        "Enforce 15-minute cache, two-hour advice cutoff and 24-hour display maximum",
+        "Expose typed service for D4 without requiring private-module imports"
+      ],
+      "scope": "release",
+      "issue": 69,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D3B",
+      "owner": 3,
+      "title": "Owned care task persistence, revisions and mutation service",
+      "hours": 18,
+      "predecessors": [
+        "S1"
+      ],
+      "requirements": [
+        "REQ-3.3",
+        "REQ-3.5",
+        "SAFE-5"
+      ],
+      "acceptance": [
+        "Own migrations and create/update/complete/skip/cancel care tasks",
+        "Expose typed operations, expected revisions and operation IDs for D4/D5",
+        "Separate recommendations, scheduled occurrences and actual appendable care logs; coordinate log schema with D5"
+      ],
+      "scope": "release",
+      "issue": 70,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D3C",
+      "owner": 3,
+      "title": "Reviewed care rules and forecast-based recommendations",
+      "hours": 15,
+      "predecessors": [
+        "D3A",
+        "D3B"
+      ],
+      "requirements": [
+        "REQ-3.3",
+        "REQ-3.4",
+        "SAFE-1"
+      ],
+      "acceptance": [
+        "Version reviewed rules and explain context, input limits, action and timing",
+        "Use care service for explicit task creation, keeping stale advice unavailable",
+        "Expose recommendation read interface to assistant"
+      ],
+      "scope": "release",
+      "issue": 71,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D3D",
+      "owner": 3,
+      "title": "Care reminders integrated with notification preferences",
+      "hours": 12,
+      "predecessors": [
+        "D3B",
+        "D5C"
+      ],
+      "requirements": [
+        "REQ-3.7",
+        "REQ-5.14",
+        "SAFE-5"
+      ],
+      "acceptance": [
+        "Use D5 device/preference service and occurrence IDs",
+        "Suppress cancelled/completed/duplicate events and respect quiet hours",
+        "Keep in-app schedule functional without push permission"
+      ],
+      "scope": "release",
+      "issue": 72,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D3E",
+      "owner": 3,
+      "title": "Audit, train and calibrate banana model pair",
+      "hours": 24,
+      "predecessors": [
+        "S1"
+      ],
+      "requirements": [
+        "REQ-3.8",
+        "REQ-2.2",
+        "QUAL-1"
+      ],
+      "acceptance": [
+        "Audit rights, grouped originals and approved four-class disease/ripeness labels",
+        "Train/calibrate both models and publish versioned cards and preprocessing",
+        "Do not add unsupported disease or shelf-life outputs"
+      ],
+      "scope": "release",
+      "issue": 73,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D3F",
+      "owner": 3,
+      "title": "Independent banana evaluation and Android disease variant",
+      "hours": 18,
+      "predecessors": [
+        "D3E"
+      ],
+      "requirements": [
+        "REQ-3.8",
+        "QUAL-1",
+        "SAFE-4",
+        "REQ-1.10"
+      ],
+      "acceptance": [
+        "Collect independent field/challenge metrics for both models",
+        "Validate quantised disease artifact and supply package metadata to D1",
+        "Obtain agronomy review or record unresolved release gate"
+      ],
+      "scope": "release",
+      "issue": 74,
+      "minimum_elapsed_days": 14,
+      "state": "not_started"
+    },
+    {
+      "key": "D3G",
+      "owner": 3,
+      "title": "Reviewed watering, harvest-window and irrigation scenarios",
+      "hours": 24,
+      "predecessors": [
+        "D3C"
+      ],
+      "requirements": [
+        "REQ-3.10",
+        "REQ-3.11",
+        "REQ-3.12"
+      ],
+      "acceptance": [
+        "Implement reviewed units, assumptions, valid inputs and unavailable states",
+        "Show harvest ranges and scenario changes; simulation cannot silently save a task",
+        "Record reviewer-approved methods and error bounds separately from observations"
+      ],
+      "scope": "release",
+      "issue": 75,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D3H",
+      "owner": 3,
+      "title": "Private harvest observations, crop advice and market values",
+      "hours": 24,
+      "predecessors": [
+        "D3C"
+      ],
+      "requirements": [
+        "REQ-3.13",
+        "REQ-3.14",
+        "REQ-3.15"
+      ],
+      "acceptance": [
+        "Implement private harvest/post-harvest CRUD and dated observations",
+        "Cite reviewed seasonal/intercrop advice with incompatibility/unknown cases",
+        "Match approved dated Sri Lankan crop/market/unit prices or withhold estimate"
+      ],
+      "scope": "release",
+      "issue": 76,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D3I",
+      "owner": 3,
+      "title": "Privacy-preserving regional risk alerts",
+      "hours": 15,
+      "predecessors": [
+        "D3A",
+        "D5I"
+      ],
+      "requirements": [
+        "REQ-3.9",
+        "SAFE-1",
+        "DATA-5"
+      ],
+      "acceptance": [
+        "Consume only eligible opt-in district aggregates from D5",
+        "Review contributor/window thresholds and forecast-dependent risk methods",
+        "Suppress small groups and withdrawn signals; never expose raw participants/locations"
+      ],
+      "scope": "release",
+      "issue": 77,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D3J",
+      "owner": 3,
+      "title": "Farming methods, translations and device acceptance",
+      "hours": 15,
+      "predecessors": [
+        "D3D",
+        "D3G",
+        "D3H",
+        "D3I",
+        "D3F"
+      ],
+      "requirements": [
+        "REQ-5.15",
+        "QUAL-2",
+        "QUAL-4"
+      ],
+      "acceptance": [
+        "Agronomy-review all estimates/rules and price freshness criteria",
+        "Human-review three-language farming and stale/unavailable explanations",
+        "Test offline records, notifications, denied GPS and method/source version evidence"
+      ],
+      "scope": "release",
+      "issue": 78,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D4E",
+      "owner": 4,
+      "title": "Chat thread/message persistence and canonical service routes",
+      "hours": 12,
+      "predecessors": [
+        "S1",
+        "D4A"
+      ],
+      "requirements": [
+        "REQ-4.1",
+        "SEC-1",
+        "DATA-1"
+      ],
+      "acceptance": [
+        "Add owned thread/message migration and list/read/delete/append APIs",
+        "Align final /threads route inventory while keeping any interim adapter explicit",
+        "Verify cross-user isolation and deletion lifecycle"
+      ],
+      "scope": "release",
+      "issue": 14,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D4F",
+      "owner": 4,
+      "title": "Conversation history UI and thread switching",
+      "hours": 9,
+      "predecessors": [
+        "D4E",
+        "D4C"
+      ],
+      "requirements": [
+        "REQ-4.1",
+        "QUAL-4"
+      ],
+      "acceptance": [
+        "Connect thread list/read APIs, new discussion and switching",
+        "Preserve turn state on failure and test empty/deleted/cross-user threads"
+      ],
+      "scope": "release",
+      "issue": 15,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D4P",
+      "owner": 4,
+      "title": "Select generation, embedding and speech providers",
+      "hours": 15,
+      "predecessors": [
+        "S1",
+        "D4D"
+      ],
+      "requirements": [
+        "REQ-4.11",
+        "REQ-4.5",
+        "PERF-4"
+      ],
+      "acceptance": [
+        "Compare at least one alternative on reviewed English/Sinhala/Tamil cases",
+        "Record privacy, safety, retrieval, latency, quotas, cost and speech results",
+        "Approve and pin embedding dimensions/normalisation/distance before production index; names and access to reviewers remain external constraints"
+      ],
+      "scope": "release",
+      "issue": 79,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D4G",
+      "owner": 4,
+      "title": "Approved knowledge schema and ingestion pipeline",
+      "hours": 12,
+      "predecessors": [
+        "D4P",
+        "S2"
+      ],
+      "requirements": [
+        "REQ-4.2",
+        "REQ-4.11",
+        "DATA-5"
+      ],
+      "acceptance": [
+        "Use approved embedding dimensions; remove obsolete fixed 1536 assumption",
+        "Retain source rights/title/URL/crop/language/review metadata",
+        "Separate experimental index used in evaluation from frozen production index; reindex on approved schema change"
+      ],
+      "scope": "release",
+      "issue": 16,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D4H",
+      "owner": 4,
+      "title": "Cited retrieval and typed plant, scan and weather reads",
+      "hours": 15,
+      "predecessors": [
+        "D4G",
+        "D4B",
+        "D1C",
+        "D3A"
+      ],
+      "requirements": [
+        "REQ-4.2",
+        "REQ-4.3",
+        "SEC-3"
+      ],
+      "acceptance": [
+        "Retrieve approved evidence and show real supporting citations or missing evidence",
+        "Use typed owner-only scan/plant/weather services; no arbitrary SQL tool",
+        "Test injected retrieved instructions and cross-user identifiers"
+      ],
+      "scope": "release",
+      "issue": 17,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D4I",
+      "owner": 4,
+      "title": "Two-phase confirmed care actions",
+      "hours": 18,
+      "predecessors": [
+        "D4E",
+        "D3B",
+        "D5B"
+      ],
+      "requirements": [
+        "REQ-4.6",
+        "REQ-4.7",
+        "SAFE-5"
+      ],
+      "acceptance": [
+        "Show exact proposed plant/task/log/reminder change and explicit confirmation",
+        "Use domain care/log services, ownership, expected revision, payload digest, operation ID and 10-minute single-use expiry",
+        "Handle cancel/change/replay/conflict/unknown outcomes; care data belongs in care/log entities, not invented plant fields"
+      ],
+      "scope": "release",
+      "issue": 18,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D4J",
+      "owner": 4,
+      "title": "LangGraph orchestration, checkpoints and bounded tools",
+      "hours": 18,
+      "predecessors": [
+        "D4E",
+        "D4H",
+        "D4I",
+        "D4D"
+      ],
+      "requirements": [
+        "REQ-4.8",
+        "REQ-4.9",
+        "PERF-4"
+      ],
+      "acceptance": [
+        "Use approved provider and owned persisted checkpoints",
+        "Enforce 60 seconds, eight tool calls and two generation retries",
+        "Preserve actual completed-action state and redact traces; production private-content tracing disabled"
+      ],
+      "scope": "release",
+      "issue": 19,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D4K",
+      "owner": 4,
+      "title": "Private photo/document attachments and safe extraction",
+      "hours": 12,
+      "predecessors": [
+        "D4E",
+        "S2"
+      ],
+      "requirements": [
+        "REQ-4.13",
+        "REQ-4.5",
+        "SEC-3"
+      ],
+      "acceptance": [
+        "Validate decoded image limits, PDF 10 MiB/30 pages and UTF-8 text 1 MiB",
+        "Reject encrypted/malformed/executable content and bound extraction",
+        "Keep owner access, provenance and untrusted-content isolation; chat photos use scan service for diagnosis"
+      ],
+      "scope": "release",
+      "issue": 20,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D4L",
+      "owner": 4,
+      "title": "Three-language speech input and reply playback",
+      "hours": 15,
+      "predecessors": [
+        "D4P",
+        "D4C",
+        "D4E"
+      ],
+      "requirements": [
+        "REQ-4.12",
+        "REQ-4.5"
+      ],
+      "acceptance": [
+        "Request mic contextually; show editable transcript before explicit send",
+        "Provide stoppable playback and text fallback in all three languages",
+        "Delete transient audio after processing and verify provider failures"
+      ],
+      "scope": "release",
+      "issue": 21,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D4M1",
+      "owner": 4,
+      "title": "Rose disease dataset, training and calibration",
+      "hours": 15,
+      "predecessors": [
+        "S1"
+      ],
+      "requirements": [
+        "REQ-4.10",
+        "QUAL-1"
+      ],
+      "acceptance": [
+        "Audit rights, labels, grouped splits and domain limits",
+        "Train calibrated disease model with fixed 60 percent cutoff and versioned card"
+      ],
+      "scope": "release",
+      "issue": 22,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D4M2",
+      "owner": 4,
+      "title": "Rose growth-stage dataset, training and calibration",
+      "hours": 15,
+      "predecessors": [
+        "S1"
+      ],
+      "requirements": [
+        "REQ-4.10",
+        "REQ-2.4",
+        "QUAL-1"
+      ],
+      "acceptance": [
+        "Review Early/Middle/Final definitions and audit original-image rights",
+        "Train stage classifier with validated quality threshold and versioned card"
+      ],
+      "scope": "release",
+      "issue": 23,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D4N",
+      "owner": 4,
+      "title": "Validated rose artifacts through common inference",
+      "hours": 18,
+      "predecessors": [
+        "D4M1",
+        "D4M2",
+        "D1A"
+      ],
+      "requirements": [
+        "REQ-4.10",
+        "REQ-1.10",
+        "QUAL-1",
+        "SAFE-4"
+      ],
+      "acceptance": [
+        "Use common /scans service; do not add a separate public rose inference route",
+        "Independently evaluate both models and quantised disease variant",
+        "Provide artifacts/metadata to D1; LLM-only diagnosis or fake confidence prohibited"
+      ],
+      "scope": "release",
+      "issue": 24,
+      "minimum_elapsed_days": 14,
+      "state": "not_started"
+    },
+    {
+      "key": "D4Q",
+      "owner": 4,
+      "title": "Reviewed gardening FAQ in three languages",
+      "hours": 9,
+      "predecessors": [
+        "D4P"
+      ],
+      "requirements": [
+        "REQ-4.14",
+        "REQ-5.15"
+      ],
+      "acceptance": [
+        "Review and attribute FAQ entries in English/Sinhala/Tamil",
+        "Keep generic FAQ distinct from personalised advice and exercise unavailable sources"
+      ],
+      "scope": "release",
+      "issue": 80,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D4O",
+      "owner": 4,
+      "title": "Assistant safety, privacy and three-language acceptance",
+      "hours": 18,
+      "predecessors": [
+        "D4J",
+        "D4K",
+        "D4L",
+        "D4Q",
+        "D4N"
+      ],
+      "requirements": [
+        "REQ-4.1",
+        "REQ-4.2",
+        "REQ-4.3",
+        "REQ-4.4",
+        "REQ-4.5",
+        "REQ-4.6",
+        "REQ-4.7",
+        "REQ-4.8",
+        "REQ-4.9",
+        "REQ-4.10",
+        "REQ-4.11",
+        "REQ-4.12",
+        "REQ-4.13",
+        "REQ-4.14",
+        "SAFE-2",
+        "SEC-1"
+      ],
+      "acceptance": [
+        "Run reviewed provider-level cases in all three languages, including unsafe treatment, injection and unauthorised writes",
+        "Verify confirmation/replay/ownership, citations, files, speech and redaction",
+        "Record actual benchmark results and reviewer sign-off; zero claims from regex-only tests"
+      ],
+      "scope": "release",
+      "issue": 25,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D5A",
+      "owner": 5,
+      "title": "Account, garden and profile lifecycle completion",
+      "hours": 15,
+      "predecessors": [
+        "S1",
+        "I5"
+      ],
+      "requirements": [
+        "REQ-5.1",
+        "REQ-5.2",
+        "REQ-5.3",
+        "SEC-1",
+        "SEC-4"
+      ],
+      "acceptance": [
+        "Extend supplied Firebase foundation with recovery/explicit linking and all six crops",
+        "Check active/revoked identity, owned plant/context CRUD and retained preferences",
+        "No email-only account merging; publish garden/context interface for other modules"
+      ],
+      "scope": "release",
+      "issue": 81,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D5B",
+      "owner": 5,
+      "title": "Private diary, care-log service and shared offline outbox",
+      "hours": 21,
+      "predecessors": [
+        "S1"
+      ],
+      "requirements": [
+        "REQ-5.3",
+        "REQ-5.4",
+        "QUAL-4",
+        "SAFE-5"
+      ],
+      "acceptance": [
+        "Agree log/occurrence relation with D3 and own diary/outbox migrations",
+        "Expose typed appendable owned care logs with operation uniqueness",
+        "Persist offline notes/photos/logs under original account; define reusable bounded outbox for D1/D2 with conflicts surfaced"
+      ],
+      "scope": "release",
+      "issue": 82,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D5C",
+      "owner": 5,
+      "title": "Notification devices, preferences and quiet-hours service",
+      "hours": 12,
+      "predecessors": [
+        "D5A",
+        "S2"
+      ],
+      "requirements": [
+        "REQ-5.14",
+        "SEC-2"
+      ],
+      "acceptance": [
+        "Provide FCM token lifecycle, language/preferences and quiet hours",
+        "Expose notification delivery contract to D3; ownership and token rotation tested",
+        "In-app pending care remains visible independently of push permission"
+      ],
+      "scope": "release",
+      "issue": 83,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D5D",
+      "owner": 5,
+      "title": "Community publishing, feeds, interactions and public sharing",
+      "hours": 24,
+      "predecessors": [
+        "I5",
+        "D5A",
+        "S2"
+      ],
+      "requirements": [
+        "REQ-5.5",
+        "REQ-5.6",
+        "REQ-5.7",
+        "REQ-5.8",
+        "REQ-5.12"
+      ],
+      "acceptance": [
+        "Require rule acceptance, preview and explicit publish; validate media and crop tags",
+        "Implement stable For You/Following pagination, owned edits/comments, unique likes/follows/bookmarks",
+        "Provide minimal read-only /p/{share_token} for explicitly public posts and remove access when unavailable"
+      ],
+      "scope": "release",
+      "issue": 84,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D5E",
+      "owner": 5,
+      "title": "Blocking, reports and restricted review operations",
+      "hours": 18,
+      "predecessors": [
+        "D5D"
+      ],
+      "requirements": [
+        "REQ-5.9",
+        "REQ-5.10",
+        "REQ-5.11",
+        "REQ-5.12",
+        "SEC-4"
+      ],
+      "acceptance": [
+        "Enforce bilateral authenticated blocking, remove follows and prevent interactions",
+        "Protect reporters and enforce exactly-one-target report constraints and abuse limits",
+        "Implement restricted audited review/runbook, suspension/removal and appeal contact; no admin portal"
+      ],
+      "scope": "release",
+      "issue": 85,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D5F",
+      "owner": 5,
+      "title": "Consent, exports, deletion and retention lifecycle",
+      "hours": 24,
+      "predecessors": [
+        "D5A",
+        "S2",
+        "D4E",
+        "D1C"
+      ],
+      "requirements": [
+        "REQ-5.16",
+        "REQ-5.17",
+        "REQ-5.18",
+        "DATA-1",
+        "DATA-2",
+        "DATA-3",
+        "DATA-4",
+        "DATA-5",
+        "DATA-6"
+      ],
+      "acceptance": [
+        "Separate optional training consent from scans/sharing and enforce withdrawal in future exports",
+        "Provide owner-only archive with 24-hour download expiry",
+        "Require reauthentication, disable immediately, delete active content within 30 days and backups in further 30 days",
+        "Test all-module cleanup, jobs, old object versions, minimal deletion records and restored-data suppression"
+      ],
+      "scope": "release",
+      "issue": 86,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D5G",
+      "owner": 5,
+      "title": "Idempotent care/post XP, badges and reward ledger",
+      "hours": 18,
+      "predecessors": [
+        "D5B",
+        "D3B",
+        "D5D"
+      ],
+      "requirements": [
+        "REQ-5.13",
+        "REQ-5.20",
+        "SAFE-5"
+      ],
+      "acceptance": [
+        "Apply exact BR-01 values/caps and unique earning-event keys",
+        "Qualifying posts award once and reverse on removal/deletion",
+        "No XP for likes/comments/follows; care completion and retries never double award"
+      ],
+      "scope": "release",
+      "issue": 87,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D5H",
+      "owner": 5,
+      "title": "Private forest and opt-in leaderboard",
+      "hours": 12,
+      "predecessors": [
+        "D5G",
+        "D5E"
+      ],
+      "requirements": [
+        "REQ-5.21"
+      ],
+      "acceptance": [
+        "Display own forest from earned milestones",
+        "Publish only opted-in chosen name/score, applying blocks/suspensions/withdrawals"
+      ],
+      "scope": "release",
+      "issue": 88,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D5I",
+      "owner": 5,
+      "title": "Opt-in district observations and aggregate statistics",
+      "hours": 18,
+      "predecessors": [
+        "D5F",
+        "D5E"
+      ],
+      "requirements": [
+        "REQ-5.22",
+        "DATA-5"
+      ],
+      "acceptance": [
+        "Agree approved contributor/window suppression rules with D3/reviewers",
+        "Produce district/crop/time aggregates with one qualifying signal per contributor",
+        "Remove withdrawn/invalid/removed contributions; expose aggregate service to D3 without raw identities"
+      ],
+      "scope": "release",
+      "issue": 89,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "D5J",
+      "owner": 5,
+      "title": "Collect local chrysanthemum stages and train model pair",
+      "hours": 30,
+      "predecessors": [
+        "S1"
+      ],
+      "requirements": [
+        "REQ-5.19",
+        "REQ-2.4",
+        "QUAL-1"
+      ],
+      "acceptance": [
+        "Audit disease source and collect stage originals: BR-08 planning floor 300/class, 30 plants, three sites",
+        "Review Bud/Open labels and grouped splits; do not represent seed-only data as complete",
+        "Train/calibrate both models and record rights, artifacts and model cards"
+      ],
+      "scope": "release",
+      "issue": 90,
+      "minimum_elapsed_days": 21,
+      "state": "not_started"
+    },
+    {
+      "key": "D5K",
+      "owner": 5,
+      "title": "Independent chrysanthemum evaluation and disease variant",
+      "hours": 18,
+      "predecessors": [
+        "D5J"
+      ],
+      "requirements": [
+        "REQ-5.19",
+        "REQ-1.10",
+        "SAFE-4",
+        "QUAL-1"
+      ],
+      "acceptance": [
+        "Run independent field/challenge tests for both models and Android disease variant",
+        "Provide accepted artifact metadata to D1 and record collection counts/reviewer result"
+      ],
+      "scope": "release",
+      "issue": 91,
+      "minimum_elapsed_days": 14,
+      "state": "not_started"
+    },
+    {
+      "key": "D5L",
+      "owner": 5,
+      "title": "Accounts/community/privacy translations and acceptance",
+      "hours": 15,
+      "predecessors": [
+        "D5C",
+        "D5D",
+        "D5E",
+        "D5F",
+        "D5H",
+        "D5I",
+        "D5K"
+      ],
+      "requirements": [
+        "REQ-5.15",
+        "QUAL-2",
+        "QUAL-4"
+      ],
+      "acceptance": [
+        "Human-review all three languages, rules/help, privacy, rewards and notifications",
+        "Exercise two-user isolation, offline/restart/conflict and removed content across all surfaces",
+        "Publish actual device/language evidence and support/review workflow"
+      ],
+      "scope": "release",
+      "issue": 92,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "R1",
+      "owner": 1,
+      "title": "Integrated security, replay, load and recovery verification",
+      "hours": 24,
+      "predecessors": [
+        "D1H",
+        "D1I",
+        "D2F",
+        "D3J",
+        "D4O",
+        "D5L"
+      ],
+      "requirements": [
+        "PERF-1",
+        "PERF-2",
+        "PERF-3",
+        "PERF-4",
+        "PERF-5",
+        "SEC-1",
+        "SEC-2",
+        "SEC-3",
+        "SEC-4",
+        "SAFE-5",
+        "QUAL-3",
+        "QUAL-4",
+        "OPS-1",
+        "OPS-2"
+      ],
+      "acceptance": [
+        "Map every requirement to evidence and resolve integration defects with affected owners",
+        "Run published 100-session workload, twelve-model timing, queue/resource/quota and restart tests",
+        "Verify security/dependency/secret scans, ownership, redaction, backup restore and deletion suppression",
+        "Measure availability/recovery and ratify or record failed provisional timing/model gates"
+      ],
+      "scope": "release",
+      "issue": 93,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "R2",
+      "owner": 2,
+      "title": "Android accessibility, language and complete demo verification",
+      "hours": 18,
+      "predecessors": [
+        "R1"
+      ],
+      "requirements": [
+        "QUAL-2",
+        "REQ-5.15",
+        "SAFE-1",
+        "SAFE-3"
+      ],
+      "acceptance": [
+        "Collect each UI owner contribution and reviewer approval for English/Sinhala/Tamil",
+        "Publish supported device/Android matrix, camera/offline/notifications/accessibility results",
+        "Rehearse full academic scenario and link model, care, community, voice/file and reward evidence"
+      ],
+      "scope": "release",
+      "issue": 94,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "R3",
+      "owner": 1,
+      "title": "Release operations, provenance, rollback and handover",
+      "hours": 18,
+      "predecessors": [
+        "R1",
+        "S2",
+        "D5F"
+      ],
+      "requirements": [
+        "OPS-1",
+        "OPS-2",
+        "OPS-3",
+        "OPS-4",
+        "SEC-2"
+      ],
+      "acceptance": [
+        "Record approved accounts/budget/terms, privacy review, contacts and runbooks",
+        "Package API/app/dependency/migration/model/knowledge/provider versions and checksums",
+        "Test rollback, restore, alerts, support and deletion suppression; no paid provisioning implied"
+      ],
+      "scope": "release",
+      "issue": 95,
+      "minimum_elapsed_days": 0,
+      "state": "not_started"
+    },
+    {
+      "key": "RG",
+      "owner": 0,
+      "title": "External reviews and product-owner acceptance gate",
+      "hours": 0,
+      "predecessors": [
+        "R2",
+        "R3"
+      ],
+      "requirements": [
+        "OPS-5",
+        "QUAL-1",
+        "QUAL-2",
+        "DATA-5"
+      ],
+      "acceptance": [
+        "Name product owner and agricultural/language/operational reviewers",
+        "Complete every Appendix C gate and competent privacy review before public launch",
+        "External availability/approval not confirmed; seven-day allowance is a provisional lead time, not a commitment"
+      ],
+      "scope": "release",
+      "issue": 96,
+      "minimum_elapsed_days": 7,
+      "state": "not_started"
+    }
+  ],
+  "release_milestone": 2,
+  "index_issue": 43,
+  "native_dependency_count": 141
+}

@@ -1,0 +1,71 @@
+﻿id,owner,scope,issue,title,remaining_hours,minimum_elapsed_days,technical_predecessors,state
+F0,1,foundation,,Shared development foundation accepted,0,0,,done
+I1A,1,interim,44,Interim: authenticated tomato upload and status flow,6,0,F0,not_started
+I1B,1,interim,45,Interim: tomato disease dataset and evaluated baseline,9,0,F0,not_started
+I1C,1,interim,46,Interim: crop-health evidence and focused PR,3,0,I1A I1B,not_started
+I2,2,interim,47,Interim: citrus quality flow and data feasibility,12,0,F0,not_started
+I3,3,interim,48,Interim: live location forecast and explained advisory,12,0,F0,not_started
+I5,5,interim,49,Interim: authenticated persisted text posts,12,0,F0,not_started
+D4A,4,interim,10,Chat contract and baseline endpoint,3,0,F0,in_review
+D4B,4,interim,11,Typed owner-only plant context tool,3,0,D4A,in_review
+D4C,4,interim,12,Mobile chat foundation,3,0,D4A,in_review
+D4D,4,interim,13,Agronomist prompt and chemical safety boundaries,3,0,D4A,in_review
+I4,4,interim,50,"Interim: real LLM turn, bounded failure and evidence",6,0,D4B D4C D4D,not_started
+IG,1,interim,51,"Interim: reviewed integration, freeze and rehearsal",6,0,I1C I2 I3 I4 I5,not_started
+S1,1,release,52,"Freeze shared API, model and cross-module handoff contracts",9,0,IG,not_started
+S2,1,release,53,"Private media, durable workers and deployment preparation",18,0,S1,not_started
+D1A,1,release,54,Durable shared scan jobs and versioned model registry,18,0,S1 S2,not_started
+D1B,1,release,55,"Android capture, disease results and reviewed guidance",15,0,S1,not_started
+D1C,1,release,56,"Owned scan saving, history and deletion service",12,0,D1A,not_started
+D1D,1,release,57,Audit tomato/chilli datasets and freeze four label maps,12,0,I1B S1,not_started
+D1E,1,release,58,Train and calibrate four tomato/chilli server models,30,0,D1D,not_started
+D1F,1,release,59,Independent tomato/chilli and Android variant validation,18,14,D1E,not_started
+D1G,1,release,60,Signed offline disease package delivery and local inference,18,0,D1A D1B D1F,not_started
+D1H,1,release,61,Offline photo queue and once-only local result sync,18,0,D1C D1G D5B,not_started
+D1I,1,release,62,Integrate twelve server models and six Android disease packs,12,0,D1A D1F D1G D2D D3F D4N D5K,not_started
+D2A,2,release,63,"Quality categories, subtype rules and consumer fixtures",9,0,S1 I2,not_started
+D2B,2,release,64,"Quality UI connected to common jobs, saving and queue",18,0,D2A D1A D1C D5B,not_started
+D2C,2,release,65,Audit and train citrus disease and quality models,24,0,D2A,not_started
+D2D,2,release,66,Independent citrus evaluation and Android disease variant,18,14,D2C,not_started
+D2E,2,release,67,Cross-crop quality acceptance and guidance review,15,0,D2B D1I,not_started
+D2F,2,release,68,Quality workflow translations and device acceptance,12,0,D2E,not_started
+D3A,3,release,69,"Weather/location service, freshness and typed read contract",12,0,S1 I3,not_started
+D3B,3,release,70,"Owned care task persistence, revisions and mutation service",18,0,S1,not_started
+D3C,3,release,71,Reviewed care rules and forecast-based recommendations,15,0,D3A D3B,not_started
+D3D,3,release,72,Care reminders integrated with notification preferences,12,0,D3B D5C,not_started
+D3E,3,release,73,"Audit, train and calibrate banana model pair",24,0,S1,not_started
+D3F,3,release,74,Independent banana evaluation and Android disease variant,18,14,D3E,not_started
+D3G,3,release,75,"Reviewed watering, harvest-window and irrigation scenarios",24,0,D3C,not_started
+D3H,3,release,76,"Private harvest observations, crop advice and market values",24,0,D3C,not_started
+D3I,3,release,77,Privacy-preserving regional risk alerts,15,0,D3A D5I,not_started
+D3J,3,release,78,"Farming methods, translations and device acceptance",15,0,D3D D3G D3H D3I D3F,not_started
+D4E,4,release,14,Chat thread/message persistence and canonical service routes,12,0,S1 D4A,not_started
+D4F,4,release,15,Conversation history UI and thread switching,9,0,D4E D4C,not_started
+D4P,4,release,79,"Select generation, embedding and speech providers",15,0,S1 D4D,not_started
+D4G,4,release,16,Approved knowledge schema and ingestion pipeline,12,0,D4P S2,not_started
+D4H,4,release,17,"Cited retrieval and typed plant, scan and weather reads",15,0,D4G D4B D1C D3A,not_started
+D4I,4,release,18,Two-phase confirmed care actions,18,0,D4E D3B D5B,not_started
+D4J,4,release,19,"LangGraph orchestration, checkpoints and bounded tools",18,0,D4E D4H D4I D4D,not_started
+D4K,4,release,20,Private photo/document attachments and safe extraction,12,0,D4E S2,not_started
+D4L,4,release,21,Three-language speech input and reply playback,15,0,D4P D4C D4E,not_started
+D4M1,4,release,22,"Rose disease dataset, training and calibration",15,0,S1,not_started
+D4M2,4,release,23,"Rose growth-stage dataset, training and calibration",15,0,S1,not_started
+D4N,4,release,24,Validated rose artifacts through common inference,18,14,D4M1 D4M2 D1A,not_started
+D4Q,4,release,80,Reviewed gardening FAQ in three languages,9,0,D4P,not_started
+D4O,4,release,25,"Assistant safety, privacy and three-language acceptance",18,0,D4J D4K D4L D4Q D4N,not_started
+D5A,5,release,81,"Account, garden and profile lifecycle completion",15,0,S1 I5,not_started
+D5B,5,release,82,"Private diary, care-log service and shared offline outbox",21,0,S1,not_started
+D5C,5,release,83,"Notification devices, preferences and quiet-hours service",12,0,D5A S2,not_started
+D5D,5,release,84,"Community publishing, feeds, interactions and public sharing",24,0,I5 D5A S2,not_started
+D5E,5,release,85,"Blocking, reports and restricted review operations",18,0,D5D,not_started
+D5F,5,release,86,"Consent, exports, deletion and retention lifecycle",24,0,D5A S2 D4E D1C,not_started
+D5G,5,release,87,"Idempotent care/post XP, badges and reward ledger",18,0,D5B D3B D5D,not_started
+D5H,5,release,88,Private forest and opt-in leaderboard,12,0,D5G D5E,not_started
+D5I,5,release,89,Opt-in district observations and aggregate statistics,18,0,D5F D5E,not_started
+D5J,5,release,90,Collect local chrysanthemum stages and train model pair,30,21,S1,not_started
+D5K,5,release,91,Independent chrysanthemum evaluation and disease variant,18,14,D5J,not_started
+D5L,5,release,92,Accounts/community/privacy translations and acceptance,15,0,D5C D5D D5E D5F D5H D5I D5K,not_started
+R1,1,release,93,"Integrated security, replay, load and recovery verification",24,0,D1H D1I D2F D3J D4O D5L,not_started
+R2,2,release,94,"Android accessibility, language and complete demo verification",18,0,R1,not_started
+R3,1,release,95,"Release operations, provenance, rollback and handover",18,0,R1 S2 D5F,not_started
+RG,0,release,96,External reviews and product-owner acceptance gate,0,7,R2 R3,not_started

@@ -1,0 +1,62 @@
+flowchart LR
+  classDef critical fill:#ffe2e2,stroke:#c62828,stroke-width:3px
+  classDef gate fill:#fff3cd,stroke:#9a6700
+  subgraph owner1["Developer 1"]
+    I1A["I1A #44: Interim: authenticated tomato upload and status flow<br/>6h / 2 calendar days"]
+    I1B["I1B #45: Interim: tomato disease dataset and evaluated baseline<br/>9h / 3 calendar days"]
+    I1C["I1C #46: Interim: crop-health evidence and focused PR<br/>3h / 1 calendar days"]
+    IG["IG #51: Interim: reviewed integration, freeze and rehearsal<br/>6h / 2 calendar days"]
+  end
+  subgraph owner2["Developer 2"]
+    I2["I2 #47: Interim: citrus quality flow and data feasibility<br/>12h / 4 calendar days"]
+  end
+  subgraph owner3["Developer 3"]
+    I3["I3 #48: Interim: live location forecast and explained advisory<br/>12h / 4 calendar days"]
+  end
+  subgraph owner4["Developer 4"]
+    D4A["D4A #10: Chat contract and baseline endpoint<br/>3h / 1 calendar days"]
+    D4B["D4B #11: Typed owner-only plant context tool<br/>3h / 1 calendar days"]
+    D4C["D4C #12: Mobile chat foundation<br/>3h / 1 calendar days"]
+    D4D["D4D #13: Agronomist prompt and chemical safety boundaries<br/>3h / 1 calendar days"]
+    I4["I4 #50: Interim: real LLM turn, bounded failure and evidence<br/>6h / 2 calendar days"]
+  end
+  subgraph owner5["Developer 5"]
+    I5["I5 #49: Interim: authenticated persisted text posts<br/>12h / 4 calendar days"]
+  end
+  click D4A "https://github.com/Tenzrr/Elora/issues/10"
+  class D4A critical
+  click I1A "https://github.com/Tenzrr/Elora/issues/44"
+  click I1B "https://github.com/Tenzrr/Elora/issues/45"
+  class I1B critical
+  click I2 "https://github.com/Tenzrr/Elora/issues/47"
+  class I2 critical
+  click I3 "https://github.com/Tenzrr/Elora/issues/48"
+  class I3 critical
+  click I5 "https://github.com/Tenzrr/Elora/issues/49"
+  class I5 critical
+  D4A --> D4B
+  click D4B "https://github.com/Tenzrr/Elora/issues/11"
+  class D4B critical
+  D4A --> D4C
+  click D4C "https://github.com/Tenzrr/Elora/issues/12"
+  class D4C critical
+  D4A --> D4D
+  click D4D "https://github.com/Tenzrr/Elora/issues/13"
+  class D4D critical
+  I1A --> I1C
+  I1B --> I1C
+  click I1C "https://github.com/Tenzrr/Elora/issues/46"
+  class I1C critical
+  D4B --> I4
+  D4C --> I4
+  D4D --> I4
+  click I4 "https://github.com/Tenzrr/Elora/issues/50"
+  class I4 critical
+  I1C --> IG
+  I2 --> IG
+  I3 --> IG
+  I4 --> IG
+  I5 --> IG
+  click IG "https://github.com/Tenzrr/Elora/issues/51"
+  class IG critical
+  linkStyle 0,1,2,4,5,6,7,8,9,10,11,12 stroke:#c62828,stroke-width:3px
