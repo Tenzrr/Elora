@@ -4,6 +4,8 @@ Baseline: 15 November 2026, development day one. Four workdays: **16–19 Novemb
 
 ## Status and evidence
 
+The [shared CPM and capacity forecast](TEAM_DEPENDENCIES.md) adds cross-developer dependencies to this original baseline. Use its [GitHub delivery index](https://github.com/Tenzrr/Elora/issues/43) for current work items. On 17 November, Dev 4 PRs #39–#42 are open/in review; that does not establish a working live LLM demonstration. Other individual completion evidence has not been supplied to this planning exercise. The three-hour daily capacity scenario forecasts later readiness than the original rehearsal target; validate remaining effort and reduce the interim slice before committing to the presentation.
+
 Requirements/report preparation is completed analysis work. October feature prototypes were removed from the development baseline. Reports retain their intentional submission-state completion wording. This tracker starts every individual deliverable as **Not started — completion evidence not yet recorded**.
 
 Target approximately 20% of each core module; owners must map the demonstrated subset to their full SRS scope. No percentage is established by shared setup, mocks, commit counts or documentation. Dev 3–5 CNNs remain later learning/release work, not a four-day requirement.

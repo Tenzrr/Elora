@@ -6,6 +6,8 @@ Own the shared disease-scan workflow and train the disease and quality CNNs for 
 
 ## Four-day plan
 
+For current issue IDs, cross-developer blockers and capacity, use the [Dev 1 issue map](../dev1-issue-map.md) and [common CPM](../TEAM_DEPENDENCIES.md). The table below preserves the original four-day baseline; its technical paths do not account for one developer's limited hours.
+
 | Task | Depends on | Planned window | Working days | Exit evidence |
 | --- | --- | --- | ---: | --- |
 | A · Confirm shared scan inputs and results with Dev 2; start the authenticated scan slice | — | Nov 16 | 1 | Agreed multipart inputs, validation and result shape |

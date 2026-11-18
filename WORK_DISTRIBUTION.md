@@ -16,6 +16,14 @@ The [finalized SRS](docs/specifications/Elora_SRS.md) governs scope. Use the [im
 
 Initial integration coordinator: Dev 1. Shared-change reviewer: Dev 3, plus affected module owners. Shared authentication/Android/database preparation is separate from individual feature delivery. Dev 3–5 train their assigned CNNs later as learning/release work; their interim evaluation focuses on their main modules.
 
+## Team issues and dependencies
+
+Use the [team dependency and CPM plan](docs/project-management/TEAM_DEPENDENCIES.md) for cross-developer handoffs, critical paths and capacity forecasts. The [GitHub delivery index](https://github.com/Tenzrr/Elora/issues/43) links the five issue maps. Capacity confirmed on 17 November is **3 hours per developer every day, including weekends**. Estimates and external lead times remain provisional; the exact April deadline is undecided.
+
+Care-task persistence and mutations belong to **Dev 3**. Dev 5 owns the diary/care-log service and shared offline outbox. Dev 4 integrates confirmed actions with those services. A database migration alone is not the handoff: consumers need an agreed typed interface, revision/idempotency behaviour and acceptance evidence.
+
+The original four-day tables below are the historical baseline. Their local dependency paths assume tasks can overlap; the common schedule accounts for each person's capacity. Overlapping training runs do not create additional developer working hours. Record actual remaining work before promising an interim date.
+
 ## Delivery checkpoints
 
 - **November 16–19, 2026.** Target about 20% of each core module through its agreed demonstrable slice. The plan tables assume access to the shared development setup and show proposed work windows, dependencies, and the critical path. Parallel rows can overlap within a developer’s workdays. Each owner decides their own implementation approach and raises blockers that change the shared dates or contracts.

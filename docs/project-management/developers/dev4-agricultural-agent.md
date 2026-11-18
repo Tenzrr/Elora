@@ -6,6 +6,8 @@ Own the assistant and its tool, retrieval and interaction boundaries. Train the 
 
 ## Four-day plan
 
+For current issue IDs, cross-developer blockers and capacity, use the [Dev 4 issue map](../dev4-issue-map.md) and [common CPM](../TEAM_DEPENDENCIES.md). Real confirmed-action integration depends on Dev 3's care service and Dev 5's care-log service; chat, interfaces and confirmation UI can proceed earlier with labelled fixtures. The table below preserves the original four-day baseline; its technical paths do not account for one developer's limited hours.
+
 | Task | Depends on | Planned window | Working days | Exit evidence |
 | --- | --- | --- | ---: | --- |
 | A · Confirm development LLM access, chat contract and one read-only tool interface | — | Nov 16 | 1 | Development configuration and typed tool inputs/outputs agreed |

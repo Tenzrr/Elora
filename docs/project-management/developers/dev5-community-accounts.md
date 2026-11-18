@@ -6,6 +6,8 @@ Own the community and account feature slice. Train the chrysanthemum disease and
 
 ## Four-day plan
 
+For current issue IDs, cross-developer blockers and capacity, use the [Dev 5 issue map](../dev5-issue-map.md) and [common CPM](../TEAM_DEPENDENCIES.md). Dev 5 owns private diary/care logs, the shared outbox and notification preferences; coordinate task/occurrence IDs with Dev 3. The table below preserves the original four-day baseline; its technical paths do not account for one developer's limited hours.
+
 | Task | Depends on | Planned window | Working days | Exit evidence |
 | --- | --- | --- | ---: | --- |
 | A · Agree on the text-post shape, owner identity and migration approach | — | Nov 16 | 1 | Create/list contract, persistence plan and authorization cases |
