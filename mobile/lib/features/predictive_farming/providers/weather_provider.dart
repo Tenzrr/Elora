@@ -12,8 +12,21 @@ const List<String> presetFarmingLocations = [
   'Matara',
 ];
 
+/// Notifier managing the currently selected farming location name.
+class SelectedLocationNotifier extends Notifier<String> {
+  @override
+  String build() => 'Colombo';
+
+  void setLocation(String location) {
+    state = location;
+  }
+}
+
 /// Holds the currently selected farming location name.
-final selectedLocationProvider = StateProvider<String>((ref) => 'Colombo');
+final selectedLocationProvider =
+    NotifierProvider<SelectedLocationNotifier, String>(
+  SelectedLocationNotifier.new,
+);
 
 /// Asynchronously fetches live weather and explainable advisory for the selected location.
 final farmingWeatherProvider =
