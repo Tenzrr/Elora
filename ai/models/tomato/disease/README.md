@@ -21,7 +21,7 @@ This directory contains the reproducible training notebook and the small evidenc
 
 The [manifest](evidence/dataset_manifest.csv) records all 830 raw paths, hashes, source and normalized labels, splits, and exclusion reasons. Exact SHA-256 duplicates and visually reviewed perceptual-hash near duplicates account for 60 exclusions, including images with conflicting labels. All 770 selected images decoded successfully. The remaining 770 originals were split into **538 train, 116 validation, and 116 test** images with stratification by source label.
 
-Plant and capture-session IDs were unavailable, so `group_id` is blank and this is **not a verified plant/session-grouped split**. Related-photo leakage may remain. A sample visual review was performed, but the full 50-originals-per-class audit required by the dataset intake procedure is still outstanding. Source disease names are visual annotations, not laboratory diagnoses.
+Plant and capture-session IDs were unavailable, so `group_id` is blank and this is **not a verified plant/session-grouped split**. Related-photo leakage may remain. A sample visual review was performed, and a [50-originals-per-class review queue](VISUAL_REVIEW.md) is ready; its 300 rows are not yet marked. Source disease names are visual annotations, not laboratory diagnoses.
 
 ## Recorded held-out result
 
@@ -42,4 +42,4 @@ One inspected test error was `Tomato_Early_blight_leaf/1723454506040.jpg`: the s
 
 This run has no independent Sri Lankan field evaluation, probability calibration, unsupported-input/fruit rejection result, or accepted-prediction coverage measurement. It does not satisfy the provisional `QUAL-1` release objectives. The fixed 60% disease cutoff must be applied to **calibrated** scores together with input/domain checks in a later model version. The issue 45 interim evidence can be reviewed without representing this baseline as release ready.
 
-The [notebook](tomato_disease_baseline.ipynb) downloads the exact source archive, repeats the audit and split, trains the baseline, and writes the three evidence files plus a local `.keras` checkpoint. Run it in Kaggle with Internet access and a GPU. Record the saved Kaggle version URL and checkpoint location/checksum in the issue or PR once available.
+The [notebook](tomato_disease_baseline.ipynb) downloads the exact source archive, repeats the audit and split, trains the baseline, and writes the three evidence files plus a local `.keras` checkpoint. Run it in Kaggle with Internet access and a GPU. The contributor's [saved Kaggle notebook](https://www.kaggle.com/code/kaveeshaginodh/elora-tomato-disease-baseline) is the run reference; its page was not independently accessible from this environment. Record the external checkpoint location/checksum in the issue or PR before handoff.
