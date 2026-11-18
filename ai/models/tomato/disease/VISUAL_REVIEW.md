@@ -1,6 +1,8 @@
-# Visual review of original tomato images
+# Technical screen and agronomy review of tomato images
 
-The [review queue](visual_review_queue.csv) contains 50 randomly selected **retained raw originals per class** (300 rows total). `prepare_visual_review.py` regenerates the same queue from the committed manifest using seed 45. This is the minimum visual sample in the dataset intake procedure; it does not replace agronomy review or independent field testing.
+The [review queue](visual_review_queue.csv) contains 50 randomly selected **retained raw originals per source class** (300 rows total). `prepare_visual_review.py` regenerates the same queue from the committed manifest using seed 45. It is a handoff record, **not a request for Dev 1 to diagnose 300 leaves**. The source labels are included so a qualified agronomy reviewer can assess them. The queue does not replace independent field testing.
+
+The notebook already checks all retained images for decode failures, exact duplicates, and candidate near duplicates. Codex can help with a separate technical screen for obvious wrong-organ images, unusable photos, visible people, and watermarks. Those checks cannot establish a disease diagnosis or image ownership.
 
 ## Open an image
 
@@ -12,20 +14,17 @@ C:\Users\Kaveesha Ginodh\Downloads\Tomato Leaf Disease Classification Dataset in
 
 For example, a queue path beginning `Tomato Dataset/Dataset (raw)/...` sits under that folder. The `review_id` lets us discuss a row without confusing similar filenames. Do not change the path, hash, source label, or split columns while reviewing.
 
-## Mark each row
+## Who fills which columns
 
-Use `yes`, `no`, or `uncertain` in these three columns:
+- `leaf_visible`: Technical screen only. Use `yes`, `no`, or `uncertain` for whether a leaf is visible. This does not require identifying the crop or disease.
+- `obvious_image_or_identifier_issue`: Technical screen only. Note blur, an image of fruit without a leaf, a visible person/identifier, a watermark, or another clear concern. Leave blank if no obvious issue is seen.
+- `technical_reviewer` and `technical_notes`: Record who did that screen and why an image was flagged.
+- `agronomy_label_assessment` and `agronomy_reviewer`: Reserved for a plant-pathology or agronomy reviewer to assess whether the source disease label fits the symptoms. Dev 1 should not guess these values.
 
-- `tomato_leaf_visible`: Is a tomato leaf sufficiently visible for the intended leaf task? A fruit-only or other-crop image is `no`.
-- `label_plausible`: Does the displayed source label appear plausible from visible symptoms? Use `uncertain` whenever you cannot judge. A visual check is not a laboratory diagnosis.
-- `rights_or_identifier_concern`: Is there a visible person, private identifier, watermark, or other reason to investigate image use? `no` does **not** prove ownership or permission.
-
-Add your name in `reviewer` and explain `no` or `uncertain` entries in `notes`. An agronomy reviewer should resolve suspected disease-label errors. Keep the source licence and contributor attribution with any shared outputs.
-
-For a first practice row, `TOM-001` visibly contains a spotted tomato-like leaf. `tomato_leaf_visible = yes` is reasonable. The early-blight label needs plant-pathology review, so `label_plausible = uncertain` is honest if you cannot verify the symptom pattern. No person or watermark is visible in that photo; this says nothing about who owns it. The queue is left blank for the human review record.
+For example, `TOM-001` visibly contains a spotted leaf. A technical reviewer can mark `leaf_visible = yes`. The early-blight label is **not** established by that observation; leave `agronomy_label_assessment` for the qualified reviewer. No visible watermark does not prove permission to use the image. Keep the source licence and contributor attribution with shared outputs.
 
 ## Why this matters
 
 The current classifier learned from folder labels. A mislabeled training photo teaches the wrong pattern; a mislabeled test photo can make a correct prediction appear wrong. The queue identifies review candidates without silently changing evidence. If review leads to exclusions or corrected labels, update the manifest and create a **new** model run and evaluation version. Preserve the current baseline as the comparison record. Do not pick a new model using the already-inspected test set.
 
-After all 300 rows are marked, summarize counts of `no` and `uncertain` by class, document each resolution, and ask the agronomy reviewer to sign off on the label mapping. Until then, the 50-per-class audit remains open.
+After technical screening, summarize clear image issues by source class. Ask a qualified reviewer to assess the disease labels and class definitions, prioritizing cross-label duplicate conflicts and errors from the model evaluation. Until that review is recorded, the label audit remains open. Dev 1 can explain the process and its limits without personally diagnosing leaves.

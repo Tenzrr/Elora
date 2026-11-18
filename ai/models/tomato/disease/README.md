@@ -21,7 +21,7 @@ This directory contains the reproducible training notebook and the small evidenc
 
 The [manifest](evidence/dataset_manifest.csv) records all 830 raw paths, hashes, source and normalized labels, splits, and exclusion reasons. Exact SHA-256 duplicates and visually reviewed perceptual-hash near duplicates account for 60 exclusions, including images with conflicting labels. All 770 selected images decoded successfully. The remaining 770 originals were split into **538 train, 116 validation, and 116 test** images with stratification by source label.
 
-Plant and capture-session IDs were unavailable, so `group_id` is blank and this is **not a verified plant/session-grouped split**. Related-photo leakage may remain. A sample visual review was performed, and a [50-originals-per-class review queue](VISUAL_REVIEW.md) is ready; its 300 rows are not yet marked. Source disease names are visual annotations, not laboratory diagnoses.
+Plant and capture-session IDs were unavailable, so `group_id` is blank and this is **not a verified plant/session-grouped split**. Related-photo leakage may remain. A sample visual review was performed, and a [50-originals-per-class review queue](VISUAL_REVIEW.md) is ready as a technical-screen and agronomy-review handoff; its 300 rows are not yet marked. Source disease names are visual annotations, not laboratory diagnoses. Dev 1 is not expected to diagnose the images.
 
 ## Recorded held-out result
 

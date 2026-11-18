@@ -31,8 +31,8 @@ def main() -> None:
 
     columns = [
         "review_id", "label_id", "source_label", "original_path", "sha256", "split",
-        "tomato_leaf_visible", "label_plausible", "rights_or_identifier_concern",
-        "reviewer", "notes",
+        "leaf_visible", "obvious_image_or_identifier_issue", "technical_reviewer",
+        "technical_notes", "agronomy_label_assessment", "agronomy_reviewer",
     ]
     with OUTPUT.open("w", newline="", encoding="utf-8") as destination:
         writer = csv.DictWriter(destination, fieldnames=columns)
