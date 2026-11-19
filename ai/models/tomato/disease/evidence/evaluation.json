@@ -1,0 +1,138 @@
+{
+  "source_doi": "10.17632/3mbnb82mxd.2",
+  "archive_sha256": "2a2b36a8f972337f6d0e95e436835e55ffee5291fa07277157b40f0441f42f50",
+  "model": "MobileNetV2 ImageNet features, frozen; six-class head",
+  "class_order": [
+    "early_blight",
+    "late_blight",
+    "septoria_leaf_spot",
+    "leaf_mold",
+    "yellow_leaf_curl_virus",
+    "healthy"
+  ],
+  "split_seed": 45,
+  "split_counts": {
+    "test": 116,
+    "train": 538,
+    "validation": 116,
+    "excluded": 60
+  },
+  "best_epoch": 9,
+  "test_classification_report": {
+    "early_blight": {
+      "precision": 0.47368421052631576,
+      "recall": 0.5625,
+      "f1-score": 0.5142857142857142,
+      "support": 16.0
+    },
+    "late_blight": {
+      "precision": 0.6153846153846154,
+      "recall": 0.5333333333333333,
+      "f1-score": 0.5714285714285714,
+      "support": 15.0
+    },
+    "septoria_leaf_spot": {
+      "precision": 0.6666666666666666,
+      "recall": 0.72,
+      "f1-score": 0.6923076923076923,
+      "support": 25.0
+    },
+    "leaf_mold": {
+      "precision": 0.8,
+      "recall": 0.7142857142857143,
+      "f1-score": 0.7547169811320755,
+      "support": 28.0
+    },
+    "yellow_leaf_curl_virus": {
+      "precision": 0.5714285714285714,
+      "recall": 0.3333333333333333,
+      "f1-score": 0.42105263157894735,
+      "support": 12.0
+    },
+    "healthy": {
+      "precision": 0.72,
+      "recall": 0.9,
+      "f1-score": 0.8,
+      "support": 20.0
+    },
+    "accuracy": 0.6637931034482759,
+    "macro avg": {
+      "precision": 0.6411940106676948,
+      "recall": 0.6272420634920635,
+      "f1-score": 0.6256319317888335,
+      "support": 116.0
+    },
+    "weighted avg": {
+      "precision": 0.6649441907155156,
+      "recall": 0.6637931034482759,
+      "f1-score": 0.657693097916705,
+      "support": 116.0
+    }
+  },
+  "test_confusion_matrix": [
+    [
+      9,
+      2,
+      2,
+      2,
+      0,
+      1
+    ],
+    [
+      3,
+      8,
+      2,
+      2,
+      0,
+      0
+    ],
+    [
+      1,
+      1,
+      18,
+      1,
+      2,
+      2
+    ],
+    [
+      4,
+      0,
+      2,
+      20,
+      1,
+      1
+    ],
+    [
+      2,
+      1,
+      2,
+      0,
+      4,
+      3
+    ],
+    [
+      0,
+      1,
+      1,
+      0,
+      0,
+      18
+    ]
+  ],
+  "example_error": {
+    "path": "Tomato Dataset/Dataset (raw)/Tomato_Early_blight_leaf/1723454506040.jpg",
+    "true_label": "early_blight",
+    "predicted_label": "septoria_leaf_spot",
+    "raw_softmax_scores": {
+      "septoria_leaf_spot": 0.7767316102981567,
+      "leaf_mold": 0.07150192558765411,
+      "early_blight": 0.05916525423526764
+    }
+  },
+  "limitations": [
+    "Plant and capture-session IDs unavailable; related-photo leakage remains possible.",
+    "Dataset description does not explain the 830 raw versus 7200 augmented image counts.",
+    "Raw softmax scores have not been calibrated.",
+    "No independent Sri Lankan field evaluation has been performed."
+  ]
+}

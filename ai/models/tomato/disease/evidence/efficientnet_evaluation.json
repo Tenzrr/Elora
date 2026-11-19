@@ -1,0 +1,142 @@
+{
+  "source_doi": "10.17632/3mbnb82mxd.2",
+  "archive_sha256": "2a2b36a8f972337f6d0e95e436835e55ffee5291fa07277157b40f0441f42f50",
+  "model": "EfficientNetB0 ImageNet features; head training and partial fine-tuning",
+  "class_order": [
+    "early_blight",
+    "late_blight",
+    "septoria_leaf_spot",
+    "leaf_mold",
+    "yellow_leaf_curl_virus",
+    "healthy"
+  ],
+  "split_seed": 45,
+  "split_counts": {
+    "test": 116,
+    "train": 538,
+    "validation": 116,
+    "excluded": 60
+  },
+  "validation_results": {
+    "head": {
+      "checkpoint": "/kaggle/working/tomato_efficientnet_head.keras",
+      "macro_f1": 0.6434330994675822,
+      "accuracy": 0.7068965517241379
+    },
+    "fine_tuned": {
+      "checkpoint": "/kaggle/working/tomato_efficientnet_finetuned.keras",
+      "macro_f1": 0.7036128039804511,
+      "accuracy": 0.7413793103448276
+    }
+  },
+  "chosen_stage": "fine_tuned",
+  "selected_model_sha256": "82d74c130d90db931535885706081c5b3c9d0cbfb5126aac7284953b9d077fef",
+  "test_classification_report": {
+    "early_blight": {
+      "precision": 0.6,
+      "recall": 0.375,
+      "f1-score": 0.46153846153846156,
+      "support": 16.0
+    },
+    "late_blight": {
+      "precision": 0.37037037037037035,
+      "recall": 0.6666666666666666,
+      "f1-score": 0.47619047619047616,
+      "support": 15.0
+    },
+    "septoria_leaf_spot": {
+      "precision": 0.72,
+      "recall": 0.72,
+      "f1-score": 0.72,
+      "support": 25.0
+    },
+    "leaf_mold": {
+      "precision": 0.71875,
+      "recall": 0.8214285714285714,
+      "f1-score": 0.7666666666666667,
+      "support": 28.0
+    },
+    "yellow_leaf_curl_virus": {
+      "precision": 0.75,
+      "recall": 0.25,
+      "f1-score": 0.375,
+      "support": 12.0
+    },
+    "healthy": {
+      "precision": 0.6111111111111112,
+      "recall": 0.55,
+      "f1-score": 0.5789473684210527,
+      "support": 20.0
+    },
+    "accuracy": 0.6120689655172413,
+    "macro avg": {
+      "precision": 0.6283719135802469,
+      "recall": 0.5638492063492063,
+      "f1-score": 0.5630571621361095,
+      "support": 116.0
+    },
+    "weighted avg": {
+      "precision": 0.6422653256704981,
+      "recall": 0.6120689655172413,
+      "f1-score": 0.6040783324358642,
+      "support": 116.0
+    }
+  },
+  "test_confusion_matrix": [
+    [
+      6,
+      6,
+      3,
+      1,
+      0,
+      0
+    ],
+    [
+      1,
+      10,
+      0,
+      3,
+      0,
+      1
+    ],
+    [
+      0,
+      2,
+      18,
+      3,
+      0,
+      2
+    ],
+    [
+      2,
+      0,
+      1,
+      23,
+      1,
+      1
+    ],
+    [
+      1,
+      3,
+      1,
+      1,
+      3,
+      3
+    ],
+    [
+      0,
+      6,
+      2,
+      1,
+      0,
+      11
+    ]
+  ],
+  "limitations": [
+    "Agronomy label review unavailable for this interim experiment.",
+    "Plant/session grouping unavailable; related-photo leakage remains possible.",
+    "Test set was inspected after the earlier baseline; this is an exploratory comparison.",
+    "No independent Sri Lankan field evaluation or unsupported-input challenge set.",
+    "Softmax scores are uncalibrated; the 60% disease cutoff was not assessed."
+  ]
+}
