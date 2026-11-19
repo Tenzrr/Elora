@@ -24,6 +24,9 @@ It restores the agreement from `5c72db8`, which was missing from `develop`.
 The feature branch started at `fe9ce48`, with the contract as a separate commit.
 On 19 November it merged `develop` at `daa004f` without conflicts, bringing in
 the #45 baseline evidence while leaving the issue 44 API behavior unchanged.
+It then merged `develop` at `eed816e` (PR #99 Farming). The two shared entry
+points, `backend/app/main.py` and `mobile/lib/main.dart`, needed conflict
+resolution so both Farming and Scan remain registered.
 Both PRs target `develop`; review/merge the contract first. No PR was merged by
 this work. Review the contract with Dev 3 and Dev 2.
 
@@ -78,6 +81,11 @@ source, test and evidence file, and the check that makes the behavior observable
 - `git diff --check`: passed.
 - After merging `develop` on 19 November: backend compile passed; local pytest
   41 passed / 1 skipped; Flutter analysis clean and all 19 tests passed.
+- After merging PR #99 from `develop`: local pytest 48 passed / 1 skipped;
+  Flutter analysis clean, all 19 tests passed, and configured debug APK built.
+  The resolved API/Flutter entry points pass `git diff --check`. The full
+  staged merge reports an upstream trailing blank line in
+  `Check-Elora-Setup.cmd`, which this feature leaves unchanged.
 - Existing hosted Supabase `dev1`: additive migration to `0002` succeeded;
   accepted upload `202`, identical retry returned the same ID, invalid image
   `415`, other owner `404`, and a new API instance read identical persisted
