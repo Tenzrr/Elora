@@ -1,0 +1,16 @@
+{
+  "scan_id": "7b78da34-f80b-4de5-8ccf-08f75ac50df2",
+  "status_url": "/api/v1/scans/7b78da34-f80b-4de5-8ccf-08f75ac50df2",
+  "status": "failed",
+  "crop_slug": "tomato",
+  "task": "disease",
+  "subtype": null,
+  "plant_id": null,
+  "created_at": "2026-11-18T00:00:00Z",
+  "image_retained": false,
+  "result": null,
+  "error": {
+    "code": "MODEL_UNAVAILABLE",
+    "message": "CONTRACT FIXTURE ONLY: no inference model is connected."
+  }
+}
