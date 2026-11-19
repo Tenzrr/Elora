@@ -1,6 +1,6 @@
 # Tomato leaf disease baseline (issue 45)
 
-This directory contains the reproducible training notebook and the small evidence files from the recorded Kaggle run. The model is an **interim research baseline**, not a production diagnosis or an accepted field model. The saved `.keras` checkpoint remains outside ordinary Git; its artifact location and checksum still need to be recorded before handoff.
+This directory contains the reproducible training notebook and the small evidence files from the recorded Kaggle run. The model is an **interim research baseline**, not a production diagnosis or an accepted field model. The saved `.keras` checkpoint remains outside ordinary Git; its artifact link and checksum are recorded below.
 
 ## Source and rights
 
