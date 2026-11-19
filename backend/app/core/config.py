@@ -14,6 +14,11 @@ class Settings(BaseSettings):
     database_ca_file: str | None = None
     firebase_project_id: str = ""
     google_application_credentials: str | None = None
+    llm_provider: str = "mock"
+    gemini_api_key: SecretStr | None = None
+    gemini_model: str = "gemini-2.5-flash"
+    llm_timeout_seconds: float = 15.0
+    llm_max_retries: int = 2
     tomato_preview_model_path: str | None = None
 
     @model_validator(mode="after")
