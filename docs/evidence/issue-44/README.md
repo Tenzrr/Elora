@@ -1,9 +1,10 @@
 # Issue 44 — interim authenticated upload and status
 
-Recorded 18 November 2026. Owner: Dev 1 (`Kavee-ginty`).
+Recorded 18 November 2026; integration refreshed 19 November 2026. Owner: Dev 1 (`Kavee-ginty`).
 Requirements: REQ-1.1, REQ-1.2 and the job-persistence subset of REQ-1.3.
 This is an upload/status demonstration, not completed disease inference or full
-SRS acceptance. Model work remains separate in #45 / PR #98.
+SRS acceptance. Model work from #45 / PR #98 is now merged into `develop`.
+Its training/evaluation artifacts do not connect a model to the scan API.
 
 ## Smallest slice and evidence boundary
 
@@ -20,7 +21,9 @@ future model integration to create a new operation.
 Shared contract prerequisite: [PR #101](https://github.com/Tenzrr/Elora/pull/101).
 Feature draft: [PR #102](https://github.com/Tenzrr/Elora/pull/102).
 It restores the agreement from `5c72db8`, which was missing from `develop`.
-The feature branch starts at `fe9ce48`, with the contract as a separate commit.
+The feature branch started at `fe9ce48`, with the contract as a separate commit.
+On 19 November it merged `develop` at `daa004f` without conflicts, bringing in
+the #45 baseline evidence while leaving the issue 44 API behavior unchanged.
 Both PRs target `develop`; review/merge the contract first. No PR was merged by
 this work. Review the contract with Dev 3 and Dev 2.
 
@@ -71,6 +74,8 @@ source, test and evidence file, and the check that makes the behavior observable
   passed. Existing Java/Kotlin/Android SDK compatibility warnings remain.
 - Contract PR #101 CI: passed.
 - `git diff --check`: passed.
+- After merging `develop` on 19 November: backend compile passed; local pytest
+  41 passed / 1 skipped; Flutter analysis clean and all 19 tests passed.
 - Existing hosted Supabase `dev1`: additive migration to `0002` succeeded;
   accepted upload `202`, identical retry returned the same ID, invalid image
   `415`, other owner `404`, and a new API instance read identical persisted
@@ -140,8 +145,9 @@ artifact and contains development client configuration; it is not committed.
 ## Limits and follow-up
 
 - No inference, worker, retained/private cloud image, model registry, diagnosis,
-  guidance, saved results/history UI or treatment claims. #45 / PR #98 was not
-  merged or changed. This does not complete full REQ-1.3.
+  guidance, saved results/history UI or treatment claims. PR #98 was merged
+  independently into `develop` before this branch was updated; its model was
+  not connected by issue 44. This does not complete full REQ-1.3.
 - Only tomato disease and the agreed citrus-quality upload handoff are accepted.
   Citrus Fresh/Spoiled/abstention displays remain Dev 2 work with labelled fixtures.
 - The current screen uses the platform camera/gallery, not a custom live
