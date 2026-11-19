@@ -18,8 +18,8 @@ or invent a model version, confidence or abstention. Retrying unchanged content
 returns the existing job; it does not rerun analysis. Re-select a photo after a
 future model integration to create a new operation.
 
-Shared contract prerequisite: [PR #101](https://github.com/Tenzrr/Elora/pull/101).
-Feature draft: [PR #102](https://github.com/Tenzrr/Elora/pull/102).
+Shared contract: [PR #101](https://github.com/Tenzrr/Elora/pull/101) (merged).
+Feature: [PR #102](https://github.com/Tenzrr/Elora/pull/102) (merged).
 It restores the agreement from `5c72db8`, which was missing from `develop`.
 The feature branch started at `fe9ce48`, with the contract as a separate commit.
 On 19 November it merged `develop` at `daa004f` without conflicts, bringing in
@@ -27,8 +27,8 @@ the #45 baseline evidence while leaving the issue 44 API behavior unchanged.
 It then merged `develop` at `eed816e` (PR #99 Farming). The two shared entry
 points, `backend/app/main.py` and `mobile/lib/main.dart`, needed conflict
 resolution so both Farming and Scan remain registered.
-Both PRs target `develop`; review/merge the contract first. No PR was merged by
-this work. Review the contract with Dev 3 and Dev 2.
+Both PRs merged into `develop` on 19 November, contract first. A Dev 3 / Dev 2
+GitHub review decision was not recorded before the owner-requested merges.
 
 ## Learn the files in this order
 
@@ -66,6 +66,8 @@ source, test and evidence file, and the check that makes the behavior observable
 | `docs/evidence/issue-44/scan-failed-en.png` | Captured Flutter widget test with mock API and synthetic image, not an Android/Firebase end-to-end screenshot. | See below. |
 | `docs/evidence/issue-44/android-upload-timeout.png` | Android Studio emulator capture of the selected synthetic photo and recoverable request error on 19 November. No receipt was created or verified in this run. | Compare with the Android attempt below. |
 | `docs/evidence/issue-44/android-live-receipt.png` | User-provided Android Studio emulator capture with a selected leaf image, persisted receipt UUID, and honest unavailable-analysis state. | Compare UUID with the API log and database check below. |
+| `docs/evidence/issue-44/android-sinhala-status.png` | Android emulator view of Sinhala scan status and actions with a selected leaf. | Inspect glyph rendering and wrapping, not translation accuracy. |
+| `docs/evidence/issue-44/android-tamil-status.png` | Android emulator view of Tamil scan status and actions with a selected leaf. | Inspect glyph rendering and the two-line retry label. |
 | `docs/evidence/issue-44/README.md` | This learning guide, test record, manual demo and limitations. | Follow the commands and checklist. |
 
 ## Recorded checks
@@ -149,9 +151,33 @@ A read-only query of that `dev1` job found `tomato` / `disease`, terminal
 returned `202` followed by a `200` status read for the **same UUID**. A second
 read-only query found one row for that operation. This verifies the core live
 receipt/status and unchanged-retry path with an existing Firebase session. The
-image is not a labelled disease fixture or inference result. Fresh sign-in,
-second-account isolation, permission denial, process restart and native
-Sinhala/Tamil wording remain to be checked on device.
+image is not a labelled disease fixture or inference result. A fresh sign-in
+was checked later below. Second-account isolation, permission denial, process
+restart and fluent Sinhala/Tamil wording remain to be checked on device.
+
+## Additional Android device checks — 19 November 2026
+
+On the same API 37 emulator, switched Scan through Sinhala and Tamil. Headers,
+status text, actions and bottom navigation rendered without missing glyphs or
+visible clipping. The Tamil retry label wraps to two lines inside its button.
+These are visual layout checks; no fluent translation review is claimed. The
+captures show a later saved scan and omit profile/account details:
+
+![Sinhala Scan status and actions on Android](android-sinhala-status.png)
+
+![Tamil Scan status and actions on Android](android-tamil-status.png)
+
+Opened and canceled Android's gallery picker, then opened and canceled the
+external camera. The selected photo and saved status remained visible after
+both cancellations. The camera opened without a runtime permission prompt;
+denied-permission behavior was not exercised on this device. Restored English,
+signed out, and observed Elora's sign-in screen. The user then signed in with
+Google; the backend recorded `POST /api/v1/session` and `GET /api/v1/plants`
+as `200 OK`. The user reported that Scan opened without the old photo or job.
+This verifies a fresh same-account session and UI state reset without recording
+credentials or account details. Only one verified account is available, so live
+second-account isolation cannot be claimed from this run; the two-user API and
+provider tests remain the evidence for that path.
 
 ## Run the checks yourself
 
@@ -172,8 +198,8 @@ flutter build apk --debug --dart-define-from-file=config/dev.json
 To regenerate local widget captures, run
 `flutter test test/scan_screen_test.dart --dart-define=RECORD_SCAN_DEMO=true`.
 It writes ignored `tmp/issue44/` PNGs at the worktree root. English has both a
-widget capture and the live device capture above; Sinhala/Tamil native-device
-visual review is pending.
+widget capture and the live device capture above. Sinhala/Tamil glyphs and
+layout have Android captures above; fluent wording review remains pending.
 
 ## Live-device demo checklist
 
@@ -199,10 +225,11 @@ to their assigned workspace through the coordinator's established process.
 8. Check Sinhala/Tamil glyphs, wording and camera/gallery behavior on the device.
    Capture evidence without bearer tokens, personal account details or secrets.
 
-The live run above used a restored Firebase session and Android gallery upload.
-The remaining checklist items, including a fresh sign-in and camera permission
-flow, remain pending. The configured APK is a development artifact and contains
-development client configuration; it is not committed.
+The original live upload used a restored Firebase session and Android gallery.
+The later fresh Google sign-in and same-account state reset are recorded above.
+Second-account, denied-permission and process-restart checks remain pending.
+The configured APK is a development artifact and contains development client
+configuration; it is not committed.
 
 ## Limits and follow-up
 
@@ -226,5 +253,6 @@ development client configuration; it is not committed.
   connecting any model. Keep the existing assessment contract and SRS's 60%
   disease cutoff/domain gates when that work is ready.
 
-Next step: review the contract with Dev 3/Dev 2 and complete the remaining
-device checklist before promoting the feature PR out of draft.
+Next step: complete a fluent Sinhala/Tamil wording review and, when a second
+verified development account is available, the remaining owner-isolation and
+denied-permission device checks. Full inference remains #53/#54 work.
