@@ -23,6 +23,7 @@ async def get_farming_weather(
     location: Annotated[str | None, Query(description="Preset location name (e.g. Colombo, Kandy)")] = None,
     latitude: Annotated[float | None, Query(ge=-90.0, le=90.0, description="Optional custom latitude")] = None,
     longitude: Annotated[float | None, Query(ge=-180.0, le=180.0, description="Optional custom longitude")] = None,
+    force_refresh: Annotated[bool, Query(description="Bypass cache and fetch fresh forecast")] = False,
 ) -> WeatherForecastResponse:
     """Fetch live weather forecast and explainable care advisory for a selected location."""
     # Resolve location name and coordinates
@@ -41,4 +42,5 @@ async def get_farming_weather(
         latitude=lat,
         longitude=lon,
         location_name=resolved_name,
+        force_refresh=force_refresh,
     )

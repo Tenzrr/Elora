@@ -11,7 +11,17 @@ from app.modules.predictive_farming.schemas import (
 
 OPEN_METEO_URL = "https://api.open-meteo.com/v1/forecast"
 RAIN_DELAY_THRESHOLD_MM = 5.0
-MAX_STALE_AGE_SECONDS = 7200  # 2 hours in seconds (BR-03)
+CACHE_TTL_SECONDS = 900.0  # 15 minutes (BR-03)
+MAX_STALE_AGE_SECONDS = 7200.0  # 2 hours (BR-03)
+MAX_DISPLAY_AGE_SECONDS = 86400.0  # 24 hours (BR-03)
+
+# In-memory forecast cache: (round(lat, 4), round(lon, 4)) -> (retrieval_time, WeatherForecastResponse)
+_forecast_cache: dict[tuple[float, float], tuple[datetime, WeatherForecastResponse]] = {}
+
+
+def clear_forecast_cache() -> None:
+    """Clear in-memory cache for deterministic test execution."""
+    _forecast_cache.clear()
 
 
 def evaluate_irrigation_advisory(
@@ -20,7 +30,7 @@ def evaluate_irrigation_advisory(
     data_age_seconds: float = 0.0,
 ) -> FarmingAdvisory:
     """Evaluate explainable irrigation advice based on rainfall and data freshness (BR-03 / REQ-3.4)."""
-    # Safety Check: Prohibit new recommendations if weather is older than 2 hours
+    # Safety Check: Prohibit new recommendations if weather is older than 2 hours (BR-03)
     if data_age_seconds > MAX_STALE_AGE_SECONDS:
         return FarmingAdvisory(
             action="ADVISORY_WITHHELD",
@@ -66,9 +76,38 @@ async def fetch_weather_forecast(
     latitude: float,
     longitude: float,
     location_name: str = "Colombo",
+    force_refresh: bool = False,
     client: httpx.AsyncClient | None = None,
 ) -> WeatherForecastResponse:
-    """Fetch live weather from Open-Meteo and return a validated forecast with an explainable advisory."""
+    """Fetch live weather from Open-Meteo with 15-min cache, stale marking, and 24h limit (BR-03)."""
+    cache_key = (round(latitude, 4), round(longitude, 4))
+    now = datetime.now(timezone.utc)
+
+    # Check in-memory cache first if force_refresh is not requested
+    if not force_refresh and cache_key in _forecast_cache:
+        retrieval_time, cached = _forecast_cache[cache_key]
+        age_seconds = (now - retrieval_time).total_seconds()
+
+        # Under 15 minutes: serve fresh cache
+        if age_seconds <= CACHE_TTL_SECONDS:
+            return cached
+
+        # Between 15 minutes and 2 hours: serve with stale mark
+        if age_seconds <= MAX_STALE_AGE_SECONDS:
+            return cached.model_copy(update={"is_stale": True})
+
+        # Between 2 hours and 24 hours: serve with stale mark and WITHHELD advice
+        if age_seconds <= MAX_DISPLAY_AGE_SECONDS:
+            stale_advisory = evaluate_irrigation_advisory(
+                precipitation_sum_mm=cached.advisory.precipitation_expected_mm,
+                location_name=location_name,
+                data_age_seconds=age_seconds,
+            )
+            return cached.model_copy(update={"is_stale": True, "advisory": stale_advisory})
+
+        # Beyond 24 hours: cache expired per BR-03
+        _forecast_cache.pop(cache_key, None)
+
     params = {
         "latitude": latitude,
         "longitude": longitude,
@@ -128,7 +167,6 @@ async def fetch_weather_forecast(
             )
         )
 
-    # Use today's daily precipitation sum (index 0) for the 24-hour irrigation decision
     today_rain_mm = daily_list[0].precipitation_sum if daily_list else 0.0
     advisory = evaluate_irrigation_advisory(
         precipitation_sum_mm=today_rain_mm,
@@ -136,7 +174,7 @@ async def fetch_weather_forecast(
         data_age_seconds=0.0,
     )
 
-    return WeatherForecastResponse(
+    result = WeatherForecastResponse(
         source="Open-Meteo",
         location_name=location_name,
         latitude=latitude,
@@ -149,3 +187,7 @@ async def fetch_weather_forecast(
         daily=daily_list,
         advisory=advisory,
     )
+
+    # Cache the fresh response
+    _forecast_cache[cache_key] = (retrieval_time, result)
+    return result
