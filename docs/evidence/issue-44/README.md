@@ -62,6 +62,7 @@ source, test and evidence file, and the check that makes the behavior observable
 | `docs/evidence/issue-44/database-smoke.json` | Sanitized executed checks against existing Supabase `dev1`, plus a read-only Firebase connectivity check. Fixture identities are explicit. | Inspect the receipt/status and evidence labels. Synthetic rows were removed afterward. |
 | `docs/evidence/issue-44/scan-failed-en.png` | Captured Flutter widget test with mock API and synthetic image, not an Android/Firebase end-to-end screenshot. | See below. |
 | `docs/evidence/issue-44/android-upload-timeout.png` | Android Studio emulator capture of the selected synthetic photo and recoverable request error on 19 November. No receipt was created or verified in this run. | Compare with the Android attempt below. |
+| `docs/evidence/issue-44/android-live-receipt.png` | User-provided Android Studio emulator capture with a selected leaf image, persisted receipt UUID, and honest unavailable-analysis state. | Compare UUID with the API log and database check below. |
 | `docs/evidence/issue-44/README.md` | This learning guide, test record, manual demo and limitations. | Follow the commands and checklist. |
 
 ## Recorded checks
@@ -111,9 +112,38 @@ lookup reached Firebase. The app's session requests returned `503` and `500`
 with timeout logs. A separate `SELECT 1` against the configured Supabase `dev1`
 database timed out during connection setup. No `202` receipt, status response,
 job UUID, owner isolation, or live Firebase sign-in was verified on this emulator
-run. The 18 November fixture-identity database smoke remains the successful
-hosted persistence evidence. Recheck the Supabase project/network connection,
-then repeat the live checklist with a verified account and real tomato leaf.
+run. The 18 November fixture-identity database smoke was the earlier successful
+hosted persistence evidence. The later live run below resolved the network
+blocker without changing the app or database configuration.
+
+## Android Studio live upload — 19 November 2026
+
+The Supabase MCP SQL check returned `1`, and health advisors were empty. The
+configured pooler returned its SSL response on a mobile hotspot but timed out
+on the original Wi-Fi; both pooler ports showed the Wi-Fi problem. The same
+backend configuration completed `SELECT 1` on the hotspot, and `dev1.scan_jobs`
+was present. After switching networks, the emulator's DNS stopped resolving
+Google; a cold emulator start with explicit DNS restored resolution. No TLS
+verification or app configuration was disabled to make the demo pass.
+
+On Medium Phone API 37.0, the app restored its existing Firebase session and
+selected a leaf image through Android's gallery. The backend recorded successful
+`POST /api/v1/session` requests, `POST /api/v1/scans` as `202 Accepted`, and
+`GET /api/v1/scans/d6a19592-273b-4fe4-a71a-7a5f8a0e1362` as `200 OK`.
+The user-provided device capture shows the same UUID, "Upload recorded", and
+"Analysis unavailable":
+
+![Android emulator: live upload receipt with unavailable analysis](android-live-receipt.png)
+
+A read-only query of that `dev1` job found `tomato` / `disease`, terminal
+`failed / MODEL_UNAVAILABLE`, a 64-character request digest, and creation time
+2026-11-19 16:16:30 UTC. The user tapped "Retry same upload"; the backend again
+returned `202` followed by a `200` status read for the **same UUID**. A second
+read-only query found one row for that operation. This verifies the core live
+receipt/status and unchanged-retry path with an existing Firebase session. The
+image is not a labelled disease fixture or inference result. Fresh sign-in,
+second-account isolation, permission denial, process restart and native
+Sinhala/Tamil wording remain to be checked on device.
 
 ## Run the checks yourself
 
@@ -133,12 +163,13 @@ flutter build apk --debug --dart-define-from-file=config/dev.json
 
 To regenerate local widget captures, run
 `flutter test test/scan_screen_test.dart --dart-define=RECORD_SCAN_DEMO=true`.
-It writes ignored `tmp/issue44/` PNGs at the worktree root. English is the
-reviewed structural capture here; native-device visual review is pending.
+It writes ignored `tmp/issue44/` PNGs at the worktree root. English has both a
+widget capture and the live device capture above; Sinhala/Tamil native-device
+visual review is pending.
 
-## Live-device demo still to record
+## Live-device demo checklist
 
-Use the existing setup guide and the configured issue 44 worktree. Dev 1's
+Use this to repeat the recorded path and cover its remaining checks. Dev 1's
 schema is already at `0002`. Do not run tests that provision/drop schemas against
 the hosted database. Other developers should apply the reviewed migration only
 to their assigned workspace through the coordinator's established process.
@@ -160,10 +191,10 @@ to their assigned workspace through the coordinator's established process.
 8. Check Sinhala/Tamil glyphs, wording and camera/gallery behavior on the device.
    Capture evidence without bearer tokens, personal account details or secrets.
 
-The Android Studio emulator attempt above did not complete the live Firebase
-sign-in/camera/upload sequence. That sequence remains pending. The configured
-APK is a development artifact and contains development client configuration;
-it is not committed.
+The live run above used a restored Firebase session and Android gallery upload.
+The remaining checklist items, including a fresh sign-in and camera permission
+flow, remain pending. The configured APK is a development artifact and contains
+development client configuration; it is not committed.
 
 ## Limits and follow-up
 
@@ -187,5 +218,5 @@ it is not committed.
   connecting any model. Keep the existing assessment contract and SRS's 60%
   disease cutoff/domain gates when that work is ready.
 
-Next step: review the contract with Dev 3/Dev 2, then record the real verified-
-Firebase Android demo before promoting the feature PR out of draft.
+Next step: review the contract with Dev 3/Dev 2 and complete the remaining
+device checklist before promoting the feature PR out of draft.
