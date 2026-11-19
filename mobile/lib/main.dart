@@ -17,6 +17,7 @@ import 'l10n/generated/app_localizations.dart';
 import 'screens/auth_screen.dart';
 import 'screens/garden_screen.dart';
 import 'screens/profile_screen.dart';
+import 'features/crop_health/scan_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -109,6 +110,9 @@ final routerProvider = Provider<GoRouter>((ref) {
                 }
                 if (module == EloraModule.farming) {
                   return const FarmingScreen();
+                }
+                if (module == EloraModule.cropHealth) {
+                  return const ScanScreen();
                 }
                 return Center(
                   child: Padding(
