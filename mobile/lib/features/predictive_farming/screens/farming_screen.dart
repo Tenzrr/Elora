@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_theme.dart';
+import '../models/care_task.dart';
 import '../models/weather_data.dart';
+import '../providers/care_task_provider.dart';
 import '../providers/weather_provider.dart';
 
 class FarmingScreen extends ConsumerWidget {
@@ -19,6 +21,7 @@ class FarmingScreen extends ConsumerWidget {
         color: EloraColors.deepGreen,
         onRefresh: () async {
           ref.invalidate(farmingWeatherProvider);
+          await ref.read(careTasksProvider.notifier).refresh();
         },
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
@@ -41,7 +44,7 @@ class FarmingScreen extends ConsumerWidget {
                   ),
                 ),
                 error: (error, _) => _buildErrorCard(context, ref, error),
-                data: (weather) => _buildWeatherContent(context, weather),
+                data: (weather) => _buildWeatherContent(context, ref, weather),
               ),
             ],
           ),
@@ -128,6 +131,7 @@ class FarmingScreen extends ConsumerWidget {
 
   Widget _buildWeatherContent(
     BuildContext context,
+    WidgetRef ref,
     WeatherForecastResponse weather,
   ) {
     return Column(
@@ -138,8 +142,12 @@ class FarmingScreen extends ConsumerWidget {
         const SizedBox(height: 16),
 
         // Prominent Explainable Advisory Card (REQ-3.4 / BR-13)
-        _buildAdvisoryCard(context, weather.advisory),
-        const SizedBox(height: 20),
+        _buildAdvisoryCard(context, ref, weather.advisory),
+        const SizedBox(height: 24),
+
+        // Section: "A Little Care, Next" (REQ-3.5 / Issue #70)
+        _buildCareTasksSection(context, ref, weather.advisory),
+        const SizedBox(height: 24),
 
         // Section Title: Current Conditions
         Text(
@@ -212,7 +220,11 @@ class FarmingScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildAdvisoryCard(BuildContext context, FarmingAdvisory advisory) {
+  Widget _buildAdvisoryCard(
+    BuildContext context,
+    WidgetRef ref,
+    FarmingAdvisory advisory,
+  ) {
     final isDelay = advisory.action == 'DELAY_IRRIGATION';
     final isWithheld = advisory.action == 'ADVISORY_WITHHELD';
 
@@ -337,10 +349,463 @@ class FarmingScreen extends ConsumerWidget {
               ),
             ),
           ],
+          if (!isWithheld) ...[
+            const SizedBox(height: 14),
+            SizedBox(
+              width: double.infinity,
+              child: FilledButton.icon(
+                style: FilledButton.styleFrom(
+                  backgroundColor: accentColor,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                onPressed: () => _showScheduleTaskDialog(context, ref, advisory),
+                icon: const Icon(Icons.add_task, size: 18),
+                label: Text(
+                  isDelay ? 'Schedule Recommended Care (Rain Delay)' : 'Schedule Recommended Care',
+                  style: const TextStyle(fontWeight: FontWeight.w700),
+                ),
+              ),
+            ),
+          ],
         ],
       ),
     );
   }
+
+  Widget _buildCareTasksSection(
+    BuildContext context,
+    WidgetRef ref,
+    FarmingAdvisory advisory,
+  ) {
+    final tasksAsync = ref.watch(careTasksProvider);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'A Little Care, Next',
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: EloraColors.deepGreen,
+                        fontWeight: FontWeight.w800,
+                      ),
+                ),
+                const SizedBox(height: 2),
+                const Text(
+                  'Scheduled tasks & activity logs',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: EloraColors.muted,
+                  ),
+                ),
+              ],
+            ),
+            IconButton(
+              icon: const Icon(Icons.add_circle_outline, color: EloraColors.leafGreen),
+              tooltip: 'New Care Task',
+              onPressed: () => _showScheduleTaskDialog(context, ref, advisory),
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
+        tasksAsync.when(
+          loading: () => const Center(
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 24),
+              child: CircularProgressIndicator(color: EloraColors.leafGreen),
+            ),
+          ),
+          error: (err, _) => Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: EloraColors.danger.withValues(alpha: 0.2)),
+            ),
+            child: const Row(
+              children: [
+                Icon(Icons.error_outline, color: EloraColors.danger),
+                SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    'Could not load tasks. Pull to refresh.',
+                    style: TextStyle(fontSize: 13, color: EloraColors.muted),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          data: (tasks) {
+            if (tasks.isEmpty) {
+              return Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(18),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: EloraColors.mint.withValues(alpha: 0.4)),
+                ),
+                child: Column(
+                  children: [
+                    Icon(
+                      Icons.spa_outlined,
+                      size: 36,
+                      color: EloraColors.leafGreen.withValues(alpha: 0.6),
+                    ),
+                    const SizedBox(height: 8),
+                    const Text(
+                      'No care tasks scheduled yet',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 14,
+                        color: EloraColors.ink,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    const Text(
+                      'Add a task following today\'s weather advisory to maintain optimal plant health.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 12, color: EloraColors.muted),
+                    ),
+                  ],
+                ),
+              );
+            }
+
+            return ListView.separated(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: tasks.length,
+              separatorBuilder: (_, __) => const SizedBox(height: 10),
+              itemBuilder: (context, index) {
+                final task = tasks[index];
+                return _buildCareTaskCard(context, ref, task);
+              },
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildCareTaskCard(
+    BuildContext context,
+    WidgetRef ref,
+    CareTask task,
+  ) {
+    IconData icon;
+    Color iconColor;
+    switch (task.taskType) {
+      case 'fertilizer':
+        icon = Icons.eco_outlined;
+        iconColor = const Color(0xFFD97706);
+        break;
+      case 'pruning':
+        icon = Icons.content_cut_outlined;
+        iconColor = const Color(0xFF9333EA);
+        break;
+      case 'harvest':
+        icon = Icons.shopping_basket_outlined;
+        iconColor = const Color(0xFFE11D48);
+        break;
+      default:
+        icon = Icons.water_drop_outlined;
+        iconColor = const Color(0xFF2563EB);
+    }
+
+    return Container(
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: task.isCompleted
+              ? EloraColors.leafGreen.withValues(alpha: 0.3)
+              : EloraColors.mint.withValues(alpha: 0.4),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: EloraColors.deepGreen.withValues(alpha: 0.03),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: iconColor.withValues(alpha: 0.1),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(icon, color: iconColor, size: 20),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      task.title,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 14,
+                        color: EloraColors.ink,
+                      ),
+                    ),
+                    Text(
+                      'Due: ${task.dueDate.day}/${task.dueDate.month} at ${task.dueDate.hour.toString().padLeft(2, '0')}:${task.dueDate.minute.toString().padLeft(2, '0')}',
+                      style: const TextStyle(
+                        fontSize: 11,
+                        color: EloraColors.muted,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              _buildTaskStatusPill(task),
+            ],
+          ),
+          if (task.advisoryRationale != null) ...[
+            const SizedBox(height: 8),
+            Text(
+              task.advisoryRationale!,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                fontSize: 11,
+                fontStyle: FontStyle.italic,
+                color: EloraColors.muted,
+              ),
+            ),
+          ],
+          if (task.isPending) ...[
+            const SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                OutlinedButton.icon(
+                  style: OutlinedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                    minimumSize: const Size(0, 32),
+                    foregroundColor: EloraColors.muted,
+                    side: BorderSide(color: EloraColors.muted.withValues(alpha: 0.3)),
+                  ),
+                  onPressed: () => ref.read(careTasksProvider.notifier).skipTask(
+                        task.id,
+                        notes: 'Skipped by grower',
+                      ),
+                  icon: const Icon(Icons.skip_next, size: 16),
+                  label: const Text('Skip', style: TextStyle(fontSize: 12)),
+                ),
+                const SizedBox(width: 8),
+                FilledButton.icon(
+                  style: FilledButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                    minimumSize: const Size(0, 32),
+                    backgroundColor: EloraColors.leafGreen,
+                    foregroundColor: Colors.white,
+                  ),
+                  onPressed: () => ref.read(careTasksProvider.notifier).completeTask(
+                        task.id,
+                        notes: 'Completed by grower',
+                      ),
+                  icon: const Icon(Icons.check, size: 16),
+                  label: const Text('Done', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700)),
+                ),
+              ],
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTaskStatusPill(CareTask task) {
+    Color bg;
+    Color fg;
+    String label;
+
+    if (task.isCompleted) {
+      bg = const Color(0xFFDCFCE7);
+      fg = const Color(0xFF15803D);
+      label = 'Completed';
+    } else if (task.isSkipped) {
+      bg = const Color(0xFFF3F4F6);
+      fg = EloraColors.muted;
+      label = 'Skipped';
+    } else if (task.isCancelled) {
+      bg = const Color(0xFFFEE2E2);
+      fg = EloraColors.danger;
+      label = 'Cancelled';
+    } else {
+      bg = const Color(0xFFFEF3C7);
+      fg = const Color(0xFFB45309);
+      label = 'Pending';
+    }
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: bg,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Text(
+        label,
+        style: TextStyle(
+          fontSize: 11,
+          fontWeight: FontWeight.w700,
+          color: fg,
+        ),
+      ),
+    );
+  }
+
+  void _showScheduleTaskDialog(
+    BuildContext context,
+    WidgetRef ref,
+    FarmingAdvisory advisory,
+  ) {
+    final titleController = TextEditingController(
+      text: advisory.action == 'DELAY_IRRIGATION'
+          ? 'Check soil & reschedule watering'
+          : 'Water plants (Normal care)',
+    );
+    final descController = TextEditingController(
+      text: 'Based on weather advisory: ${advisory.title}',
+    );
+    String selectedType = 'watering';
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (bottomSheetContext) {
+        return StatefulBuilder(
+          builder: (context, setModalState) {
+            return Padding(
+              padding: EdgeInsets.only(
+                left: 20,
+                right: 20,
+                top: 20,
+                bottom: MediaQuery.of(bottomSheetContext).viewInsets.bottom + 24,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Schedule Care Task',
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                              color: EloraColors.deepGreen,
+                              fontWeight: FontWeight.w800,
+                            ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.close),
+                        onPressed: () => Navigator.pop(bottomSheetContext),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  DropdownButtonFormField<String>(
+                    value: selectedType,
+                    decoration: const InputDecoration(
+                      labelText: 'Task Type',
+                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    ),
+                    items: const [
+                      DropdownMenuItem(value: 'watering', child: Text('Watering')),
+                      DropdownMenuItem(value: 'fertilizer', child: Text('Fertilizer')),
+                      DropdownMenuItem(value: 'pruning', child: Text('Pruning')),
+                      DropdownMenuItem(value: 'harvest', child: Text('Harvest')),
+                      DropdownMenuItem(value: 'pest_control', child: Text('Pest Control')),
+                    ],
+                    onChanged: (val) {
+                      if (val != null) {
+                        setModalState(() => selectedType = val);
+                      }
+                    },
+                  ),
+                  const SizedBox(height: 12),
+                  TextField(
+                    controller: titleController,
+                    decoration: const InputDecoration(
+                      labelText: 'Task Title',
+                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  TextField(
+                    controller: descController,
+                    maxLines: 2,
+                    decoration: const InputDecoration(
+                      labelText: 'Notes / Context',
+                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    ),
+                  ),
+                  const SizedBox(height: 18),
+                  FilledButton(
+                    style: FilledButton.styleFrom(
+                      backgroundColor: EloraColors.deepGreen,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                    ),
+                    onPressed: () async {
+                      final title = titleController.text.trim();
+                      if (title.isEmpty) return;
+
+                      Navigator.pop(bottomSheetContext);
+                      await ref.read(careTasksProvider.notifier).createTask(
+                            taskType: selectedType,
+                            title: title,
+                            description: descController.text.trim(),
+                            dueDate: DateTime.now().add(const Duration(hours: 1)),
+                            advisoryRationale: advisory.reasoning,
+                          );
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Care task scheduled successfully!'),
+                            backgroundColor: EloraColors.deepGreen,
+                          ),
+                        );
+                      }
+                    },
+                    child: const Text(
+                      'Save Care Task',
+                      style: TextStyle(fontWeight: FontWeight.w700),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
 
   Widget _buildMetricsGrid(
     BuildContext context,
