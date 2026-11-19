@@ -61,6 +61,7 @@ source, test and evidence file, and the check that makes the behavior observable
 | `mobile/test/fixtures/scan-synthetic.png` | Generated solid-green 32×24 PNG; no disease/leaf label or model evidence. | Used only for widget/upload testing. |
 | `docs/evidence/issue-44/database-smoke.json` | Sanitized executed checks against existing Supabase `dev1`, plus a read-only Firebase connectivity check. Fixture identities are explicit. | Inspect the receipt/status and evidence labels. Synthetic rows were removed afterward. |
 | `docs/evidence/issue-44/scan-failed-en.png` | Captured Flutter widget test with mock API and synthetic image, not an Android/Firebase end-to-end screenshot. | See below. |
+| `docs/evidence/issue-44/android-upload-timeout.png` | Android Studio emulator capture of the selected synthetic photo and recoverable request error on 19 November. No receipt was created or verified in this run. | Compare with the Android attempt below. |
 | `docs/evidence/issue-44/README.md` | This learning guide, test record, manual demo and limitations. | Follow the commands and checklist. |
 
 ## Recorded checks
@@ -92,6 +93,27 @@ The actual hosted response and timestamp are in [database-smoke.json](database-s
 The green rectangle is the synthetic test image. The screen is scrolled to the
 status/actions. Sinhala/Tamil widget tests check structure and overflow; their
 test-runner fallback glyphs do not establish native Android typography.
+
+## Android Studio emulator attempt — 19 November 2026
+
+Opened this worktree's `mobile` project in Android Studio and ran the app on
+Medium Phone API 37.0 with `config/dev.json`. The app restored an existing
+Firebase-authenticated session. Scan opened with Tomato / Disease and the
+interim no-inference message. Android's photo picker selected the repository's
+solid-green synthetic test PNG. On submit, the screen kept that photo and showed
+the recoverable request error below. This is UI and failure-recovery evidence,
+not a real tomato leaf or a successful authenticated upload.
+
+![Android emulator: synthetic photo retained after request timeout](android-upload-timeout.png)
+
+The local API health endpoint returned `200`, and a read-only Firebase Admin
+lookup reached Firebase. The app's session requests returned `503` and `500`
+with timeout logs. A separate `SELECT 1` against the configured Supabase `dev1`
+database timed out during connection setup. No `202` receipt, status response,
+job UUID, owner isolation, or live Firebase sign-in was verified on this emulator
+run. The 18 November fixture-identity database smoke remains the successful
+hosted persistence evidence. Recheck the Supabase project/network connection,
+then repeat the live checklist with a verified account and real tomato leaf.
 
 ## Run the checks yourself
 
@@ -138,9 +160,10 @@ to their assigned workspace through the coordinator's established process.
 8. Check Sinhala/Tamil glyphs, wording and camera/gallery behavior on the device.
    Capture evidence without bearer tokens, personal account details or secrets.
 
-No Android device was attached during the recorded checks; this live Firebase
-sign-in/camera sequence remains pending. The configured APK is a development
-artifact and contains development client configuration; it is not committed.
+The Android Studio emulator attempt above did not complete the live Firebase
+sign-in/camera/upload sequence. That sequence remains pending. The configured
+APK is a development artifact and contains development client configuration;
+it is not committed.
 
 ## Limits and follow-up
 
