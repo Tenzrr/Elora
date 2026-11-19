@@ -6,9 +6,11 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from ai.agent.prompts.agronomist_system import (
+    AGRONOMIST_SYSTEM_PROMPT,
     CHEMICAL_SAFETY_REFUSAL_MESSAGE,
     is_chemical_pesticide_query,
 )
+from ai.agent.provider import get_agent_provider
 from app.core.auth import Actor, current_actor
 from app.db.session import get_db
 from app.modules.agricultural_agent.schemas import (
@@ -59,16 +61,16 @@ async def chat_turn(body: ChatRequest, actor: Owner, db: DB):
             created_at=current_timestamp(),
         )
 
-    guidance = (
-        "Welcome to Elora Agricultural Assistant. "
-        "Inspect leaf surfaces, monitor soil moisture before watering, and maintain clean tools. "
-        "For specific disease diagnosis, share clear photos through crop scanning."
-        f"{plant_context_text}"
+    provider = get_agent_provider()
+    turn_result = await provider.generate_turn(
+        prompt=body.message,
+        system_prompt=AGRONOMIST_SYSTEM_PROMPT,
+        context=plant_context_text.strip() if plant_context_text else None,
     )
 
     return ChatResponse(
         thread_id=thread_id,
-        response=guidance,
+        response=turn_result.text,
         tools_executed=tools_executed,
         created_at=current_timestamp(),
     )
