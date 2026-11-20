@@ -1,0 +1,35 @@
+{
+  "recorded_at": "2026-11-18T15:26:05.340038+00:00",
+  "database": "Existing Supabase dev1 schema, scoped runtime role, verified TLS",
+  "identity": "FIXTURE IDENTITY in an in-process test app; NOT live Firebase sign-in",
+  "image": "Synthetic 32x24 solid-green PNG; upload validation only",
+  "checks": {
+    "accepted": 202,
+    "identical_retry": "same scan_id",
+    "invalid_image": 415,
+    "cross_user_status": 404,
+    "new_api_instance": "identical persisted status",
+    "firebase_admin_lookup": "connected; expected synthetic UID not found (not a sign-in test)"
+  },
+  "receipt": {
+    "scan_id": "4addabbe-dfd2-4d95-ab58-3c0a3f362637",
+    "status_url": "/api/v1/scans/4addabbe-dfd2-4d95-ab58-3c0a3f362637"
+  },
+  "status_response": {
+    "scan_id": "4addabbe-dfd2-4d95-ab58-3c0a3f362637",
+    "status_url": "/api/v1/scans/4addabbe-dfd2-4d95-ab58-3c0a3f362637",
+    "status": "failed",
+    "crop_slug": "tomato",
+    "task": "disease",
+    "subtype": null,
+    "plant_id": null,
+    "created_at": "2026-11-18T15:26:08.351466Z",
+    "image_retained": false,
+    "result": null,
+    "error": {
+      "code": "MODEL_UNAVAILABLE",
+      "message": "No inference model is connected. Select a photo to try again after model integration."
+    }
+  },
+  "synthetic_rows": "removed after checks; scan_jobs table retained"
+}

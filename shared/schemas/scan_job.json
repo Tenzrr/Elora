@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://elora.invalid/schemas/interim-scan-job-v1.json",
+  "title": "Interim persisted scan failure (no connected model)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["scan_id", "status_url", "status", "crop_slug", "task", "subtype", "plant_id", "created_at", "image_retained", "result", "error"],
+  "properties": {
+    "scan_id": {"type": "string", "format": "uuid"},
+    "status_url": {"type": "string", "pattern": "^/api/v1/scans/[0-9a-f-]+$"},
+    "status": {"const": "failed"},
+    "crop_slug": {"enum": ["tomato", "citrus"]},
+    "task": {"enum": ["disease", "quality"]},
+    "subtype": {"enum": [null, "orange", "lemon"]},
+    "plant_id": {"type": ["string", "null"], "format": "uuid"},
+    "created_at": {"type": "string", "format": "date-time"},
+    "image_retained": {"const": false},
+    "result": {"type": "null"},
+    "error": {
+      "type": "object", "additionalProperties": false,
+      "required": ["code", "message"],
+      "properties": {"code": {"const": "MODEL_UNAVAILABLE"}, "message": {"type": "string", "minLength": 1}}
+    }
+  },
+  "oneOf": [
+    {"properties": {"crop_slug": {"const": "tomato"}, "task": {"const": "disease"}, "subtype": {"type": "null"}}},
+    {"properties": {"crop_slug": {"const": "citrus"}, "task": {"const": "quality"}, "subtype": {"enum": ["orange", "lemon"]}}}
+  ]
+}
