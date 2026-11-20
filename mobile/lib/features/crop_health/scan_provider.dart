@@ -24,6 +24,10 @@ class ScanState {
     this.scanId,
     this.status,
     this.error,
+    this.previewLabel,
+    this.previewModelVersion,
+    this.previewError,
+    this.previewBusy = false,
     this.busy = false,
   });
 
@@ -32,12 +36,20 @@ class ScanState {
   final String? scanId;
   final String? status;
   final String? error;
+  final String? previewLabel;
+  final String? previewModelVersion;
+  final String? previewError;
+  final bool previewBusy;
   final bool busy;
 
   ScanState copyWith({
     String? scanId,
     String? status,
     String? error,
+    String? previewLabel,
+    String? previewModelVersion,
+    String? previewError,
+    bool? previewBusy,
     bool? busy,
   }) => ScanState(
     bytes: bytes,
@@ -45,6 +57,10 @@ class ScanState {
     scanId: scanId ?? this.scanId,
     status: status ?? this.status,
     error: error,
+    previewLabel: previewLabel ?? this.previewLabel,
+    previewModelVersion: previewModelVersion ?? this.previewModelVersion,
+    previewError: previewError,
+    previewBusy: previewBusy ?? this.previewBusy,
     busy: busy ?? this.busy,
   );
 }
@@ -92,6 +108,50 @@ class ScanController extends Notifier<ScanState> {
         state = state.copyWith(
           busy: false,
           error: error is ApiException ? error.code : 'REQUEST_FAILED',
+        );
+      }
+    }
+  }
+
+  Future<void> preview() async {
+    if (state.bytes == null || state.busy) return;
+    final generation = _generation;
+    state = state.copyWith(busy: true, previewBusy: true);
+    try {
+      final result = await ref
+          .read(apiProvider)
+          .uploadImage(
+            '/scans/preview',
+            fields: {'crop_slug': 'tomato', 'task': 'disease'},
+            bytes: state.bytes!,
+            operationId: state.operationId!,
+          );
+      if (!ref.mounted || generation != _generation) return;
+      final label = result['label_id'] as String;
+      const labels = {
+        'early_blight',
+        'late_blight',
+        'septoria_leaf_spot',
+        'leaf_mold',
+        'yellow_leaf_curl_virus',
+        'healthy',
+      };
+      if (!labels.contains(label) ||
+          result['model_id'] != 'tomato-disease-mobilenetv2') {
+        throw const ApiException('INVALID_RESPONSE');
+      }
+      state = state.copyWith(
+        previewLabel: label,
+        previewModelVersion: result['model_version'] as String,
+        busy: false,
+        previewBusy: false,
+      );
+    } catch (error) {
+      if (ref.mounted && generation == _generation) {
+        state = state.copyWith(
+          busy: false,
+          previewBusy: false,
+          previewError: error is ApiException ? error.code : 'REQUEST_FAILED',
         );
       }
     }

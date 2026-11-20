@@ -1,0 +1,2 @@
+# Optional CPU dependency for the tomato research preview.
+tensorflow-cpu==2.21.0

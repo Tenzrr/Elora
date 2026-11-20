@@ -1,6 +1,6 @@
 # Shared foundation API
 
-The [finalized SRS](specifications/Elora_SRS.md) remains authoritative. This document defines the implemented foundation subset. OpenAPI is generated at `/openapi.json`; no model inference, community, weather or assistant endpoints are implemented here.
+The [finalized SRS](specifications/Elora_SRS.md) remains authoritative. This document defines the implemented foundation subset. OpenAPI is generated at `/openapi.json`; the optional tomato research preview below is separate from the saved scan assessment contract.
 
 | Route | Contract |
 |---|---|
@@ -58,3 +58,20 @@ Dev 2 may develop Fresh, Spoiled and unable-to-assess screens using visibly
 labelled fixtures; this API currently produces none of those results. Citrus
 quality's agreed future labels are `fresh` and `spoiled`. Human review by Dev 3
 and Dev 2 is required before integration of this shared contract.
+
+## Optional tomato research preview
+
+`POST /api/v1/scans/preview` accepts the same bounded multipart image input with
+`crop_slug=tomato`, `task=disease`, no subtype or plant ID. It requires a verified
+active Firebase user and a locally configured, checksum-verified tomato baseline
+checkpoint. It is disabled when `APP_ENV=production`. A successful `200` response
+has `label_id`, `model_id`, `model_version` and an explicit experimental notice.
+There is no confidence, guidance or saved assessment. The image is discarded
+after synchronous inference. Missing or unloadable model returns `503
+MODEL_UNAVAILABLE`; unsupported selection returns `422 UNSUPPORTED_SCAN`.
+
+This is a demonstration of real CNN execution, not a result under
+`model_contract.json` or full REQ-1.3/REQ-1.4 acceptance. It does not change
+the existing `POST /api/v1/scans` receipt/status semantics. The baseline has
+no calibrated confidence, validated domain rejection or independent field
+evaluation; do not call its output a confirmed diagnosis.

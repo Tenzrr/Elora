@@ -45,6 +45,12 @@ void main() {
           baseUrl: _config.apiUrl,
           token: (_) async => 'fixture-token',
           client: MockClient((request) async {
+            if (request.url.path.endsWith('/scans/preview')) {
+              return http.Response(
+                '{"label_id":"early_blight","model_id":"tomato-disease-mobilenetv2","model_version":"baseline-2026-11-18"}',
+                200,
+              );
+            }
             if (request.method == 'POST') {
               keys.add(request.headers['Idempotency-Key']!);
               return http.Response(
@@ -124,10 +130,17 @@ void main() {
         await tester.pumpAndSettle();
         expect(keys.length, 2);
         expect(keys.first, keys.last);
+        final preview = find.byType(OutlinedButton).first;
+        await _reveal(tester, preview);
+        await tester.tap(preview);
+        await tester.pumpAndSettle();
+        expect(container.read(scanProvider).previewLabel, 'early_blight');
+        expect(find.text('early blight'), findsOneWidget);
+        expect(keys.length, 2); // Preview did not create another saved job.
         expect(container.read(scanProvider).bytes, bytes);
         expect(tester.takeException(), isNull);
         if (const bool.fromEnvironment('RECORD_SCAN_DEMO')) {
-          await _record(tester, 'scan-failed-$language');
+          await _record(tester, 'scan-preview-$language');
         }
         // Leaving the route and returning retains the current account's selection.
         container.read(routerProvider).go('/garden');
