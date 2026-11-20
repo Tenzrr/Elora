@@ -1,0 +1,31 @@
+{
+  "scan_id": "6a4d9f3b-8c2e-4d0b-af5a-2b3c4d5e6f70",
+  "crop_slug": "citrus",
+  "task": "quality",
+  "model_id": "citrus-quality-fixture",
+  "model_version": "fixture-v0",
+  "origin": "server",
+  "outcome": "assessed",
+  "assessed_at": "2026-11-20T00:00:00Z",
+  "label_id": "spoiled",
+  "confidence": 0.88,
+  "top_predictions": [
+    {
+      "label_id": "spoiled",
+      "confidence": 0.88
+    },
+    {
+      "label_id": "fresh",
+      "confidence": 0.12
+    }
+  ],
+  "warnings": [
+    "LABELLED FIXTURE (fixture-v0): Synthetic contract example only; not a real citrus quality assessment and not for commercial, food-safety or storage decisions."
+  ],
+  "guidance": [
+    {
+      "text": "Fresh and spoiled are dataset-backed visible-condition labels only; this fixture does not establish commercial grade, food safety or storage life.",
+      "source_url": "https://data.mendeley.com/datasets/6ps7gtp2wg/1"
+    }
+  ]
+}
