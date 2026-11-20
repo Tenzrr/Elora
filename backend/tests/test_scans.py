@@ -82,6 +82,7 @@ def test_experimental_preview_requires_verified_user_and_model_configuration(api
     assert response.json()["label_id"] == "healthy"
     assert "not a confirmed diagnosis" in response.json()["notice"]
     assert seen[0][0] == "test-checkpoint.keras" and seen[0][1].startswith(b"\xff\xd8\xff")
+    assert seen[0][1] == files["image"][1]  # Do not recompress the preview after validation.
     assert client.post(path, headers=alice, data={**fields, "crop_slug": "citrus"}, files=files).status_code == 422
     app.state.settings.app_env = "production"
     assert client.post(path, headers=alice, data=fields, files=files).status_code == 403

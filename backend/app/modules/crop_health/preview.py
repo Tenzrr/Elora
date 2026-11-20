@@ -5,7 +5,7 @@ from functools import lru_cache
 from io import BytesIO
 from pathlib import Path
 
-from PIL import Image
+from PIL import Image, ImageOps
 
 LABELS = (
     "early_blight", "late_blight", "septoria_leaf_spot", "leaf_mold",
@@ -29,7 +29,8 @@ def predict_leaf(path: str, jpeg: bytes) -> str:
     import tensorflow as tf
 
     # Match the training notebook: RGB pixels in 0–255, then resize with padding.
-    image = np.asarray(Image.open(BytesIO(jpeg)).convert("RGB"))
+    # The validated bytes are decoded directly to avoid a second lossy JPEG encode.
+    image = np.asarray(ImageOps.exif_transpose(Image.open(BytesIO(jpeg))).convert("RGB"))
     batch = tf.expand_dims(tf.image.resize_with_pad(image, 224, 224), 0)
     scores = _model(path)(batch, training=False).numpy()[0]
     if scores.shape != (len(LABELS),) or not np.all(np.isfinite(scores)):

@@ -10,8 +10,9 @@ completed REQ-1.3/REQ-1.4 assessment.
 ## Boundary and files
 
 `POST /api/v1/scans/preview` is a verified-Firebase-user, development-only
-multipart request. The API validates and strips image metadata with the existing
-safe decoder, checks the checkpoint SHA-256, matches the notebook's RGB
+multipart request. The API validates the upload with the existing safe decoder,
+then decodes its original pixels with EXIF orientation applied; it avoids a
+second lossy JPEG encode before inference. It checks the checkpoint SHA-256, matches the notebook's RGB
 224×224 padded preprocessing, and returns a class ID, model ID/version and
 experimental notice. It discards the photo after inference. It does not save
 a scan or result and does not change the existing `POST /api/v1/scans` job,
@@ -59,20 +60,32 @@ which still ends `failed / MODEL_UNAVAILABLE`.
 
 ![Mock preview UI with explicit experimental warning](mock-preview-en.png)
 
-## Android Studio device attempt
+## Android Studio device check
 
 The API ran on local port 8001 with the existing scoped Dev 1 Supabase runtime
 and Firebase configuration. The Android Studio API 37 emulator installed the
 configured debug APK, restored the Firebase session, and displayed the selected
-validation leaf. The previous session reached `POST /api/v1/session` and
-`GET /api/v1/plants` as `200`. On 20 November the preview request stalled before
-inference: the API logged session/database timeouts, and a direct PostgreSQL
-pooler SSL probe timed out on the current network. No live on-device prediction
-is claimed yet. The selected photo remained available for retry. Retry on the
-SLT Fibre/hotspot connection that previously reached the pooler, then capture
-the card and API `200` without account details.
+validation leaf. The session reached `POST /api/v1/session` and
+`GET /api/v1/plants` as `200`. On 20 November the first preview request stalled
+before inference: the API logged session/database timeouts, and a direct
+PostgreSQL pooler SSL probe timed out on that network. The selected photo
+remained available for retry. The user switched to a hotspot; the pooler probe
+returned PostgreSQL SSL response `b'S'`, and the live preview API returned
+`POST /api/v1/scans/preview 200` using the signed-in Firebase account and the
+configured Dev 1 database. The app displayed `early blight`, model version
+`baseline-2026-11-18`, and the experimental notice. This is one known validation
+photo and does not establish performance on new field photos.
+
+During this check, the first live prediction was `late blight`, although direct
+inference on the source JPEG gave `early blight`. Reproducing the mobile JPEG
+quality-90 encode followed by the API's second JPEG quality-90 encode changed
+this image's predicted class. The preview now validates the upload but sends
+the original uploaded bytes to the predictor, which applies EXIF orientation
+without another lossy encode. The live retry then displayed `early blight`.
 
 ![Android emulator retained the selected leaf after the network timeout](android-network-timeout.png)
+
+![Live Android preview showing the known early-blight validation leaf and experimental notice](android-live-preview.png)
 
 ## Run the demo
 
