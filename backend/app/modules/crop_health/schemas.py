@@ -19,6 +19,13 @@ class ScanReceipt(BaseModel):
     status_url: str
 
 
+class PreviewResult(BaseModel):
+    label_id: Literal["early_blight", "late_blight", "septoria_leaf_spot", "leaf_mold", "yellow_leaf_curl_virus", "healthy"]
+    model_id: Literal["tomato-disease-mobilenetv2"] = "tomato-disease-mobilenetv2"
+    model_version: Literal["baseline-2026-11-18"] = "baseline-2026-11-18"
+    notice: str = "Experimental prediction from a photo; not a confirmed diagnosis. No calibrated confidence or treatment advice is available."
+
+
 class ScanFailure(BaseModel):
     code: Literal["MODEL_UNAVAILABLE"] = "MODEL_UNAVAILABLE"
     message: str = "No inference model is connected. Select a photo to try again after model integration."

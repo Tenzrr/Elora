@@ -17,7 +17,8 @@ from app.core.errors import fail
 from app.db.models import Plant
 from app.db.session import get_db
 from app.modules.crop_health.models import ScanJob
-from app.modules.crop_health.schemas import ScanFailure, ScanInput, ScanReceipt, ScanStatus
+from app.modules.crop_health.schemas import PreviewResult, ScanFailure, ScanInput, ScanReceipt, ScanStatus
+from app.modules.crop_health.preview import predict_leaf
 from app.shared.images import MAX_BYTES, validate_image
 
 router = APIRouter(prefix="/api/v1/scans", tags=["scans"])
@@ -56,9 +57,9 @@ async def upload(request: Request):
     if raw and not (raw.startswith(b"\xff\xd8\xff") or raw.startswith(b"\x89PNG\r\n\x1a\n")
                     or (raw.startswith(b"RIFF") and raw[8:12] == b"WEBP")):
         fail(415, "UNSUPPORTED_MEDIA_TYPE", "Use JPEG, PNG or WebP.")
-    await run_in_threadpool(validate_image, raw)
+    jpeg = await run_in_threadpool(validate_image, raw)
     digest = hashlib.sha256(json.dumps(selection.model_dump(mode="json"), sort_keys=True).encode() + b"\0" + raw).hexdigest()
-    return selection, digest
+    return selection, digest, jpeg
 
 
 def view(job: ScanJob):
@@ -81,7 +82,7 @@ def view(job: ScanJob):
 })
 async def submit(request: Request, response: Response, actor: Owner, db: DB,
                  idempotency_key: Annotated[UUID, Header()]):
-    selection, digest = await upload(request)
+    selection, digest, _ = await upload(request)
     if selection.crop_slug == "citrus" and selection.task == "quality":
         if selection.subtype not in {"orange", "lemon"}:
             fail(422, "INVALID_SUBTYPE", "Choose orange or lemon for citrus quality.")
@@ -114,6 +115,23 @@ async def submit(request: Request, response: Response, actor: Owner, db: DB,
         fail(409, "IDEMPOTENCY_CONFLICT", "Use a new key after changing the photo or selections.")
     response.headers["Location"] = f"/api/v1/scans/{job.id}"
     return ScanReceipt(scan_id=job.id, status_url=response.headers["Location"])
+
+
+@router.post("/preview", response_model=PreviewResult)
+async def preview(request: Request, actor: Owner):
+    settings = request.app.state.settings
+    if settings.app_env not in {"development", "test"}:
+        fail(403, "PREVIEW_DISABLED", "Experimental predictions are unavailable here.")
+    if not settings.tomato_preview_model_path:
+        fail(503, "MODEL_UNAVAILABLE", "The experimental tomato model is not configured.")
+    selection, _, jpeg = await upload(request)
+    if (selection.crop_slug, selection.task, selection.subtype, selection.plant_id) != ("tomato", "disease", None, None):
+        fail(422, "UNSUPPORTED_SCAN", "Preview accepts only a tomato leaf disease photo.")
+    try:
+        label = await run_in_threadpool(predict_leaf, settings.tomato_preview_model_path, jpeg)
+    except (OSError, ImportError, ValueError, RuntimeError):
+        fail(503, "MODEL_UNAVAILABLE", "The experimental tomato model could not run.")
+    return PreviewResult(label_id=label)
 
 
 @router.get("/{scan_id}", response_model=ScanStatus)

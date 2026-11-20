@@ -63,6 +63,30 @@ def test_durable_failure_contract_and_idempotent_retry(api):
     asyncio.run(rows())
 
 
+def test_experimental_preview_requires_verified_user_and_model_configuration(api, monkeypatch):
+    client, _, app = api
+    alice = signed_in(client)
+    fields = {"crop_slug": "tomato", "task": "disease"}
+    files = {"image": ("leaf.jpg", picture("JPEG"), "image/jpeg")}
+    path = "/api/v1/scans/preview"
+    assert client.post(path, data=fields, files=files).status_code == 401
+    assert client.post(path, headers=signed_in(client, "unverified"), data=fields, files=files).status_code == 403
+    assert client.post(path, headers=alice, data=fields, files=files).status_code == 503
+    app.state.settings.tomato_preview_model_path = "test-checkpoint.keras"
+    import importlib
+    module = importlib.import_module("app.modules.crop_health.router")
+    seen = []
+    monkeypatch.setattr(module, "predict_leaf", lambda model_path, image: seen.append((model_path, image)) or "healthy")
+    response = client.post(path, headers=alice, data=fields, files=files)
+    assert response.status_code == 200, response.text
+    assert response.json()["label_id"] == "healthy"
+    assert "not a confirmed diagnosis" in response.json()["notice"]
+    assert seen[0][0] == "test-checkpoint.keras" and seen[0][1].startswith(b"\xff\xd8\xff")
+    assert client.post(path, headers=alice, data={**fields, "crop_slug": "citrus"}, files=files).status_code == 422
+    app.state.settings.app_env = "production"
+    assert client.post(path, headers=alice, data=fields, files=files).status_code == 403
+
+
 def test_auth_ownership_and_optional_plant(api):
     client, engine, _ = api
     alice, bob = signed_in(client), signed_in(client, "bob")

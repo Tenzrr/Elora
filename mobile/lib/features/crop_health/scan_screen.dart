@@ -150,7 +150,7 @@ class _ScanScreenState extends ConsumerState<ScanScreen>
         ),
         if (scan.busy) ...[
           const LinearProgressIndicator(),
-          Text(t.scanChecking),
+          Text(scan.previewBusy ? t.scanPreviewRunning : t.scanChecking),
         ],
         if (scan.scanId != null) ...[
           Text(t.scanRecorded, style: Theme.of(context).textTheme.titleMedium),
@@ -178,7 +178,33 @@ class _ScanScreenState extends ConsumerState<ScanScreen>
               }),
             ),
           ),
+        if (scan.previewLabel != null)
+          Card(
+            color: EloraColors.mint,
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    t.scanPreviewTitle,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  Text(scan.previewLabel!.replaceAll('_', ' ')),
+                  Text('${t.scanPreviewModel}: ${scan.previewModelVersion}'),
+                  Text(t.scanPreviewWarning),
+                ],
+              ),
+            ),
+          ),
+        if (scan.previewError != null) Text(t.scanPreviewUnavailable),
         const SizedBox(height: 12),
+        OutlinedButton(
+          onPressed: disabled || scan.bytes == null
+              ? null
+              : () => unawaited(_controller.preview()),
+          child: Text(t.scanPreviewAction),
+        ),
         FilledButton(
           onPressed: disabled || scan.bytes == null
               ? null
