@@ -55,7 +55,7 @@ def test_organic_cultural_queries_are_accepted(api):
         assert resp.status_code == 200
         body = resp.json()
         assert "Elora does not prescribe synthetic chemical pesticides" not in body["response"]
-        assert "Welcome to Elora Agricultural Assistant" in body["response"]
+        assert "Agricultural guidance" in body["response"]
 
 
 def test_safety_refusal_preserves_plant_tool_metadata(api):
