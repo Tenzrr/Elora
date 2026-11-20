@@ -7,6 +7,7 @@ from typing import Protocol
 
 import httpx
 
+from ai.agent.formatters import sanitize_agronomic_text
 from app.core.config import Settings, get_settings
 
 logger = logging.getLogger(__name__)
@@ -33,6 +34,7 @@ class AgentProvider(Protocol):
         prompt: str,
         system_prompt: str,
         context: str | None = None,
+        is_user_greeting: bool = False,
     ) -> ProviderTurnResult: ...
 
 
@@ -162,10 +164,12 @@ class MockAgentProvider:
         prompt: str,
         system_prompt: str,
         context: str | None = None,
+        is_user_greeting: bool = False,
     ) -> ProviderTurnResult:
         response_text = self._generate_agronomic_response(prompt, context)
+        cleaned_text = sanitize_agronomic_text(response_text, is_user_greeting=is_user_greeting)
         return ProviderTurnResult(
-            text=response_text,
+            text=cleaned_text,
             provider="mock",
             model=self.model_name,
             fallback=False,
@@ -195,6 +199,7 @@ class GeminiAgentProvider:
         prompt: str,
         system_prompt: str,
         context: str | None = None,
+        is_user_greeting: bool = False,
     ) -> ProviderTurnResult:
         start_time = time.perf_counter()
 
@@ -221,7 +226,7 @@ class GeminiAgentProvider:
             ],
             "generationConfig": {
                 "temperature": 0.2,
-                "maxOutputTokens": 800,
+                "maxOutputTokens": 450,
                 "thinkingConfig": {
                     "thinkingBudget": 0,
                 },
@@ -252,9 +257,11 @@ class GeminiAgentProvider:
                             if candidates:
                                 parts = candidates[0].get("content", {}).get("parts", [])
                                 if parts and "text" in parts[0]:
+                                    raw_text = parts[0]["text"].strip()
+                                    cleaned_text = sanitize_agronomic_text(raw_text, is_user_greeting=is_user_greeting)
                                     elapsed = int((time.perf_counter() - start_time) * 1000)
                                     return ProviderTurnResult(
-                                        text=parts[0]["text"].strip(),
+                                        text=cleaned_text,
                                         provider="gemini",
                                         model=current_model,
                                         fallback=False,

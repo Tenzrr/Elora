@@ -10,6 +10,7 @@ from ai.agent.prompts.agronomist_system import (
     AGRONOMIST_SYSTEM_PROMPT,
     CHEMICAL_SAFETY_REFUSAL_MESSAGE,
     is_chemical_pesticide_query,
+    is_greeting_query,
 )
 from ai.agent.provider import get_agent_provider
 from app.core.auth import Actor, current_actor
@@ -67,10 +68,12 @@ async def chat_turn(body: ChatRequest, actor: Owner, db: DB, request: Request):
 
     settings = getattr(request.app.state, "settings", None) or get_settings()
     provider = get_agent_provider(settings)
+    user_greeted = is_greeting_query(body.message)
     turn_result = await provider.generate_turn(
         prompt=body.message,
         system_prompt=AGRONOMIST_SYSTEM_PROMPT,
         context=plant_context_text.strip() if plant_context_text else None,
+        is_user_greeting=user_greeted,
     )
     print(f"[CHAT_LOG] Generated reply ({turn_result.provider}): {turn_result.text}\n", flush=True)
     logger.warning("agricultural_chat_turn_reply provider=%s text=%r", turn_result.provider, turn_result.text)

@@ -3,6 +3,8 @@ import httpx
 import pytest
 from pydantic import SecretStr
 
+from ai.agent.formatters import sanitize_agronomic_text, to_sans_bold, to_sans_italic
+from ai.agent.prompts.agronomist_system import is_greeting_query
 from ai.agent.provider import (
     DEFAULT_FALLBACK_MESSAGE,
     GeminiAgentProvider,
@@ -178,3 +180,34 @@ def test_chat_route_cross_user_isolation(api):
     assert alice_chat.status_code == 200
     body = alice_chat.json()
     assert "Requested plant was not found in your garden." in body["response"]
+
+
+def test_unicode_formatting_sanitization():
+    raw_sample = "### 1. Water Management\n* **Morning Watering:** Check *soil moisture* depth.\n* Incorporate **compost**."
+    sanitized = sanitize_agronomic_text(raw_sample, is_user_greeting=False)
+    assert "#" not in sanitized
+    assert "**" not in sanitized
+    assert "*" not in sanitized
+    assert "•" in sanitized
+    assert "𝟭. 𝗪𝗮𝘁𝗲𝗿 𝗠𝗮𝗻𝗮𝗴𝗲𝗺𝗲𝗻𝘁" in sanitized
+    assert "• 𝗠𝗼𝗿𝗻𝗶𝗻𝗴 𝗪𝗮𝘁𝗲𝗿𝗶𝗻𝗴:" in sanitized
+
+
+def test_repetitive_greeting_stripping():
+    sample = "Ayubowan! I am Elora.\n\n### 1. Tomato Pruning\n* Cut suckers."
+    stripped = sanitize_agronomic_text(sample, is_user_greeting=False)
+    assert "Ayubowan" not in stripped
+    assert "I am Elora" not in stripped
+    assert "𝟭. 𝗧𝗼𝗺𝗮𝘁𝗼 𝗣𝗿𝘂𝗻𝗶𝗻𝗴" in stripped
+
+    preserved = sanitize_agronomic_text(sample, is_user_greeting=True)
+    assert "Ayubowan" in preserved
+
+
+def test_greeting_query_detection():
+    assert is_greeting_query("hello")
+    assert is_greeting_query("Hi there")
+    assert is_greeting_query("Ayubowan")
+    assert is_greeting_query("what can you do")
+    assert not is_greeting_query("any info on tomato")
+    assert not is_greeting_query("how to prune dead leaves")
