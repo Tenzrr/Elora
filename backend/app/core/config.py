@@ -14,6 +14,7 @@ class Settings(BaseSettings):
     database_ca_file: str | None = None
     firebase_project_id: str = ""
     google_application_credentials: str | None = None
+    tomato_preview_model_path: str | None = None
 
     @model_validator(mode="after")
     def validate_workspace(self):
