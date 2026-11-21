@@ -18,6 +18,7 @@ import 'screens/auth_screen.dart';
 import 'screens/garden_screen.dart';
 import 'screens/profile_screen.dart';
 import 'features/crop_health/scan_screen.dart';
+import 'features/produce_quality/quality_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -105,6 +106,9 @@ final routerProvider = Provider<GoRouter>((ref) {
             GoRoute(
               path: module.path,
               builder: (context, state) {
+                if (module == EloraModule.quality) {
+                  return const QualityScreen();
+                }
                 if (module == EloraModule.assistant) {
                   return const ChatScreen();
                 }
