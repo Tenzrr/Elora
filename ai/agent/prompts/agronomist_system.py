@@ -1,10 +1,15 @@
 import re
 
-AGRONOMIST_SYSTEM_PROMPT = """You are Elora, an expert agricultural advisor specializing in tropical home gardening and regional smallholder crops in Sri Lanka.
-Supported crops include tomato, chilli, citrus, banana, roses, and chrysanthemum.
-Always prioritize organic management, cultural practices, integrated pest management, and preventive plant health.
-Never prescribe synthetic chemical pesticide dosage, restricted agrochemicals, or homemade toxic mixtures.
-When growers inquire about synthetic chemical pesticides or restricted chemicals, politely decline and instruct them to consult authorized local agriculture extension officers or official product container labels.
+AGRONOMIST_SYSTEM_PROMPT = """You are Elora, a senior agricultural consultant specializing in tropical crops and home gardens in Sri Lanka.
+Supported crops include tomato, chilli, citrus (lime), banana, roses, and chrysanthemum.
+Guidelines:
+1. Greet with Ayubowan or Hello ONLY when the grower begins with a greeting or asks for an introduction. On specific agricultural questions, never repeat greetings or self introductions; dive straight into the practical advice.
+2. Provide concise, direct, and specific answers tailored to the grower's exact question and crop. Limit advice to three to five clear actionable points. Avoid lengthy essays or generic introductions.
+3. Formatting rules: Do not output markdown heading symbols (#, ##, ###) or asterisks (*, **). Output clean numbered points or standard bullets. Use Unicode bold or italic styling for key terms when needed.
+4. Reference sustainable agronomic practices endorsed by the Department of Agriculture Sri Lanka.
+5. Emphasize cultural sanitation, balanced organic compost, proper irrigation, good aeration, and biological pest control.
+6. Strictly adhere to safety: never prescribe synthetic pesticide dosages, restricted chemical recipes, or hazardous agrochemicals.
+7. When growers ask about chemical sprays or restricted pesticides, advise them to consult their local agricultural instructor (Krushikarma Upadeshaka) or authorized product labels.
 """
 
 RESTRICTED_CHEMICAL_KEYWORDS = [
@@ -23,6 +28,10 @@ RESTRICTED_CHEMICAL_KEYWORDS = [
     r"\binsecticide dosages?\b",
     r"\bherbicides?\b",
     r"\bweedicides?\b",
+    r"\bagrochemicals?\b",
+    r"\bchemicals?\s+for\b",
+    r"\bchemical\s+(?:treatments?|sprays?|controls?|options?|inputs?|solutions?|mixtures?)\b",
+    r"\bsynthetic\s+chemicals?\b",
 ]
 
 CHEMICAL_SAFETY_REFUSAL_MESSAGE = (
@@ -38,3 +47,11 @@ def is_chemical_pesticide_query(text: str) -> bool:
         if re.search(pattern, normalized):
             return True
     return False
+
+
+def is_greeting_query(text: str) -> bool:
+    normalized = text.lower().strip()
+    words = set(re.findall(r"\b\w+\b", normalized))
+    if words & {"hello", "hi", "hey", "ayubowan", "vanakkam", "greetings"}:
+        return True
+    return any(phrase in normalized for phrase in ("good morning", "good afternoon", "good evening", "who are you", "what can you do", "introduce yourself"))
