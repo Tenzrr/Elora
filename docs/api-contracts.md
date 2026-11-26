@@ -75,3 +75,26 @@ This is a demonstration of real CNN execution, not a result under
 the existing `POST /api/v1/scans` receipt/status semantics. The baseline has
 no calibrated confidence, validated domain rejection or independent field
 evaluation; do not call its output a confirmed diagnosis.
+
+## Interim Community private drafts — Dev 5
+
+This interim contract supports private, authenticated text drafts only.
+Public publishing, public feed access and Community Rules acceptance are
+outside this interim scope and remain disabled.
+
+| Route | Contract |
+|---|---|
+| POST /api/v1/community/posts | Requires an authenticated, active Firebase user with verified email. Accepts only `text` (1–2000 characters). The server derives the post owner from the verified Firebase identity mapped to the application user. Caller-supplied `user_id` or author identity is not accepted. Returns `201` with the created private draft. |
+| GET /api/v1/community/posts | Returns only the authenticated user's own drafts. Supports UUID `cursor` pagination; `limit` defaults to 20 and has a maximum of 100. Returns `items` and `next_cursor`. Posts belonging to other users are never included. |
+
+Every post created in this interim flow has `published_at = null`.
+The post response includes `id`, `user_id`, `text`, `published_at`,
+`created_at` and `updated_at`.
+
+Ownership is enforced by the backend using the verified Firebase identity.
+The client cannot choose or impersonate the post author.
+
+There is no public publish endpoint in this interim implementation.
+All posts remain private drafts and are visible only to their owner.
+Public publishing and Community Rules acceptance will be addressed in
+the next Community phase.
