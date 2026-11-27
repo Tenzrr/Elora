@@ -6,6 +6,7 @@ from sqlalchemy import text
 from app.core.config import Settings
 from app.db.models import Base
 from app.modules.crop_health.models import ScanJob  # Register feature metadata for Alembic.
+from app.modules.community.models import CommunityPost  # Register Community metadata for Alembic.
 from app.db.session import make_engine
 
 settings = Settings()

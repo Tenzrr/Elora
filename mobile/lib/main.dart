@@ -19,6 +19,7 @@ import 'screens/garden_screen.dart';
 import 'screens/profile_screen.dart';
 import 'features/crop_health/scan_screen.dart';
 import 'features/produce_quality/quality_screen.dart';
+import 'features/community/community_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -117,6 +118,9 @@ final routerProvider = Provider<GoRouter>((ref) {
                 }
                 if (module == EloraModule.cropHealth) {
                   return const ScanScreen();
+                }
+                if (module == EloraModule.community) {
+                  return const CommunityScreen();
                 }
                 return Center(
                   child: Padding(
