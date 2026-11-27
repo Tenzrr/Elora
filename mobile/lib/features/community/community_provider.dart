@@ -1,4 +1,4 @@
-﻿import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/network/api_client.dart';
 import '../../../core/providers.dart';
@@ -75,36 +75,43 @@ class CommunityState {
 class CommunityController extends Notifier<CommunityState> {
   @override
   CommunityState build() {
-    ref.watch(
-      authStateProvider.select((auth) => auth.asData?.value?.uid),
-    );
+    ref.watch(authStateProvider.select((auth) => auth.asData?.value?.uid));
     return const CommunityState();
   }
 
+  String? _signedInUserId() {
+    return ref.read(authStateProvider).asData?.value?.uid;
+  }
+
+  bool _isCurrentUserRequest(String? requestUserId) {
+    return ref.mounted &&
+        requestUserId != null &&
+        _signedInUserId() == requestUserId;
+  }
+
   Future<void> loadPosts({bool refresh = false}) async {
+    final requestUserId = _signedInUserId();
+    if (requestUserId == null) return;
+
     if (state.isLoading) return;
     if (!refresh && state.hasLoaded && state.nextCursor == null) return;
 
     final cursor = refresh ? null : state.nextCursor;
 
-    state = state.copyWith(
-      isLoading: true,
-      clearError: true,
-    );
+    state = state.copyWith(isLoading: true, clearError: true);
 
     try {
       final path = cursor == null
           ? '/community/posts?limit=20'
           : '/community/posts?limit=20&cursor=$cursor';
 
-      final response = await ref.read(apiProvider).request('GET', path)
-          as Map;
+      final response = await ref.read(apiProvider).request('GET', path) as Map;
+      if (!_isCurrentUserRequest(requestUserId)) return;
 
       final items = (response['items'] as List)
           .map(
-            (item) => CommunityPost.fromJson(
-              Map<String, dynamic>.from(item as Map),
-            ),
+            (item) =>
+                CommunityPost.fromJson(Map<String, dynamic>.from(item as Map)),
           )
           .toList();
 
@@ -113,9 +120,8 @@ class CommunityController extends Notifier<CommunityState> {
           : [
               ...state.posts,
               ...items.where(
-                (post) => !state.posts.any(
-                  (existing) => existing.id == post.id,
-                ),
+                (post) =>
+                    !state.posts.any((existing) => existing.id == post.id),
               ),
             ];
 
@@ -127,11 +133,11 @@ class CommunityController extends Notifier<CommunityState> {
         hasLoaded: true,
       );
     } catch (error) {
+      if (!_isCurrentUserRequest(requestUserId)) return;
+
       state = state.copyWith(
         isLoading: false,
-        errorCode: error is ApiException
-            ? error.code
-            : 'REQUEST_FAILED',
+        errorCode: error is ApiException ? error.code : 'REQUEST_FAILED',
       );
     }
   }
@@ -141,38 +147,35 @@ class CommunityController extends Notifier<CommunityState> {
 
     if (content.isEmpty || state.isSubmitting) return false;
 
-    state = state.copyWith(
-      isSubmitting: true,
-      clearError: true,
-    );
+    final requestUserId = _signedInUserId();
+    if (requestUserId == null) return false;
+
+    state = state.copyWith(isSubmitting: true, clearError: true);
 
     try {
-      final response = await ref.read(apiProvider).request(
-        'POST',
-        '/community/posts',
-        body: {'text': content},
-      ) as Map;
+      final response =
+          await ref
+                  .read(apiProvider)
+                  .request('POST', '/community/posts', body: {'text': content})
+              as Map;
 
-      final post = CommunityPost.fromJson(
-        Map<String, dynamic>.from(response),
-      );
+      if (!_isCurrentUserRequest(requestUserId)) return false;
+
+      final post = CommunityPost.fromJson(Map<String, dynamic>.from(response));
 
       state = state.copyWith(
-        posts: [
-          post,
-          ...state.posts.where((item) => item.id != post.id),
-        ],
+        posts: [post, ...state.posts.where((item) => item.id != post.id)],
         isSubmitting: false,
         hasLoaded: true,
       );
 
       return true;
     } catch (error) {
+      if (!_isCurrentUserRequest(requestUserId)) return false;
+
       state = state.copyWith(
         isSubmitting: false,
-        errorCode: error is ApiException
-            ? error.code
-            : 'REQUEST_FAILED',
+        errorCode: error is ApiException ? error.code : 'REQUEST_FAILED',
       );
 
       return false;
@@ -180,7 +183,6 @@ class CommunityController extends Notifier<CommunityState> {
   }
 }
 
-final communityProvider =
-    NotifierProvider<CommunityController, CommunityState>(
+final communityProvider = NotifierProvider<CommunityController, CommunityState>(
   CommunityController.new,
 );
