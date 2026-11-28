@@ -727,7 +727,7 @@ class FarmingScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: 12),
                   DropdownButtonFormField<String>(
-                    value: selectedType,
+                    initialValue: selectedType,
                     decoration: const InputDecoration(
                       labelText: 'Task Type',
                       contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
