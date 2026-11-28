@@ -75,5 +75,19 @@
   "scanRequestFailed": "The request could not finish. Your photo is kept here. Check your connection and sign-in, then retry or refresh status.",
   "scanRetry": "Retry same upload",
   "scanSubmit": "Submit leaf photo",
-  "scanRefresh": "Refresh status"
+  "scanRefresh": "Refresh status",
+  "communityMyPosts": "My posts",
+  "communityPrivatePostsNote": "Only you can see saved drafts until community rules acceptance and publishing are integrated.",
+  "communityCreatePost": "Create post",
+  "communityTextHint": "What would you like to share?",
+  "communityPreview": "Preview",
+  "communitySaveDraft": "Save private draft",
+  "communityDraft": "Private draft",
+  "communityNoPosts": "No saved posts yet. Create your first text post.",
+  "communityPostSaved": "Your draft was saved.",
+  "communityLoadFailed": "Could not load posts. Please try again.",
+  "communitySaveFailed": "Could not save your draft. Check your connection and try again.",
+  "communityTextRequired": "Please enter some post text.",
+  "communityYou": "You",
+  "communityLoadMore": "Load more"
 }
