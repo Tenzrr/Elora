@@ -1,13 +1,20 @@
 from datetime import datetime, timezone
+from uuid import UUID
 import httpx
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.core.errors import fail
+from app.db.models import CareLog, CareTask, Plant
 from app.modules.predictive_farming.schemas import (
+    CareTaskCreate,
     CurrentWeather,
     DailyForecast,
     FarmingAdvisory,
     WeatherForecastResponse,
     WeatherUnits,
 )
+
 
 OPEN_METEO_URL = "https://api.open-meteo.com/v1/forecast"
 RAIN_DELAY_THRESHOLD_MM = 5.0
@@ -83,30 +90,12 @@ async def fetch_weather_forecast(
     cache_key = (round(latitude, 4), round(longitude, 4))
     now = datetime.now(timezone.utc)
 
-    # Check in-memory cache first if force_refresh is not requested
+    # 1. Check in-memory cache for valid fresh data (< 15 mins) unless force_refresh requested
     if not force_refresh and cache_key in _forecast_cache:
         retrieval_time, cached = _forecast_cache[cache_key]
         age_seconds = (now - retrieval_time).total_seconds()
-
-        # Under 15 minutes: serve fresh cache
         if age_seconds <= CACHE_TTL_SECONDS:
             return cached
-
-        # Between 15 minutes and 2 hours: serve with stale mark
-        if age_seconds <= MAX_STALE_AGE_SECONDS:
-            return cached.model_copy(update={"is_stale": True})
-
-        # Between 2 hours and 24 hours: serve with stale mark and WITHHELD advice
-        if age_seconds <= MAX_DISPLAY_AGE_SECONDS:
-            stale_advisory = evaluate_irrigation_advisory(
-                precipitation_sum_mm=cached.advisory.precipitation_expected_mm,
-                location_name=location_name,
-                data_age_seconds=age_seconds,
-            )
-            return cached.model_copy(update={"is_stale": True, "advisory": stale_advisory})
-
-        # Beyond 24 hours: cache expired per BR-03
-        _forecast_cache.pop(cache_key, None)
 
     params = {
         "latitude": latitude,
@@ -131,6 +120,24 @@ async def fetch_weather_forecast(
         response = await client.get(OPEN_METEO_URL, params=params)
         response.raise_for_status()
         data = response.json()
+    except Exception as exc:
+        # Fallback to cached data if Open-Meteo is unreachable (BR-03 stale fallback)
+        if cache_key in _forecast_cache:
+            retrieval_time, cached = _forecast_cache[cache_key]
+            age_seconds = (now - retrieval_time).total_seconds()
+
+            if age_seconds <= MAX_STALE_AGE_SECONDS:
+                return cached.model_copy(update={"is_stale": True})
+
+            if age_seconds <= MAX_DISPLAY_AGE_SECONDS:
+                stale_advisory = evaluate_irrigation_advisory(
+                    precipitation_sum_mm=cached.advisory.precipitation_expected_mm,
+                    location_name=location_name,
+                    data_age_seconds=age_seconds,
+                )
+                return cached.model_copy(update={"is_stale": True, "advisory": stale_advisory})
+
+        raise exc
     finally:
         if should_close_client:
             await client.aclose()
@@ -191,3 +198,143 @@ async def fetch_weather_forecast(
     # Cache the fresh response
     _forecast_cache[cache_key] = (retrieval_time, result)
     return result
+
+
+# --- Care Task & Care Log Service (REQ-3.5 / SAFE-5) ---
+
+
+async def list_care_tasks(
+    db: AsyncSession,
+    user_id: UUID,
+    plant_id: UUID | None = None,
+    status: str | None = None,
+) -> list[CareTask]:
+    """List care tasks belonging to the user with optional plant and status filters."""
+    query = select(CareTask).where(CareTask.user_id == user_id)
+    if plant_id is not None:
+        query = query.where(CareTask.plant_id == plant_id)
+    if status is not None:
+        query = query.where(CareTask.status == status)
+    result = await db.scalars(query.order_by(CareTask.due_date.asc()))
+    return list(result.all())
+
+
+async def create_care_task(
+    db: AsyncSession,
+    user_id: UUID,
+    task_in: CareTaskCreate,
+) -> CareTask:
+    """Create a new plant care task under ownership checks (REQ-3.5)."""
+    # If plant_id is specified, verify ownership
+    if task_in.plant_id is not None:
+        plant = await db.scalar(
+            select(Plant).where(Plant.id == task_in.plant_id, Plant.user_id == user_id)
+        )
+        if plant is None:
+            fail(404, "NOT_FOUND", "Specified plant not found or does not belong to user.")
+
+    task = CareTask(
+        user_id=user_id,
+        plant_id=task_in.plant_id,
+        task_type=task_in.task_type,
+        title=task_in.title,
+        description=task_in.description,
+        due_date=task_in.due_date,
+        advisory_rationale=task_in.advisory_rationale,
+    )
+    db.add(task)
+    await db.flush()
+    return task
+
+
+async def get_care_task(
+    db: AsyncSession,
+    user_id: UUID,
+    task_id: UUID,
+) -> CareTask:
+    """Retrieve a single care task with ownership check."""
+    task = await db.scalar(
+        select(CareTask).where(CareTask.id == task_id, CareTask.user_id == user_id)
+    )
+    if task is None:
+        fail(404, "NOT_FOUND", "Care task was not found.")
+    return task
+
+
+async def complete_care_task(
+    db: AsyncSession,
+    user_id: UUID,
+    task_id: UUID,
+    notes: str | None = None,
+) -> CareTask:
+    """Mark a task complete and record an actual care log (REQ-3.5, SAFE-5)."""
+    task = await get_care_task(db, user_id, task_id)
+    # SAFE-5: Idempotent replay protection
+    if task.status == "completed":
+        return task
+    if task.status == "cancelled":
+        fail(400, "INVALID_STATE", "Cannot complete a cancelled care task.")
+
+    task.status = "completed"
+    care_log = CareLog(
+        task_id=task.id,
+        user_id=user_id,
+        plant_id=task.plant_id,
+        action_taken="completed",
+        notes=notes,
+    )
+    db.add(care_log)
+    await db.flush()
+    return task
+
+
+async def skip_care_task(
+    db: AsyncSession,
+    user_id: UUID,
+    task_id: UUID,
+    notes: str | None = None,
+) -> CareTask:
+    """Mark a task skipped and record an actual care log (REQ-3.5, SAFE-5)."""
+    task = await get_care_task(db, user_id, task_id)
+    if task.status == "skipped":
+        return task
+    if task.status == "cancelled":
+        fail(400, "INVALID_STATE", "Cannot skip a cancelled care task.")
+
+    task.status = "skipped"
+    care_log = CareLog(
+        task_id=task.id,
+        user_id=user_id,
+        plant_id=task.plant_id,
+        action_taken="skipped",
+        notes=notes,
+    )
+    db.add(care_log)
+    await db.flush()
+    return task
+
+
+async def cancel_care_task(
+    db: AsyncSession,
+    user_id: UUID,
+    task_id: UUID,
+) -> CareTask:
+    """Cancel a scheduled care task (REQ-3.5)."""
+    task = await get_care_task(db, user_id, task_id)
+    task.status = "cancelled"
+    await db.flush()
+    return task
+
+
+async def list_care_logs(
+    db: AsyncSession,
+    user_id: UUID,
+    plant_id: UUID | None = None,
+) -> list[CareLog]:
+    """Retrieve actual care logs retained separately from recommendations (REQ-3.5)."""
+    query = select(CareLog).where(CareLog.user_id == user_id)
+    if plant_id is not None:
+        query = query.where(CareLog.plant_id == plant_id)
+    result = await db.scalars(query.order_by(CareLog.logged_at.desc()))
+    return list(result.all())
+

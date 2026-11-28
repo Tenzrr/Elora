@@ -1,6 +1,7 @@
 from datetime import datetime
 from typing import List, Literal, Optional
-from pydantic import BaseModel, Field
+from uuid import UUID
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class WeatherUnits(BaseModel):
@@ -59,3 +60,53 @@ class WeatherForecastResponse(BaseModel):
     current: CurrentWeather = Field(..., description="Current weather metrics")
     daily: List[DailyForecast] = Field(..., description="7-day daily forecast breakdown")
     advisory: FarmingAdvisory = Field(..., description="Rule-based explainable farming advisory")
+
+
+# --- Plant Care Tasks & Logs (REQ-3.5 / Issue #70) ---
+
+TaskType = Literal["watering", "fertilizer", "pruning", "harvest", "pest_control"]
+TaskStatus = Literal["pending", "completed", "skipped", "cancelled"]
+
+
+class CareTaskCreate(BaseModel):
+    plant_id: Optional[UUID] = Field(default=None, description="Optional plant ID the task is scheduled for")
+    task_type: TaskType = Field(default="watering", description="Type of care task")
+    title: str = Field(..., min_length=1, max_length=160, description="Short title for the task")
+    description: Optional[str] = Field(default=None, max_length=1000, description="Care details or notes")
+    due_date: datetime = Field(..., description="Scheduled due date/time for the task")
+    advisory_rationale: Optional[str] = Field(
+        default=None, max_length=500, description="Explainable weather advisory rationale if scheduled from advice"
+    )
+
+
+class CareTaskAction(BaseModel):
+    notes: Optional[str] = Field(default=None, max_length=1000, description="Grower notes when completing/skipping")
+
+
+class CareTaskView(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: UUID
+    user_id: UUID
+    plant_id: Optional[UUID] = None
+    task_type: str
+    title: str
+    description: Optional[str] = None
+    due_date: datetime
+    status: str
+    advisory_rationale: Optional[str] = None
+    created_at: datetime
+    updated_at: datetime
+
+
+class CareLogView(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: UUID
+    task_id: Optional[UUID] = None
+    user_id: UUID
+    plant_id: Optional[UUID] = None
+    action_taken: str
+    notes: Optional[str] = None
+    logged_at: datetime
+

@@ -45,3 +45,40 @@ class Plant(Base):
     notes: Mapped[str | None] = mapped_column(String(2000))
     revision: Mapped[int] = mapped_column(Integer, default=1)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now)
+
+
+class CareTask(Base):
+    """REQ-3.5: Plant care tasks under ownership checks."""
+    __tablename__ = "care_tasks"
+    __table_args__ = (
+        CheckConstraint("task_type IN ('watering', 'fertilizer', 'pruning', 'harvest', 'pest_control')", name="care_task_type"),
+        CheckConstraint("status IN ('pending', 'completed', 'skipped', 'cancelled')", name="care_task_status"),
+        {"schema": "app"},
+    )
+    id: Mapped[uuid.UUID] = mapped_column(Uuid, primary_key=True, default=uuid.uuid4)
+    user_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("app.users.id"), index=True)
+    plant_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("app.plants.id", ondelete="CASCADE"), nullable=True, index=True)
+    task_type: Mapped[str] = mapped_column(String(30), default="watering")
+    title: Mapped[str] = mapped_column(String(160))
+    description: Mapped[str | None] = mapped_column(String(1000))
+    due_date: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    status: Mapped[str] = mapped_column(String(20), default="pending")
+    advisory_rationale: Mapped[str | None] = mapped_column(String(500))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now)
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now, onupdate=now)
+
+
+class CareLog(Base):
+    """REQ-3.5: Retain actual care logs separately from recommendations."""
+    __tablename__ = "care_logs"
+    __table_args__ = (
+        {"schema": "app"},
+    )
+    id: Mapped[uuid.UUID] = mapped_column(Uuid, primary_key=True, default=uuid.uuid4)
+    task_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("app.care_tasks.id", ondelete="SET NULL"), nullable=True)
+    user_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("app.users.id"), index=True)
+    plant_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("app.plants.id", ondelete="CASCADE"), nullable=True, index=True)
+    action_taken: Mapped[str] = mapped_column(String(50))
+    notes: Mapped[str | None] = mapped_column(String(1000))
+    logged_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now)
+
